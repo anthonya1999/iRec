@@ -39,7 +39,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
     if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying) {
-        UIAlertView *musicAlert = [[UIAlertView alloc] initWithTitle:nil message:@"Other audio from another source is currently playing from the device. In order for iRec to properly record, the audio must be stopped. Would you like to exit the app, or stop the audio?" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Stop Audio", nil];
+        UIAlertView *musicAlert = [[UIAlertView alloc] initWithTitle:@"3rd Party Audio" message:@"Other audio from another source is currently playing from the device. In order for iRec to properly record, the audio must be stopped. Would you like to exit the app, or stop the audio?" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Stop Audio", nil];
         [musicAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex == 0) {
                 exit(0);
