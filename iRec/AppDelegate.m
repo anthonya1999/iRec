@@ -38,7 +38,9 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
-    [[MPMusicPlayerController iPodMusicPlayer] stop];
+    if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying) {
+        [[MPMusicPlayerController iPodMusicPlayer] stop];
+    }
     
     [Parse setApplicationId:@"l0lKvRthodCZ2iMpZW2AXYYtr2lzI8u2xhkJT8Kn" clientKey:@"lX13j5I2hrp5QH8KO4KLxVdPOtLknORUfYci0zog"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
