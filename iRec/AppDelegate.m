@@ -43,7 +43,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     [self registerForRemoteNotification];
     
     //Fail-safe if the preferences file is not created...
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *bundleIdentifier = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleIdentifierKey];
     NSString *plistPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Library/Preferences/%@.plist",bundleIdentifier]];
     
@@ -68,9 +68,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"showedWarningAlert"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"showedWarningAlert"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
     
     
     NSLog(@"Registering default values from Settings.bundle");
