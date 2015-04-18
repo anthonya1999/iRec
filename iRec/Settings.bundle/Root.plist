@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Customization</string>
+			<key>FooterText</key>
+			<string>Turn on or off the dark theme. The dark theme has white text and black colors, and the light theme has black text and white colors.
+				
+You also may choose to suspend (fade out) the app after you start recording.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Dark Theme</string>
+			<key>Key</key>
+			<string>dark_theme_switch</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Suspend Application</string>
+			<key>Key</key>
+			<string>suspend_switch</string>
+			<key>DefaultValue</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Video</string>
+			<key>FooterText</key>
+			<string>FPS (frames per second) determines the smoothness of the resulting recording.  If you are using an old or non-retina device, you must set your FPS to 24.</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Orientation</string>
+			<key>Key</key>
+			<string>video_orientation</string>
+			<key>DefaultValue</key>
+			<string>0</string>
+			<key>Titles</key>
+			<array>
+				<string>Portrait</string>
+				<string>Portrait (Upside Down)</string>
+				<string>Landscape (Home Button to Right)</string>
+				<string>Landscape (Home Button to Left)</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>0</string>
+				<string>180</string>
+				<string>270</string>
+				<string>90</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>FPS</string>
+			<key>Key</key>
+			<string>multi_fps</string>
+			<key>DefaultValue</key>
+			<string>29.97</string>
+			<key>Titles</key>
+			<array>
+				<string>Default (29.97)</string>
+				<string>24</string>
+				<string>30</string>
+				<string>60</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>29.97</string>
+				<string>24</string>
+				<string>30</string>
+				<string>60</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Audio</string>
+			<key>FooterText</key>
+			<string>Bitrate (in kbit/s) and sample rate (in hertz) determines the audio quality.  The number of channels also may be changed from mono (one) to stereo (two).</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Record Audio</string>
+			<key>Key</key>
+			<string>switch_audio</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Sample Rate</string>
+			<key>Key</key>
+			<string>samplerate_value</string>
+			<key>DefaultValue</key>
+			<string>44100</string>
+			<key>Titles</key>
+			<array>
+				<string>Default (44100 Hz)</string>
+				<string>48000 Hz</string>
+				<string>88200 Hz</string>
+				<string>96000 Hz</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>44100</string>
+				<string>48000</string>
+				<string>88200</string>
+				<string>96000</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Bitrate</string>
+			<key>Key</key>
+			<string>multi_bitrate</string>
+			<key>DefaultValue</key>
+			<string>2500</string>
+			<key>Titles</key>
+			<array>
+				<string>Default (2500)</string>
+				<string>3000</string>
+				<string>6000</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>2500</string>
+				<string>3000</string>
+				<string>6000</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSMultiValueSpecifier</string>
+			<key>Title</key>
+			<string>Channels</string>
+			<key>Key</key>
+			<string>channels_number</string>
+			<key>DefaultValue</key>
+			<string>1</string>
+			<key>Titles</key>
+			<array>
+				<string>Default (Mono)</string>
+				<string>Stereo</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>1</string>
+				<string>2</string>
+			</array>
+		</dict>
+	</array>
+	<key>StringsTable</key>
+	<string>Root</string>
+</dict>
+</plist>
