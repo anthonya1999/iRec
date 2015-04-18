@@ -10,14 +10,14 @@
 	<string>iRec</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>52AD8F1135CCC22307E98DDC3A8FA3E682E1547E</key>
+		<key>21481B8D86AD110481605B168F232876E0F5485B</key>
 		<string>https://github.com/anthonya1999/iRec.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>iRec.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>52AD8F1135CCC22307E98DDC3A8FA3E682E1547E</key>
+		<key>21481B8D86AD110481605B168F232876E0F5485B</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -25,14 +25,14 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>52AD8F1135CCC22307E98DDC3A8FA3E682E1547E</string>
+	<string>21481B8D86AD110481605B168F232876E0F5485B</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>52AD8F1135CCC22307E98DDC3A8FA3E682E1547E</string>
+			<string>21481B8D86AD110481605B168F232876E0F5485B</string>
 			<key>IDESourceControlWCCName</key>
 			<string>iRec%20-%201.2</string>
 		</dict>
