@@ -7,6 +7,7 @@
 //
 
 #import "NewRecordingViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 #import "ScreenRecorder.h"
 #import "WelcomeViewController.h"
 #import "UIAlertView+RSTAdditions.h"
@@ -83,6 +84,31 @@ CGFloat degreesToRadians(CGFloat degrees) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying) {
+        
+        UIGraphicsBeginImageContext(self.view.bounds.size);
+        CGContextRef c = UIGraphicsGetCurrentContext();
+        CGContextTranslateCTM(c, 0, 0);
+        [self.view.layer renderInContext:c];
+        UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
+        viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
+        UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
+        [self.view addSubview:blurredView];
+        UIGraphicsEndImageContext();
+        
+        UIAlertView *musicAlert = [[UIAlertView alloc] initWithTitle:@"3rd Party Audio" message:@"Other audio from another source is currently playing from the device. In order for iRec to properly record, the audio must be stopped. Would you like to exit the app, or stop the audio?" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Stop Audio", nil];
+        [musicAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == 0) {
+                exit(0);
+            }
+            if (buttonIndex == 1) {
+                [[MPMusicPlayerController iPodMusicPlayer] stop];
+                [blurredView removeFromSuperview];
+            }
+        }];
+    }
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
