@@ -7,7 +7,6 @@
 //
 
 #import "NewRecordingViewController.h"
-#import <MediaPlayer/MediaPlayer.h>
 #import "ScreenRecorder.h"
 #import "WelcomeViewController.h"
 #import "UIAlertView+RSTAdditions.h"
@@ -85,8 +84,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    if ([[MPMusicPlayerController iPodMusicPlayer] playbackState] == MPMusicPlaybackStatePlaying) {
+    if ([[AVAudioSession sharedInstance] isOtherAudioPlaying] == YES) {
         
         UIGraphicsBeginImageContext(self.view.bounds.size);
         CGContextRef c = UIGraphicsGetCurrentContext();
@@ -104,7 +102,8 @@ CGFloat degreesToRadians(CGFloat degrees) {
                 exit(0);
             }
             if (buttonIndex == 1) {
-                [[MPMusicPlayerController iPodMusicPlayer] stop];
+                NSError *categoryError = nil;
+                [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&categoryError];
                 [blurredView removeFromSuperview];
             }
         }];
