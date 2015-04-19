@@ -102,8 +102,9 @@ CGFloat degreesToRadians(CGFloat degrees) {
                 exit(0);
             }
             if (buttonIndex == 1) {
-                NSError *categoryError = nil;
-                [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&categoryError];
+                NSError *error = nil;
+                [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
+                [[AVAudioSession sharedInstance] setActive:YES error:&error];
                 [blurredView removeFromSuperview];
             }
         }];
