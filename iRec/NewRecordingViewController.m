@@ -32,10 +32,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
     {
         shareString1 = @"Record your iOS devices' screen with iRec! itms-services://?action=download-manifest&url=https://emu4ios.net/ESM/iRec.plist";
         copyString = @"Download link: itms-services://?action=download-manifest&url=https://emu4ios.net/ESM/iRec.plist";
-        
-        
     }
-    
     return self;
 }
 
@@ -105,6 +102,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
                 NSError *error = nil;
                 [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
                 [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                [[AVAudioSession sharedInstance] setActive:NO error:&error];
                 [blurredView removeFromSuperview];
             }
         }];
@@ -329,13 +327,9 @@ fail:
     NSString *urlString = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
     NSURL *fileURL = [NSURL fileURLWithPath:urlString];
     
-    
-    
-    
     //If the app is not recording, we want to start recording
     if(!self.isRecording)
     {
-        
         [self setTitleAndColorForButton];
         
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1];
