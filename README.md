@@ -7,7 +7,7 @@
 To install and deploy iRec to your device through Xcode, you must find and setup the PrivateFramework headers for IOKit, IOSurface, CoreSurface, and IOMobileFramebuffer (64-bit-safe version), and place them in the framework. I cannot provide these files in the project, due to legal reasons. However, you may grab the first two here:  
 https://github.com/rpetrich/iphoneheaders (download the entire repository).
 
-The third one here:  
+The third one here (you may right click the link as select "Download Linked File", and it will save to your downloads folder):  
 http://denemo.org/~jjbenham/iphone-dev-read-only/include/include/CoreSurface/CoreSurface.h
 
 And the last one from here:  
