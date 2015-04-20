@@ -64,6 +64,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
          const char *videoQueueLabel = "com.agatiello.videoqueue";
          _videoQueue = dispatch_queue_create(videoQueueLabel, queueSerial);
          _pixelBufferLock = [NSLock new];
+         NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
         
          mach_port_t masterPort = kIOMasterPortDefault;
          NSAssert(masterPort = kIOMasterPortDefault, @"The port does not seem to be set to NULL.");
