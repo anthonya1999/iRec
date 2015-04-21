@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CreditTableViewController : UITableViewController <MFMailComposeViewControllerDelegate>
+@interface CreditTableViewController : UITableViewController <MFMailComposeViewControllerDelegate, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 

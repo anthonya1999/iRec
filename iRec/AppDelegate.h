@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, AVAudioPlayerDelegate> {
+@interface AppDelegate : UIResponder <UIApplicationDelegate, AVAudioPlayerDelegate, UIAlertViewDelegate> {
     AVAudioPlayer *player;
     UIBackgroundTaskIdentifier backgroundTaskID;
 }

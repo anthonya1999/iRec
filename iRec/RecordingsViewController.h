@@ -10,7 +10,7 @@
 #import "ScreenRecorder.h"
 #import <UIKit/UIKit.h>
 
-@interface RecordingsViewController : UITableViewController <NewRecordingViewControllerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate> {
+@interface RecordingsViewController : UITableViewController <NewRecordingViewControllerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {
     NSMutableArray *_recordingNames;
     NSString *_recFinalName;
     IBOutlet UIButton *_deleteAllButton;

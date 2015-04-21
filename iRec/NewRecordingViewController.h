@@ -13,7 +13,7 @@
 @class ScreenRecorder;
 @protocol NewRecordingViewControllerDelegate;
 
-@interface NewRecordingViewController : UITableViewController /*<AVAudioPlayerDelegate, AVCaptureFileOutputRecordingDelegate, CLLocationManagerDelegate>*/ {
+@interface NewRecordingViewController : UITableViewController <UIAlertViewDelegate/*AVAudioPlayerDelegate, AVCaptureFileOutputRecordingDelegate, CLLocationManagerDelegate*/> {
     ScreenRecorder *_recorder;
     IBOutlet UITextField *_nameField;
     IBOutlet UIButton *_startStopButton;

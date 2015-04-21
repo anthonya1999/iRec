@@ -80,33 +80,64 @@ CGFloat degreesToRadians(CGFloat degrees) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
+    [self otherMediaIsPlaying];
+}
+
+
+- (BOOL)otherMediaIsPlaying {
     if ([[AVAudioSession sharedInstance] isOtherAudioPlaying] == YES) {
-        
-        UIGraphicsBeginImageContext(self.view.bounds.size);
-        CGContextRef c = UIGraphicsGetCurrentContext();
-        CGContextTranslateCTM(c, 0, 0);
-        [self.view.layer renderInContext:c];
-        UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-        viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-        UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-        [self.view addSubview:blurredView];
-        UIGraphicsEndImageContext();
-        
-        UIAlertView *musicAlert = [[UIAlertView alloc] initWithTitle:@"3rd Party Audio" message:@"Other audio from another source is currently playing from the device. In order for iRec to properly record, the audio must be stopped. Would you like to exit the app, or stop the audio?" delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Stop Audio", nil];
-        [musicAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            if (buttonIndex == 0) {
-                exit(0);
-            }
-            if (buttonIndex == 1) {
-                NSError *error = nil;
-                [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
-                [[AVAudioSession sharedInstance] setActive:YES error:&error];
-                [[AVAudioSession sharedInstance] setActive:NO error:&error];
-                [blurredView removeFromSuperview];
-            }
-        }];
+        goto fail;
     }
+    return NO;
+fail:
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(c, 0, 0);
+    [self.view.layer renderInContext:c];
+    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
+    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
+    [self.view addSubview:blurredView];
+    UIGraphicsEndImageContext();
+    
+    UIAlertView *musicAlert = nil;
+    NSString *musicAlertText = nil;
+    
+    if (_recorder != nil) {
+        if (_recorder) {
+            musicAlertText = @"Other media is currently playing. To save the recording, you must stop the existing audio.";
+            musicAlert = [[UIAlertView alloc] initWithTitle:@"3rd Party Audio" message:musicAlertText delegate:self cancelButtonTitle:nil otherButtonTitles:@"Stop Audio", nil];
+            [musicAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == 0) {
+                    NSError *error = nil;
+                    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
+                    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                    [[AVAudioSession sharedInstance] setActive:NO error:&error];
+                    [blurredView removeFromSuperview];
+                }
+            }];
+        }
+    }
+    
+    if (_recorder == nil) {
+        if (!_recorder) {
+            musicAlertText = @"Other audio from another source is currently playing from the device. In order for iRec to properly record, the audio must be stopped. Would you like to exit the app, or stop the audio?";
+            musicAlert = [[UIAlertView alloc] initWithTitle:@"3rd Party Audio" message:musicAlertText delegate:self cancelButtonTitle:@"Exit" otherButtonTitles:@"Stop Audio", nil];
+            [musicAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == 0) {
+                    exit(0);
+                }
+                if (buttonIndex == 1) {
+                    NSError *error = nil;
+                    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
+                    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+                    [[AVAudioSession sharedInstance] setActive:NO error:&error];
+                    [blurredView removeFromSuperview];
+                }
+            }];
+        }
+    }
+    return YES;
 }
 
 - (void)viewDidLoad {
