@@ -78,8 +78,8 @@ CGFloat degreesToRadians(CGFloat degrees) {
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     if ([[AVAudioSession sharedInstance] isOtherAudioPlaying] == YES) {
         
@@ -107,6 +107,10 @@ CGFloat degreesToRadians(CGFloat degrees) {
             }
         }];
     }
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
