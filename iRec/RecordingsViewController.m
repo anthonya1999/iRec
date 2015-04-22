@@ -153,8 +153,7 @@
     }
 }
 
-#pragma mark -
-#pragma mark UITableViewDelegate Methods
+#pragma mark - UITableViewDelegate Methods
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
     /*
@@ -312,8 +311,7 @@
  */
 
 
-#pragma mark -
-#pragma mark New Recording
+#pragma mark - New Recording
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {

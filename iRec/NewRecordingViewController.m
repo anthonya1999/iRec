@@ -68,7 +68,6 @@ CGFloat degreesToRadians(CGFloat degrees) {
     }
 }
 
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -78,17 +77,12 @@ CGFloat degreesToRadians(CGFloat degrees) {
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self otherMediaIsPlaying];
-}
-
-
 - (BOOL)otherMediaIsPlaying {
     if ([[AVAudioSession sharedInstance] isOtherAudioPlaying] == YES) {
         goto fail;
     }
     return NO;
+    
 fail:
     UIGraphicsBeginImageContext(self.view.bounds.size);
     CGContextRef c = UIGraphicsGetCurrentContext();
@@ -187,39 +181,40 @@ fail:
      */
 }
 
-#pragma mark UITableViewDelegate Methods
+#pragma mark - UITableViewDelegate Methods
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (indexPath.section == 1) {
-        if (_recorder == nil) {
-            if (!self.hasValidName)
-                goto deselect;
-            
-            /*
-            Now uses AppDelegate to handle when app goes into background/foreground.
-            [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]; //temp hack for 3 minutes
-             */
-            _nameField.userInteractionEnabled = NO;
-            //self.tabBarController.tabBar.userInteractionEnabled = NO;
-            [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
-            //[self record];
-            //[_startButton setAlpha:0.1];
-            //[_stopButton setAlpha:1.0];
-            [self startStopRecording];
-        }
-        
-        else {
-            if (_recorder) {
-                //[_recorder stopRecording];
-                [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-                // _recorder = nil;
+        if (!self.otherMediaIsPlaying) {
+            if (_recorder == nil) {
+                if (!self.hasValidName)
+                    goto deselect;
+                                /*
+                 Now uses AppDelegate to handle when app goes into background/foreground.
+                 [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]; //temp hack for 3 minutes
+                 */
+                _nameField.userInteractionEnabled = NO;
+                //self.tabBarController.tabBar.userInteractionEnabled = NO;
+                [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+                //[self record];
+                //[_startButton setAlpha:0.1];
+                //[_stopButton setAlpha:1.0];
                 [self startStopRecording];
-                //self.tabBarController.tabBar.userInteractionEnabled = YES;
-                //[self setMergingText];
-                //[self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:5.0];
-                [self setButtonTextToNormal];
-                //[self mergeAudio];
+            }
+            
+            else {
+                if (_recorder) {
+                    //[_recorder stopRecording];
+                    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+                    // _recorder = nil;
+                    [self startStopRecording];
+                    //self.tabBarController.tabBar.userInteractionEnabled = YES;
+                    //[self setMergingText];
+                    //[self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:5.0];
+                    [self setButtonTextToNormal];
+                    //[self mergeAudio];
+                }
             }
         }
     }
