@@ -67,13 +67,13 @@ CGFloat degreesToRadians(CGFloat degrees) {
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
         
          mach_port_t masterPort = kIOMasterPortDefault;
-         NSAssert(masterPort = kIOMasterPortDefault, @"The port does not seem to be set to NULL.");
+         NSAssert(masterPort, @"There doesn't seem to be a port.");
          CFMutableDictionaryRef serviceMatching = IOServiceMatching("AppleCLCD");
          io_service_t framebufferService = IOServiceGetMatchingService(masterPort, serviceMatching);
          NSAssert(framebufferService, @"Unable to get the IOService matching AppleCLCD.");
          
          task_port_t owningTask = 0;
-         NSAssert(owningTask = 0, @"It appears the task is not set to 0.");
+         NSAssert(_framebufferConnection, @"There's no framebuffer connection, please check IOMobileFramebuffer!");
          IOMobileFramebufferOpen(framebufferService, mach_task_self_, owningTask, &_framebufferConnection);
          IOMobileFramebufferGetLayerDefaultSurface((void *)_framebufferConnection, owningTask, (void *)&_screenSurface);
          
@@ -118,9 +118,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
          NSAssert(_mySurface, @"Error creating the IOSurface.");
          _allocator = kCFAllocatorDefault;
          NSAssert(_allocator = NULL, @"Uh-oh, it seems the allocator is not equal to NULL. How is this possible?");
-         uint32_t type = 0;
-         NSAssert(type = 0, @"The type doesn't seem to equal 0!");
-         IOSurfaceAcceleratorCreate(_allocator, type, &_accelerator);
+         IOSurfaceAcceleratorCreate(_allocator, 0, &_accelerator);
          IOSurfaceUnlock(_screenSurface, _lockOptions, &seed);
      }
     return self;
