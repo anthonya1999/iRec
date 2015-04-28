@@ -8,9 +8,5 @@
 	</array>
 	<key>application-identifier</key>
 	<string>$(AppIdentifierPrefix)com.adhoc.iRec</string>
-	<key>aps-environment</key>
-	<string>production</string>
-	<key>get-task-allow</key>
-	<false/>
 </dict>
 </plist>
