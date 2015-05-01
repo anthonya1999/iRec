@@ -406,18 +406,14 @@ fail:
     //If the app is recording, we want to stop recording
     else
     {
-        NSError *sessionError = nil;
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1 * 60 * 60 * 24];
         [_delegate newRecordingViewController:self didAddNewRecording:_nameField.text];
         [_recorder stopRecording];
         _recorder = nil;
         [recorder stop];
         recorder = nil;
-        [session setActive:NO error:&sessionError];
         self.isRecording = NO;
         isAudioRec = NO;
-        [sessionTwo startRunning];
-        [[AVAudioSession sharedInstance] setActive:NO error:&sessionError];
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
 
         //Temporary, remove when audio merging is fixed:
