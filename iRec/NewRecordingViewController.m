@@ -414,6 +414,12 @@ fail:
         recorder = nil;
         self.isRecording = NO;
         isAudioRec = NO;
+        
+        if (!self.otherMediaIsPlaying) {
+            NSError *error = nil;
+            [[AVAudioSession sharedInstance] setActive:NO error:&error];
+        }
+        
         [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
 
         //Temporary, remove when audio merging is fixed:
