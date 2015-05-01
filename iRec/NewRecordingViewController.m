@@ -109,6 +109,7 @@ fail:
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
                     [blurredView removeFromSuperview];
                     [self startStopRecording];
+                    [self setButtonTextToNormal];
                 }
             }];
         }
@@ -142,7 +143,7 @@ fail:
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
     if ([prefs boolForKey:@"dark_theme_switch"]) {
-    _shareButtonOutlet.tintColor = [UIColor whiteColor];
+        _shareButtonOutlet.tintColor = [UIColor whiteColor];
     }
     else {
         //do nothing different...
@@ -192,7 +193,7 @@ fail:
             if (_recorder == nil) {
                 if (!self.hasValidName)
                     goto deselect;
-                                /*
+                /*
                  Now uses AppDelegate to handle when app goes into background/foreground.
                  [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]; //temp hack for 3 minutes
                  */
@@ -249,7 +250,6 @@ deselect:
     _startStopButton.userInteractionEnabled = YES;
     self.tableView.userInteractionEnabled = NO;
     _nameField.userInteractionEnabled = NO;
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
 }
 
 - (void)setButtonTextToNormal {
@@ -260,7 +260,6 @@ deselect:
     _startStopButton.userInteractionEnabled = NO;
     _nameField.userInteractionEnabled = YES;
     self.tableView.userInteractionEnabled = YES;
-    [[UIApplication sharedApplication] endIgnoringInteractionEvents];
 }
 
 
@@ -307,7 +306,7 @@ fail:
     failAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorText delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [failAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 0) {
-        [blurredView removeFromSuperview];
+            [blurredView removeFromSuperview];
         }
     }];
     
@@ -346,9 +345,9 @@ fail:
     [self presentViewController:activityViewController animated:YES completion:nil];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-            activityViewController.modalPresentationStyle = UIModalPresentationPopover;
-            activityViewController.popoverPresentationController.barButtonItem = activityType;
-            activityViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
+        activityViewController.modalPresentationStyle = UIModalPresentationPopover;
+        activityViewController.popoverPresentationController.barButtonItem = activityType;
+        activityViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
     }
     
 }
@@ -420,8 +419,6 @@ fail:
             [[AVAudioSession sharedInstance] setActive:NO error:&error];
         }
         
-        [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-
         //Temporary, remove when audio merging is fixed:
         NSString *audioToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf",_nameField.text]];
         NSError *error = nil;
@@ -647,7 +644,7 @@ fail:
     AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:videoFileURL options:options];
     
     
-     
+    
     
     AVAssetTrack *assetVideoTrack = nil;
     AVAssetTrack *assetAudioTrack = nil;

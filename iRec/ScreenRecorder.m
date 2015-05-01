@@ -16,9 +16,7 @@
     IOMobileFramebufferConnection _framebufferConnection;
     IOSurfaceRef _screenSurface, _mySurface;
     CFDictionaryRef _mySurfaceAttributes;
-    CFAllocatorRef _allocator;
     IOSurfaceAcceleratorRef _accelerator;
-    uint32_t _lockOptions;
     AVAssetWriter *_videoWriter;
     AVAssetWriterInput *_videoWriterInput, *_audioWriterInput;
     AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
@@ -59,28 +57,19 @@ CGFloat degreesToRadians(CGFloat degrees) {
      if ((self = [super init])) {
          _framerate = framerate;
          _bitrate = bitrate;
-         dispatch_queue_attr_t queueSerial = DISPATCH_QUEUE_SERIAL;
-         NSAssert(queueSerial, @"It seems as if the serial could not be found.");
-         const char *videoQueueLabel = "com.agatiello.videoqueue";
-         _videoQueue = dispatch_queue_create(videoQueueLabel, queueSerial);
+         _videoQueue = dispatch_queue_create("com.agatiello.videoqueue", DISPATCH_QUEUE_SERIAL);
          _pixelBufferLock = [NSLock new];
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
         
-         mach_port_t masterPort = kIOMasterPortDefault;
-         NSAssert(masterPort, @"There doesn't seem to be a port.");
          CFMutableDictionaryRef serviceMatching = IOServiceMatching("AppleCLCD");
-         io_service_t framebufferService = IOServiceGetMatchingService(masterPort, serviceMatching);
+         io_service_t framebufferService = IOServiceGetMatchingService(kIOMasterPortDefault, serviceMatching);
          NSAssert(framebufferService, @"Unable to get the IOService matching AppleCLCD.");
          
-         task_port_t owningTask = 0;
-         NSAssert(_framebufferConnection, @"There's no framebuffer connection, please check IOMobileFramebuffer!");
-         IOMobileFramebufferOpen(framebufferService, mach_task_self_, owningTask, &_framebufferConnection);
-         IOMobileFramebufferGetLayerDefaultSurface((void *)_framebufferConnection, owningTask, (void *)&_screenSurface);
+         IOMobileFramebufferOpen(framebufferService, mach_task_self_, 0, &_framebufferConnection);
+         IOMobileFramebufferGetLayerDefaultSurface((void *)_framebufferConnection, 0, (void *)&_screenSurface);
          
          uint32_t seed = IOSurfaceGetSeed(_screenSurface);
-         _lockOptions = kIOSurfaceLockReadOnly;
-         NSAssert(_lockOptions = kIOSurfaceLockReadOnly, @"The IOSurface does not have the correct type of lock!");
-         IOSurfaceLock(_screenSurface, _lockOptions, &seed);
+         IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
          size_t planeIndex = IOSurfaceGetPlaneCount(_screenSurface);
          size_t planeBytesPerElement = IOSurfaceGetBytesPerElementOfPlane(_screenSurface, planeIndex);
          size_t planeBytesPerRow = IOSurfaceGetBytesPerRowOfPlane(_screenSurface, planeIndex);
@@ -116,10 +105,8 @@ CGFloat degreesToRadians(CGFloat degrees) {
          
          _mySurface = IOSurfaceCreate(_mySurfaceAttributes);
          NSAssert(_mySurface, @"Error creating the IOSurface.");
-         _allocator = kCFAllocatorDefault;
-         NSAssert(_allocator = NULL, @"Uh-oh, it seems the allocator is not equal to NULL. How is this possible?");
-         IOSurfaceAcceleratorCreate(_allocator, 0, &_accelerator);
-         IOSurfaceUnlock(_screenSurface, _lockOptions, &seed);
+         IOSurfaceAcceleratorCreate(kCFAllocatorDefault, 0, &_accelerator);
+         IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
      }
     return self;
 }
@@ -201,7 +188,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
     [_videoWriter startWriting];
     [_videoWriter startSessionAtSourceTime:kCMTimeZero];
     
-    NSAssert(_pixelBufferAdaptor.pixelBufferPool, @"There's no pixel buffer pool? Something has gone horribly wrong...");
+    //NSAssert(_pixelBufferAdaptor.pixelBufferPool, @"There's no pixel buffer pool? Something has gone horribly wrong...");
 }
 
 #pragma mark - Start Recording
@@ -246,11 +233,9 @@ CGFloat degreesToRadians(CGFloat degrees) {
 
 - (void)_saveFrame:(CMTime)frame {
     uint32_t seed = IOSurfaceGetSeed(_screenSurface);
-    _lockOptions = kIOSurfaceLockReadOnly;
-    NSAssert(_lockOptions = kIOSurfaceLockReadOnly, @"The IOSurface does not have the correct type of lock!");
-    IOSurfaceLock(_screenSurface, _lockOptions, &seed);
+    IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
     IOSurfaceAcceleratorTransferSurface(_accelerator, _screenSurface, _mySurface, _mySurfaceAttributes, NULL);
-    IOSurfaceUnlock(_screenSurface, _lockOptions, &seed);
+    IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
     
     dispatch_async(dispatch_get_main_queue(), ^{
         if(!_pixelBufferAdaptor.pixelBufferPool) {
@@ -262,10 +247,8 @@ CGFloat degreesToRadians(CGFloat degrees) {
         static dispatch_once_t onceToken;
         dispatch_once(&onceToken, ^{
             NSAssert(_pixelBufferAdaptor.pixelBufferPool, @"The pixel buffer pool is returning NULL (nothing). Please ensure there is one before saving a frame!");
-            _allocator = kCFAllocatorDefault;
             [_pixelBufferLock lock];
-            CVPixelBufferPoolCreatePixelBuffer(_allocator, _pixelBufferAdaptor.pixelBufferPool, &pixelBuffer);
-            NSAssert(_allocator = NULL, @"Uh-oh, it seems the allocator is not equal to NULL. How is this possible?");
+            CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, _pixelBufferAdaptor.pixelBufferPool, &pixelBuffer);
             [_pixelBufferLock unlock];
             NSAssert(pixelBuffer, @"There's no pixel buffer?! AT ALL?!!! Something's messed up.");
         });
