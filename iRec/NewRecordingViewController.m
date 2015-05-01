@@ -108,6 +108,7 @@ fail:
                     [[AVAudioSession sharedInstance] setActive:YES error:&error];
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
                     [blurredView removeFromSuperview];
+                    [self startStopRecording];
                 }
             }];
         }
@@ -127,6 +128,7 @@ fail:
                     [[AVAudioSession sharedInstance] setActive:YES error:&error];
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
                     [blurredView removeFromSuperview];
+                    [self startStopRecording];
                 }
             }];
         }
