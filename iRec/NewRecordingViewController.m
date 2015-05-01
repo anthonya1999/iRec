@@ -109,6 +109,7 @@ fail:
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
                     [blurredView removeFromSuperview];
                     [self startStopRecording];
+                    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
                     [self setButtonTextToNormal];
                 }
             }];
@@ -130,6 +131,7 @@ fail:
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
                     [blurredView removeFromSuperview];
                     [self startStopRecording];
+                    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
                 }
             }];
         }
