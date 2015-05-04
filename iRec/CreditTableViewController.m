@@ -52,35 +52,11 @@
             }
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
-            
         }
         
         
         if (indexPath.row == 1) {
-            NSString *scheme = @"";
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
-            {
-                scheme = [NSString stringWithFormat:@"twitter://user?screen_name=AAgatiello"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
-            {
-                scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/AAgatiello"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
-            {
-                scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=AAgatiello"];
-            }
-            else
-            {
-                scheme = [NSString stringWithFormat:@"http://twitter.com/AAgatiello"];
-            }
             
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
-            
-            
-        }
-        
-        if (indexPath.row == 2) {
             NSString *scheme = @"";
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
             {
@@ -100,8 +76,28 @@
             }
             
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
+        }
+        
+        if (indexPath.row == 2) {
+            NSString *scheme = @"";
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
+            {
+                scheme = [NSString stringWithFormat:@"twitter://user?screen_name=AAgatiello"];
+            }
+            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
+            {
+                scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/AAgatiello"];
+            }
+            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
+            {
+                scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=AAgatiello"];
+            }
+            else
+            {
+                scheme = [NSString stringWithFormat:@"http://twitter.com/AAgatiello"];
+            }
             
-            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
         }
         if (indexPath.row == 3) {
             NSString *scheme = @"";
