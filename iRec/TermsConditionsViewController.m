@@ -57,7 +57,21 @@
 
 - (IBAction)disagreeToTerms:(UIBarButtonItem *)sender {
     UIAlertView *disagreeAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"You must agree to the iRec & Emu4iOS terms and conditions to use the application." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [disagreeAlert show];
+    UIGraphicsBeginImageContext(self.view.bounds.size);
+    CGContextRef c = UIGraphicsGetCurrentContext();
+    CGContextTranslateCTM(c, 0, 0);
+    [self.view.layer renderInContext:c];
+    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
+    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
+    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
+    [self.view addSubview:blurredView];
+    UIGraphicsEndImageContext();
+
+    [disagreeAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == 0) {
+            [blurredView removeFromSuperview];
+        }
+    }];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
