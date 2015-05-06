@@ -7,6 +7,7 @@
 //
 
 #import "WelcomeViewController.h"
+#import "TermsConditionsViewController.h"
 
 @interface WelcomeViewController ()
 
@@ -21,9 +22,20 @@
     return self;
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    self.navigationController.toolbarHidden = YES;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
+    UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"dark_theme_switch"]) {
+        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    }
+    [[self navigationItem] setBackBarButtonItem:newBackButton];
+    
     [[self.appIconImage layer] setCornerRadius:20.0];
     _appIconImage.layer.masksToBounds = YES;
     
@@ -38,8 +50,9 @@
     self.navigationItem.title = @"Welcome to iRec";
 }
 
-- (IBAction)dismissViewController:(UIButton *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (IBAction)presentTermsConditions:(UIButton *)sender {
+    TermsConditionsViewController *termsConditionsViewController = [[TermsConditionsViewController alloc] init];
+    [self.navigationController pushViewController:termsConditionsViewController animated:YES];
 }
 
 @end

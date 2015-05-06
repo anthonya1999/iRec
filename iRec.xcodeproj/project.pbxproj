@@ -49,6 +49,7 @@
 		9239699E1AC1E4BA00DDC929 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9239699D1AC1E4BA00DDC929 /* Fabric.framework */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
+		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
 		9291FACF1AB4C16E009B2387 /* UIImage+ImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 9291FACD1AB4C16E009B2387 /* UIImage+ImageEffects.m */; };
 		92DAB8FB1ADC8EF900AA50BE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DAB8FA1ADC8EF900AA50BE /* IOKit.framework */; };
 		92DAB8FD1ADC8EFE00AA50BE /* IOMobileFramebuffer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92DAB8FC1ADC8EFE00AA50BE /* IOMobileFramebuffer.framework */; };
@@ -134,6 +135,8 @@
 		9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		92657C541AC0A67E009112E4 /* LegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalViewController.h; sourceTree = "<group>"; };
 		92657C551AC0A67E009112E4 /* LegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalViewController.m; sourceTree = "<group>"; };
+		9270221D1AF9964100A78EE9 /* TermsConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsConditionsViewController.h; sourceTree = "<group>"; };
+		9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsConditionsViewController.m; sourceTree = "<group>"; };
 		9291FACD1AB4C16E009B2387 /* UIImage+ImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageEffects.m"; sourceTree = "<group>"; };
 		9291FACE1AB4C16E009B2387 /* UIImage+ImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageEffects.h"; sourceTree = "<group>"; };
 		92DAB8FA1ADC8EF900AA50BE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/System/Library/Frameworks/IOKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -378,6 +381,8 @@
 			children = (
 				9259B5881A9FEC0A0072AD4F /* WelcomeViewController.h */,
 				9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */,
+				9270221D1AF9964100A78EE9 /* TermsConditionsViewController.h */,
+				9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */,
 			);
 			name = "Welcome Screen";
 			sourceTree = "<group>";
@@ -540,6 +545,7 @@
 				92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */,
 				920CD04D1A94E05D004BD668 /* BetaTestersViewController.m in Sources */,
 				920CD0461A94DF97004BD668 /* UIWebView+AFNetworking.m in Sources */,
+				9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */,
 				920CCFF41A94DC77004BD668 /* TabBar.m in Sources */,
 				920CD00D1A94DF48004BD668 /* SoftwareUpdateOperation.m in Sources */,
 				920CD0411A94DF97004BD668 /* UIAlertView+AFNetworking.m in Sources */,
