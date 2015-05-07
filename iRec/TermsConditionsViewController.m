@@ -38,6 +38,7 @@
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"Agree" style:UIBarButtonItemStyleDone target:self action:@selector(dismissTermsConditions)];
     NSArray *items = [NSArray arrayWithObjects:item1, flexiableItem, item2, nil];
     self.toolbarItems = items;
+    self.tableView.backgroundColor = [UIColor whiteColor];
 
 }
 
