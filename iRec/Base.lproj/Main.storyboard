@@ -822,42 +822,6 @@
             </objects>
             <point key="canvasLocation" x="672" y="740"/>
         </scene>
-        <!--Terms and Conditions-->
-        <scene sceneID="EzQ-Nr-932">
-            <objects>
-                <tableViewController storyboardIdentifier="initialLegalViewController" id="EJc-8X-BaY" customClass="TermsConditionsViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Si1-eG-opA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <sections/>
-                        <connections>
-                            <outlet property="dataSource" destination="EJc-8X-BaY" id="oOo-yW-zsZ"/>
-                            <outlet property="delegate" destination="EJc-8X-BaY" id="42s-AD-6qw"/>
-                        </connections>
-                    </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="Disagree" id="jP4-MS-xMG">
-                            <connections>
-                                <action selector="disagreeToTerms:" destination="EJc-8X-BaY" id="hwa-nG-Tqd"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="bgx-Xi-tnt"/>
-                        <barButtonItem title="Agree" style="done" id="v5X-Al-imL">
-                            <connections>
-                                <action selector="dismissTermsConditions:" destination="EJc-8X-BaY" id="zqm-Xn-6Ur"/>
-                            </connections>
-                        </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" title="Terms and Conditions" id="Q6f-GB-a3S"/>
-                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="d0M-h0-Jwf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1348" y="740"/>
-        </scene>
     </scenes>
     <resources>
         <image name="bug" width="30" height="30"/>

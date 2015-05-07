@@ -18,13 +18,27 @@
 
 - (instancetype)init
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    self = [storyboard instantiateViewControllerWithIdentifier:@"initialLegalViewController"];
+    self = [self initWithStyle:UITableViewStyleGrouped];
+    return self;
+}
+
+- (instancetype)initWithStyle:(UITableViewStyle)style {
+    self = [super initWithStyle:style];
+    if (self)
+    {
+        self.title = @"Terms and Conditions";
+    }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *flexiableItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"Disagree" style:UIBarButtonItemStyleBordered target:self action:@selector(disagreeToTerms)];
+    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"Agree" style:UIBarButtonItemStyleDone target:self action:@selector(dismissTermsConditions)];
+    NSArray *items = [NSArray arrayWithObjects:item1, flexiableItem, item2, nil];
+    self.toolbarItems = items;
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -32,7 +46,7 @@
     self.navigationController.toolbarHidden = NO;
 }
 
-- (IBAction)dismissTermsConditions:(UIBarButtonItem *)sender {
+- (void)dismissTermsConditions {
     UIAlertView *dismissTermsAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"I agree to the iRec & Emu4iOS terms and conditions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Agree", nil];
     UIGraphicsBeginImageContext(self.view.bounds.size);
     CGContextRef c = UIGraphicsGetCurrentContext();
@@ -55,7 +69,7 @@
     }];
 }
 
-- (IBAction)disagreeToTerms:(UIBarButtonItem *)sender {
+- (void)disagreeToTerms {
     UIAlertView *disagreeAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"You must agree to the iRec & Emu4iOS terms and conditions to use the application." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     UIGraphicsBeginImageContext(self.view.bounds.size);
     CGContextRef c = UIGraphicsGetCurrentContext();
