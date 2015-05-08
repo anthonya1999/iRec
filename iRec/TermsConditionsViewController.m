@@ -38,8 +38,17 @@
     UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"Agree" style:UIBarButtonItemStyleDone target:self action:@selector(dismissTermsConditions)];
     NSArray *items = [NSArray arrayWithObjects:item1, flexiableItem, item2, nil];
     self.toolbarItems = items;
-    self.tableView.backgroundColor = [UIColor whiteColor];
 
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"dark_theme_switch"]) {
+        self.navigationController.toolbar.barTintColor = [UIColor blackColor];
+        item1.tintColor = [UIColor whiteColor];
+        item2.tintColor = [UIColor whiteColor];
+        self.tableView.backgroundColor = [UIColor blackColor];
+    }
+    else {
+        self.tableView.backgroundColor = [UIColor whiteColor];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -99,13 +108,25 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *headerFooterView = (UITableViewHeaderFooterView *)view;
-    [headerFooterView.textLabel setTextColor:[UIColor blackColor]];
-    [headerFooterView.textLabel setAlpha:0.5];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"dark_theme_switch"]) {
+        [headerFooterView.textLabel setTextColor:[UIColor whiteColor]];
+    }
+    else {
+        [headerFooterView.textLabel setTextColor:[UIColor blackColor]];
+    }
+    [headerFooterView.textLabel setAlpha:0.7];
 }
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *headerFooterView = (UITableViewHeaderFooterView *)view;
-    [headerFooterView.textLabel setTextColor:[UIColor blackColor]];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs boolForKey:@"dark_theme_switch"]) {
+        [headerFooterView.textLabel setTextColor:[UIColor whiteColor]];
+    }
+    else {
+        [headerFooterView.textLabel setTextColor:[UIColor blackColor]];
+    }
     [headerFooterView.textLabel setAlpha:1.0];
 }
 
