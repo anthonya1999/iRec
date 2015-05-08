@@ -33,17 +33,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *flexiableItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *item1 = [[UIBarButtonItem alloc] initWithTitle:@"Disagree" style:UIBarButtonItemStyleBordered target:self action:@selector(disagreeToTerms)];
-    UIBarButtonItem *item2 = [[UIBarButtonItem alloc] initWithTitle:@"Agree" style:UIBarButtonItemStyleDone target:self action:@selector(dismissTermsConditions)];
-    NSArray *items = [NSArray arrayWithObjects:item1, flexiableItem, item2, nil];
+    UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
+    UIBarButtonItem *disagreeButton = [[UIBarButtonItem alloc] initWithTitle:@"Disagree" style:UIBarButtonItemStyleBordered target:self action:@selector(disagreeToTerms)];
+    UIBarButtonItem *agreeButton = [[UIBarButtonItem alloc] initWithTitle:@"Agree" style:UIBarButtonItemStyleDone target:self action:@selector(dismissTermsConditions)];
+    NSArray *items = [NSArray arrayWithObjects:disagreeButton, flexibleSpace, agreeButton, nil];
     self.toolbarItems = items;
 
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     if ([prefs boolForKey:@"dark_theme_switch"]) {
         self.navigationController.toolbar.barTintColor = [UIColor blackColor];
-        item1.tintColor = [UIColor whiteColor];
-        item2.tintColor = [UIColor whiteColor];
+        disagreeButton.tintColor = [UIColor whiteColor];
+        agreeButton.tintColor = [UIColor whiteColor];
         self.tableView.backgroundColor = [UIColor blackColor];
     }
     else {
