@@ -294,6 +294,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 }
 
 - (void)backgroundForever {
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
     backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [self backgroundForever];
         NSLog(@"Application will run in background forever until the task is stopped.");
@@ -301,6 +302,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 }
 
 - (void)stopBackgroundTask {
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     if (backgroundTaskID != -1)
         [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskID];
         NSLog(@"Background task ended.");
