@@ -9,13 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, AVAudioPlayerDelegate, UIAlertViewDelegate> {
-    AVAudioPlayer *player;
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
     UIBackgroundTaskIdentifier backgroundTaskID;
 }
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic) AVAudioPlayer *player;
 @property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskID;
 
 @end

@@ -30,7 +30,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 
 @implementation AppDelegate
 
-@synthesize player;
 @synthesize backgroundTaskID;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
