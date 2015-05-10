@@ -297,7 +297,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 - (void)backgroundForever {
     backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
         [self backgroundForever];
-        [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
         NSLog(@"Application will run in background forever until the task is stopped.");
     }];
 }
@@ -305,22 +304,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 - (void)stopBackgroundTask {
     if (backgroundTaskID != -1)
         [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskID];
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    NSLog(@"Background task ended.");
-}
-
-- (void)playMP3 {
-    NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
-    resourcePath = [resourcePath stringByAppendingString:@"/blank.mp3"];
-    NSURL *fileURL = [NSURL fileURLWithPath:resourcePath];
-    NSError *error = nil;
-    player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:&error];
-    player.delegate = self;
-    [player play];
-    player.numberOfLoops = -1;
-    player.currentTime = 0;
-    player.volume = 1.0;
-    NSLog(@"Started playing file: %@", resourcePath);
+        NSLog(@"Background task ended.");
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -332,27 +316,23 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     [self backgroundForever];
-    [self playMP3];
     NSLog(@"Application entered background.");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     [self stopBackgroundTask];
-    [player stop];
     NSLog(@"Application entered foreground.");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     [self stopBackgroundTask];
-    [player stop];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     [self stopBackgroundTask];
-    [player stop];
 }
 
 @end

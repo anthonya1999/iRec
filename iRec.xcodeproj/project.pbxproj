@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		92074A5A1AB5D2B0001B772F /* blank.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 92074A591AB5D2B0001B772F /* blank.mp3 */; };
 		920CCFC01A94DAD1004BD668 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CCFBF1A94DAD1004BD668 /* main.m */; };
 		920CCFC31A94DAD1004BD668 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CCFC21A94DAD1004BD668 /* AppDelegate.m */; };
 		920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 920CCFCA1A94DAD1004BD668 /* Main.storyboard */; };
@@ -57,7 +56,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		92074A591AB5D2B0001B772F /* blank.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = blank.mp3; sourceTree = "<group>"; };
 		920CCFBA1A94DAD1004BD668 /* iRec.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iRec.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		920CCFBE1A94DAD1004BD668 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		920CCFBF1A94DAD1004BD668 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -201,7 +199,6 @@
 			isa = PBXGroup;
 			children = (
 				920CCFFD1A94DEC4004BD668 /* Extras */,
-				92074A591AB5D2B0001B772F /* blank.mp3 */,
 				920CCFBE1A94DAD1004BD668 /* Info.plist */,
 				920CCFBF1A94DAD1004BD668 /* main.m */,
 			);
@@ -488,7 +485,6 @@
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
 				920CCFD11A94DAD1004BD668 /* LaunchScreen.xib in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
-				92074A5A1AB5D2B0001B772F /* blank.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
