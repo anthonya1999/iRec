@@ -185,7 +185,10 @@
         }
         if (buttonIndex == 1)
         {
-            [self export];
+            NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _recFinalName]];
+            NSURL *videoURL = [NSURL fileURLWithPath:URL];
+            UISaveVideoAtPathToSavedPhotosAlbum(videoURL.path, nil, NULL, NULL);
+            
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"The recording \"%@\" has successfully been saved to your Camera Roll!", _recordingNames[indexPath.row]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == 0) {
@@ -223,8 +226,7 @@
 }
 
 - (void)export {
-    NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _recFinalName]];
-    UISaveVideoAtPathToSavedPhotosAlbum(URL, self, nil, nil);
+   
 }
 
 /*
