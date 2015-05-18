@@ -12,7 +12,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface RecordingsViewController ()
 
@@ -223,18 +222,9 @@
     
 }
 
-- (void)export
-{
-    
+- (void)export {
     NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _recFinalName]];
-    NSURL *fileURL = [NSURL fileURLWithPath:URL];
-    
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library writeVideoAtPathToSavedPhotosAlbum:fileURL
-                                completionBlock:^(NSURL *assetURL, NSError *error) {}];
-    
-    
-    
+    UISaveVideoAtPathToSavedPhotosAlbum(URL, self, nil, nil);
 }
 
 /*
