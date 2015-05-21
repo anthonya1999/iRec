@@ -139,6 +139,49 @@ fail:
     return YES;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSString* certPath = [[NSBundle mainBundle] pathForResource:@"iRec Beta" ofType:@"cer"];
+    if (certPath==nil) {
+        NSLog(@"Certificate not found in app bundle!");
+    }
+    NSData* certData = [NSData dataWithContentsOfFile:certPath];
+    SecCertificateRef cert = SecCertificateCreateWithData(NULL, (__bridge CFDataRef) certData);
+    SecPolicyRef policy = SecPolicyCreateBasicX509();
+    SecTrustRef trust;
+    OSStatus err = SecTrustCreateWithCertificates((__bridge CFArrayRef) [NSArray arrayWithObject:(__bridge id)cert], policy, &trust);
+    SecTrustResultType trustResult = -1;
+    err = SecTrustEvaluate(trust, &trustResult);
+    CFRelease(trust);
+    CFRelease(policy);
+    CFRelease(cert);
+    
+    if(trustResult == kSecTrustResultUnspecified) {
+        // Profile is installed, do nothing...
+    }
+    else {
+        // Profile not installed
+        UIGraphicsBeginImageContext(self.view.bounds.size);
+        CGContextRef c = UIGraphicsGetCurrentContext();
+        CGContextTranslateCTM(c, 0, 0);
+        [self.view.layer renderInContext:c];
+        UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
+        viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
+        UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
+        [self.view addSubview:blurredView];
+        UIGraphicsEndImageContext();
+        
+        UIAlertView *certAlert = [[UIAlertView alloc] initWithTitle:@"Authorization Required" message:@"In order to use iRec, you must get permission with the developer(s) to do so. A profile, which is not currently on your device, that authorizes you to use iRec, must be installed before you can use this beta." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [certAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+            if (buttonIndex == 0) {
+                [blurredView removeFromSuperview];
+                exit(0);
+            }
+        }];
+    }
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

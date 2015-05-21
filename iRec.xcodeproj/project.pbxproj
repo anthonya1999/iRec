@@ -43,6 +43,7 @@
 		920CD0521A94E77F004BD668 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 920CD0511A94E77F004BD668 /* Crashlytics.framework */; };
 		920CD0551A94E8C9004BD668 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 920CD0541A94E8C9004BD668 /* Settings.bundle */; };
 		9211482E1ADC8D6B00775711 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 9211482D1ADC8D6B00775711 /* libsqlite3.dylib */; };
+		921C214D1B0E95E900CAB36B /* iRec Beta.cer in Resources */ = {isa = PBXBuildFile; fileRef = 921C214C1B0E95E900CAB36B /* iRec Beta.cer */; };
 		922D6B2D1AD1BC7900C82626 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922D6B2C1AD1BC7900C82626 /* Bolts.framework */; };
 		922D6B2F1AD1BC8800C82626 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 922D6B2E1AD1BC8800C82626 /* Parse.framework */; };
 		9239699E1AC1E4BA00DDC929 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9239699D1AC1E4BA00DDC929 /* Fabric.framework */; };
@@ -126,6 +127,7 @@
 		920CD0531A94E7B9004BD668 /* iRec.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iRec.entitlements; sourceTree = "<group>"; };
 		920CD0541A94E8C9004BD668 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		9211482D1ADC8D6B00775711 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/usr/lib/libsqlite3.dylib; sourceTree = DEVELOPER_DIR; };
+		921C214C1B0E95E900CAB36B /* iRec Beta.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iRec Beta.cer"; sourceTree = "<group>"; };
 		922D6B2C1AD1BC7900C82626 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		922D6B2E1AD1BC8800C82626 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		9239699D1AC1E4BA00DDC929 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				920CCFFD1A94DEC4004BD668 /* Extras */,
+				921C214C1B0E95E900CAB36B /* iRec Beta.cer */,
 				920CCFBE1A94DAD1004BD668 /* Info.plist */,
 				920CCFBF1A94DAD1004BD668 /* main.m */,
 			);
@@ -484,6 +487,7 @@
 				920CD0551A94E8C9004BD668 /* Settings.bundle in Resources */,
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
 				920CCFD11A94DAD1004BD668 /* LaunchScreen.xib in Resources */,
+				921C214D1B0E95E900CAB36B /* iRec Beta.cer in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
