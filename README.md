@@ -1,6 +1,6 @@
 ### iRec - iOS 7-8 Screen Recorder
 
-![ScreenShot](https://pbs.twimg.com/media/B-e4J7yIcAAcWf8.jpg)
+![ScreenShot](https://pbs.twimg.com/media/CATNEPXWQAAJWSt.jpg)
 
 ####Setup  
   
