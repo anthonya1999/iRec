@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Notification - iRec WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
+		<key>iRec WatchKit App.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>iRec.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -18,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>920CCFD51A94DAD1004BD668</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>927ADA261B13ACF200B4887C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

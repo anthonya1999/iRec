@@ -13,6 +13,7 @@
 #import "UpdateViewController.h"
 #import "LegalViewController.h"
 #import "BetaTestersViewController.h"
+#import "WatchSupportViewController.h"
 #import "UIImage+ImageEffects.h"
 
 @interface CreditTableViewController ()
@@ -133,7 +134,13 @@
             [self.navigationController pushViewController:updateViewController animated:YES];
         }
     }
+    
     if (indexPath.section == 3) {
+        WatchSupportViewController *watchSupportViewController = [[WatchSupportViewController alloc] init];
+        [self.navigationController pushViewController:watchSupportViewController animated:YES];
+    }
+
+    if (indexPath.section == 4) {
         if (indexPath.row == 0) {
             
             UIGraphicsBeginImageContext(self.view.bounds.size);
@@ -178,7 +185,7 @@
         }
     }
     
-    if (indexPath.section == 4) {
+    if (indexPath.section == 5) {
         if (indexPath.row == 0) {
             LegalViewController *legalViewController = [[LegalViewController alloc] init];
             [self.navigationController pushViewController:legalViewController animated:YES];

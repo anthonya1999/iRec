@@ -22,7 +22,7 @@ You also may choose to suspend (fade out) the app after you start recording.</st
 			<key>Key</key>
 			<string>dark_theme_switch</string>
 			<key>DefaultValue</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>
@@ -32,7 +32,7 @@ You also may choose to suspend (fade out) the app after you start recording.</st
 			<key>Key</key>
 			<string>suspend_switch</string>
 			<key>DefaultValue</key>
-			<false/>
+			<true/>
 		</dict>
 		<dict>
 			<key>Type</key>

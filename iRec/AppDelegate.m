@@ -68,9 +68,11 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    
     NSLog(@"Registering default values from Settings.bundle");
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"dark_theme_switch", [NSNumber numberWithBool:YES], @"suspend_switch", nil];
+    [defs registerDefaults:dictionary];
     [defs synchronize];
     
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>StringsTable</key>
+	<string>Root</string>
+	<key>PreferenceSpecifiers</key>
+	<array>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Watch Settings</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Show Recording Finished Screen</string>
+			<key>Key</key>
+			<string>show_done_message</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Show Timer</string>
+            <key>Key</key>
+            <string>show_timer_switch</string>
+            <key>DefaultValue</key>
+            <true/>
+        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Additional Options</string>
+			<key>FooterText</key>
+			<string>Please go to the default Settings app for iOS, and then scroll down to &quot;iRec&quot; to change recording options – like FPS (frames per second), bitrate, and more.</string>
+		</dict>
+	</array>
+	<key>ApplicationGroupContainerIdentifier</key>
+	<string>group.com.adhoc.iRec</string>
+</dict>
+</plist>
