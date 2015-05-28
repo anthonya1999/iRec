@@ -7,6 +7,8 @@
 //
 
 #import "InterfaceController.h"
+#import "ScreenRecorder.h"
+#import "NewRecordingViewController.h"
 
 @interface InterfaceController () {
     NSString *buttonText;
@@ -23,7 +25,7 @@
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"show_done_message", [NSNumber numberWithBool:YES], @"show_timer_switch", nil];
     [defaults registerDefaults:dictionary];
     [defaults synchronize];
-    
+        
     [_recordTimer setHidden:YES];
     [_recordTimer stop];
     [_settingsLabel setHidden:NO];

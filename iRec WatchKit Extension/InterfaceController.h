@@ -8,8 +8,13 @@
 
 #import <WatchKit/WatchKit.h>
 #import <Foundation/Foundation.h>
+@class ScreenRecorder;
+@class NewRecordingViewController;
 
 @interface InterfaceController : WKInterfaceController
+
+@property (strong, nonatomic) NewRecordingViewController *deviceRecordingViewController;
+@property (strong, nonatomic) ScreenRecorder *deviceRecorder;
 
 @property (weak, nonatomic) IBOutlet WKInterfaceButton *startStopButton;
 @property (weak, nonatomic) IBOutlet WKInterfaceTimer *recordTimer;
