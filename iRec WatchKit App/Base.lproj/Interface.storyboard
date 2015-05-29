@@ -11,10 +11,11 @@
                 <controller title="iRec Remote" id="6iY-5P-2YP" customClass="InterfaceController">
                     <items>
                         <label width="136" alignment="left" text="Status: " textAlignment="center" numberOfLines="0" id="pts-hr-lKA">
-                            <fontDescription key="font" type="system" pointSize="14"/>
+                            <fontDescription key="font" type="system" weight="light" pointSize="12"/>
                             <variation key="device=watch42mm" width="156"/>
                         </label>
                         <button width="1" alignment="left" title="Start Recording" id="H5B-iE-kHS">
+                            <fontDescription key="font" type="system" pointSize="17"/>
                             <connections>
                                 <action selector="startStopRecording:" destination="6iY-5P-2YP" id="UI8-It-nc0"/>
                             </connections>
