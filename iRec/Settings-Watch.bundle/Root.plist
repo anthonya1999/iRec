@@ -22,23 +22,33 @@
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Show Timer</string>
-            <key>Key</key>
-            <string>show_timer_switch</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Show Recording Status</string>
+			<key>Key</key>
+			<string>show_status_label</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Show Timer</string>
+			<key>Key</key>
+			<string>show_timer_switch</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
 			<string>Additional Options</string>
 			<key>FooterText</key>
-			<string>Please go to the default Settings app for iOS, and then scroll down to &quot;iRec&quot; to change recording options – like FPS (frames per second), bitrate, and more.</string>
+			<string>Please go to the default Settings app for iOS, and then scroll down to &quot;iRec&quot; to change recording options – like:  • FPS (frames per second) • Bitrate &amp; Sample Rate • Orientation</string>
 		</dict>
 	</array>
 	<key>ApplicationGroupContainerIdentifier</key>

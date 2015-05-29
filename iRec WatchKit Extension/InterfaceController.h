@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet WKInterfaceButton *startStopButton;
 @property (weak, nonatomic) IBOutlet WKInterfaceTimer *recordTimer;
 @property (weak, nonatomic) IBOutlet WKInterfaceLabel *settingsLabel;
+@property (weak, nonatomic) IBOutlet WKInterfaceLabel *statusLabel;
 
 @end

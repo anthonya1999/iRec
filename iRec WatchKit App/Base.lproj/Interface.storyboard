@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14E17e" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6iY-5P-2YP">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6iY-5P-2YP">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
@@ -10,6 +10,10 @@
             <objects>
                 <controller title="iRec Remote" id="6iY-5P-2YP" customClass="InterfaceController">
                     <items>
+                        <label width="136" alignment="left" text="Status: " textAlignment="center" numberOfLines="0" id="pts-hr-lKA">
+                            <fontDescription key="font" type="system" pointSize="14"/>
+                            <variation key="device=watch42mm" width="156"/>
+                        </label>
                         <button width="1" alignment="left" title="Start Recording" id="H5B-iE-kHS">
                             <connections>
                                 <action selector="startStopRecording:" destination="6iY-5P-2YP" id="UI8-It-nc0"/>
@@ -41,10 +45,11 @@
                         <outlet property="recordTimer" destination="gJp-pI-gpi" id="HQF-pE-915"/>
                         <outlet property="settingsLabel" destination="Ntt-x7-Fls" id="TqN-pi-sHF"/>
                         <outlet property="startStopButton" destination="H5B-iE-kHS" id="g8m-mA-IUW"/>
+                        <outlet property="statusLabel" destination="pts-hr-lKA" id="F2e-nW-92V"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="218.82051282051285" y="343.92307692307696"/>
+            <point key="canvasLocation" x="217.94871794871796" y="342.17948717948718"/>
         </scene>
         <!--Close-->
         <scene sceneID="z2o-XJ-x6h">

@@ -25,10 +25,13 @@
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSNumber numberWithBool:YES], @"show_done_message",
                                [NSNumber numberWithBool:YES], @"show_timer_switch",
+                               [NSNumber numberWithBool:YES], @"show_status_label",
                                nil];
     [defaults registerDefaults:dictionary];
     [defaults synchronize];
-        
+  
+    [_statusLabel setText:@"Status: Not Recording"];
+    [_statusLabel setTextColor:[UIColor redColor]];
     [_recordTimer setHidden:YES];
     [_recordTimer stop];
     [_settingsLabel setHidden:NO];
@@ -41,6 +44,15 @@
 - (void)willActivate {
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
+    
+    NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.adhoc.iRec"];
+    BOOL enabled = [defaults boolForKey:@"show_status_label"];
+    if (enabled) {
+        [_statusLabel setHidden:NO];
+    }
+    else {
+        [_statusLabel setHidden:YES];
+    }
 }
 
 - (void)didDeactivate {
@@ -66,6 +78,8 @@
             NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:buttonText];
             [attString setAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]} range:NSMakeRange(0, attString.string.length)];
             [_startStopButton setAttributedTitle:attString];
+            [_statusLabel setText:@"Status: Recording"];
+            [_statusLabel setTextColor:[UIColor greenColor]];
             
             NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.adhoc.iRec"];
             BOOL enabled = [defaults boolForKey:@"show_timer_switch"];
@@ -90,6 +104,8 @@
         [_recordTimer stop];
         [_recordTimer setHidden:YES];
         [_settingsLabel setHidden:NO];
+        [_statusLabel setText:@"Status: Not Recording"];
+        [_statusLabel setTextColor:[UIColor redColor]];
         
         NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.adhoc.iRec"];
         BOOL enabled = [defaults boolForKey:@"show_done_message"];
