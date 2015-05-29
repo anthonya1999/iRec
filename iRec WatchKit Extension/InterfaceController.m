@@ -22,7 +22,10 @@
     [super awakeWithContext:context];
     
     NSUserDefaults *defaults = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.adhoc.iRec"];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], @"show_done_message", [NSNumber numberWithBool:YES], @"show_timer_switch", nil];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                               [NSNumber numberWithBool:YES], @"show_done_message",
+                               [NSNumber numberWithBool:YES], @"show_timer_switch",
+                               nil];
     [defaults registerDefaults:dictionary];
     [defaults synchronize];
         
