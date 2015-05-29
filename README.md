@@ -31,10 +31,19 @@ Add this line (without quotes):
   
 ####Note: You must place brackets "<>" between IOKit/IOKitLib.h and xpc/xpc.h
 
-After you have done this, iRec should successfully compile! Thank you for your interest in iRec.
+After you have done this, iRec should successfully compile! Thank you for your interest in iRec.  
+  
+####Apple Watch Support  
+  
+![ScreenShot](https://pbs.twimg.com/media/CF4Z0WJUoAAynGq.jpg)  
+  
+iRec v1.2 and above now has support for the Apple Watch! You can remotely start recording from your watch, see how long you've been recording for, and customize more settings, directly from the Apple Watch app on your iPhone (see photo below).  
+  
+![ScreenShot](https://pbs.twimg.com/media/CF9-3O6UoAAt-_w.jpg)
 
 ####Known Issues  
   
 * If you are running iOS 8.3 or above, the resulting recording may freeze on a random frame at times, and then start recording again.  
 * Export to Camera Roll does not work on the iPhone 6 Plus.  
 * No audio recording yet.
+* Apple Watch remote does not work yet, it is only a GUI.
