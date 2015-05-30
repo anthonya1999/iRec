@@ -15,6 +15,11 @@
 
 @implementation WelcomeViewController
 
+- (NSUserDefaults *)defaults {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    return prefs;
+}
+
 - (instancetype)init
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -30,8 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     }
     [[self navigationItem] setBackBarButtonItem:newBackButton];

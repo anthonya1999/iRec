@@ -24,6 +24,11 @@ CGFloat degreesToRadians(CGFloat degrees) {
     return degrees * M_PI / 180;
 };
 
+- (NSUserDefaults *)defaults {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    return prefs;
+}
+
 - (id) init
 {
     self = [super init];
@@ -185,9 +190,7 @@ fail:
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         _shareButtonOutlet.tintColor = [UIColor whiteColor];
     }
     else {
@@ -202,7 +205,7 @@ fail:
     isAudioRec = NO;
     
     
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         _nameField.keyboardAppearance = UIKeyboardAppearanceDark;
     }
     else {
@@ -361,9 +364,8 @@ fail:
 - (int)framerate {
     //int requestedFramerate = [_framerateField.text intValue];
     int fps;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs objectForKey:@"multi_fps"])
-        fps = [[prefs objectForKey:@"multi_fps"] doubleValue];
+    if ([self.defaults objectForKey:@"multi_fps"])
+        fps = [[self.defaults objectForKey:@"multi_fps"] doubleValue];
     return fps; //> 0 ? fps : 29.97);
 }
 
@@ -371,9 +373,8 @@ fail:
 - (int)bitrate {
     //int requestedBitrate = [text_bitrate intValue];
     int bitrate;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs objectForKey:@"multi_bitrate"])
-        bitrate = [[prefs objectForKey:@"multi_bitrate"] doubleValue];
+    if ([self.defaults objectForKey:@"multi_bitrate"])
+        bitrate = [[self.defaults objectForKey:@"multi_bitrate"] doubleValue];
     return bitrate; //> 0 ? bitrate : 3500);
 }
 
@@ -420,17 +421,15 @@ fail:
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&speakerError];
         [[AVAudioSession sharedInstance] setActive:YES error:&sessionError];
         
-        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-        
         float samplerate;
-        if ([prefs objectForKey:@"samplerate_value"])
-            samplerate = [[prefs objectForKey:@"samplerate_value"] floatValue];
+        if ([self.defaults objectForKey:@"samplerate_value"])
+            samplerate = [[self.defaults objectForKey:@"samplerate_value"] floatValue];
         
         int channels;
-        if ([prefs objectForKey:@"channels_number"])
-            channels = [[prefs objectForKey:@"channels_number"] doubleValue];
+        if ([self.defaults objectForKey:@"channels_number"])
+            channels = [[self.defaults objectForKey:@"channels_number"] doubleValue];
         
-        if ([prefs boolForKey:@"suspend_switch"])
+        if ([self.defaults boolForKey:@"suspend_switch"])
             [[UIApplication sharedApplication] performSelector:@selector(suspend)];
         
         self.isRecording = YES;
@@ -676,8 +675,6 @@ fail:
 
 
 -(void)mergeAudio{
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
     NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mov", _nameField.text]];
     NSURL *videoFileURL = [NSURL fileURLWithPath:videoURL];
     NSString *audioURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
@@ -704,7 +701,7 @@ fail:
             assetVideoTrack = assetArray[0];
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:audioURL] && [prefs boolForKey:@"switch_audio"]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:audioURL] && [self.defaults boolForKey:@"switch_audio"]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
         if ([assetArray count] > 0)
             assetAudioTrack = assetArray[0];

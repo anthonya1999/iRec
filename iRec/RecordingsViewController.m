@@ -19,14 +19,18 @@
 
 @implementation RecordingsViewController
 
-- (void)viewDidLoad {
+- (NSUserDefaults *)defaults {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    return prefs;
+}
+
+- (void)viewDidLoad {
     if (_recorder) {
         //do nothing
     }
     else {
         [super viewDidLoad];
-        if ([prefs boolForKey:@"dark_theme_switch"]) {
+        if ([self.defaults boolForKey:@"dark_theme_switch"]) {
             [_deleteAllButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_deleteAllButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }

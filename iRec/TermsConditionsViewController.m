@@ -16,6 +16,11 @@
 
 @implementation TermsConditionsViewController
 
+- (NSUserDefaults *)defaults {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    return prefs;
+}
+
 - (instancetype)init
 {
     self = [self initWithStyle:UITableViewStyleGrouped];
@@ -39,8 +44,7 @@
     NSArray *items = [NSArray arrayWithObjects:disagreeButton, flexibleSpace, agreeButton, nil];
     self.toolbarItems = items;
 
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         self.navigationController.toolbar.barTintColor = [UIColor blackColor];
         disagreeButton.tintColor = [UIColor whiteColor];
         agreeButton.tintColor = [UIColor whiteColor];
@@ -108,8 +112,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *headerFooterView = (UITableViewHeaderFooterView *)view;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         [headerFooterView.textLabel setTextColor:[UIColor whiteColor]];
     }
     else {
@@ -120,8 +123,7 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
     UITableViewHeaderFooterView *headerFooterView = (UITableViewHeaderFooterView *)view;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         [headerFooterView.textLabel setTextColor:[UIColor whiteColor]];
     }
     else {

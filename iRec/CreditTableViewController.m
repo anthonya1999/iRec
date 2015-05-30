@@ -22,6 +22,11 @@
 
 @implementation CreditTableViewController
 
+- (NSUserDefaults *)defaults {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    return prefs;
+}
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -222,9 +227,7 @@
 {
     [super viewDidLoad];
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
         self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     }
     else {
