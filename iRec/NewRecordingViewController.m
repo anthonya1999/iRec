@@ -42,13 +42,12 @@ CGFloat degreesToRadians(CGFloat degrees) {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-    if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
-        return 3;
+    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]]) {
+            return 3;
+        }
     }
-    else {
-        return 2;
-    }
+    return 2;
 }
 
 - (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
