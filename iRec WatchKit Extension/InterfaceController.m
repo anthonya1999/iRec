@@ -26,6 +26,8 @@
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
     
+    [self addFixedMenuItems];
+    
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSNumber numberWithBool:YES], @"show_done_message",
                                [NSNumber numberWithBool:YES], @"show_timer_switch",
@@ -34,7 +36,7 @@
     [self.defaults registerDefaults:dictionary];
     [self.defaults synchronize];
   
-    [_statusLabel setText:@"Status: Not Recording"];
+    [_statusLabel setText:[NSString stringWithFormat:@"Status: Not Recording"]];
     [_statusLabel setTextColor:[UIColor redColor]];
     [_recordTimer setHidden:YES];
     [_recordTimer stop];
@@ -56,6 +58,24 @@
     else {
         [_statusLabel setHidden:YES];
     }
+    [self addMenuItems];
+    [self addFixedMenuItems];
+}
+
+- (void)addFixedMenuItems {
+    [self addMenuItemWithImageNamed:@"Gear" title:@"Settings" action:@selector(presentSettingsPopup)];
+    [self addMenuItemWithItemIcon:WKMenuItemIconInfo title:@"Info" action:@selector(presentInfo)];
+    [self addMenuItemWithImageNamed:@"Group" title:@"Developers" action:@selector(presentDevelopers)];
+}
+
+- (void)addMenuItems {
+    [self clearAllMenuItems];
+    if ([buttonText isEqualToString:[NSString stringWithFormat:@"Start Recording"]]) {
+        [self addMenuItemWithItemIcon:WKMenuItemIconPlay title:[NSString stringWithFormat:@"Start Recording"] action:@selector(startStopRecording)];
+    }
+    else if ([buttonText isEqualToString:[NSString stringWithFormat:@"Stop Recording"]]) {
+        [self addMenuItemWithItemIcon:WKMenuItemIconDecline title:[NSString stringWithFormat:@"Stop Recording"] action:@selector(startStopRecording)];
+    }
 }
 
 - (void)didDeactivate {
@@ -75,7 +95,7 @@
     [self presentControllerWithName:@"developersInterfaceController" context:nil];
 }
 
-- (IBAction)startStopRecording:(WKInterfaceButton *)sender {
+- (IBAction)startStopRecording {
     if ([buttonText isEqualToString:[NSString stringWithFormat:@"Start Recording"]]) {
         
         [self presentTextInputControllerWithSuggestions:@[@"My New Recording"] allowedInputMode:WKTextInputModePlain completion:^(NSArray *results) {
@@ -85,7 +105,7 @@
             NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:buttonText];
             [attString setAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]} range:NSMakeRange(0, attString.string.length)];
             [_startStopButton setAttributedTitle:attString];
-            [_statusLabel setText:@"Status: Recording"];
+            [_statusLabel setText:[NSString stringWithFormat:@"Status: Recording"]];
             [_statusLabel setTextColor:[UIColor greenColor]];
             
             BOOL enabled = [self.defaults boolForKey:@"show_timer_switch"];
@@ -97,6 +117,8 @@
             [_recordTimer setDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
             [_recordTimer start];
             [_settingsLabel setHidden:YES];
+            [self addMenuItems];
+            [self addFixedMenuItems];
                 
             }
         }];
@@ -110,8 +132,11 @@
         [_recordTimer stop];
         [_recordTimer setHidden:YES];
         [_settingsLabel setHidden:NO];
-        [_statusLabel setText:@"Status: Not Recording"];
+        [_statusLabel setText:[NSString stringWithFormat:@"Status: Not Recording"]];
         [_statusLabel setTextColor:[UIColor redColor]];
+        
+        [self addMenuItems];
+        [self addFixedMenuItems];
         
         BOOL enabled = [self.defaults boolForKey:@"show_done_message"];
         if (enabled) {

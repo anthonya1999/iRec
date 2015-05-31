@@ -17,7 +17,7 @@
                         <button width="1" alignment="left" title="Start Recording" id="H5B-iE-kHS">
                             <fontDescription key="font" type="system" pointSize="17"/>
                             <connections>
-                                <action selector="startStopRecording:" destination="6iY-5P-2YP" id="UI8-It-nc0"/>
+                                <action selector="startStopRecording" destination="6iY-5P-2YP" id="t01-kP-fid"/>
                             </connections>
                         </button>
                         <timer width="136" alignment="left" textAlignment="center" previewedSeconds="0" id="gJp-pI-gpi">
@@ -28,25 +28,7 @@
                             <variation key="device=watch42mm" width="156"/>
                         </label>
                     </items>
-                    <menu key="menu" id="OeA-dE-TRZ">
-                        <items>
-                            <menuItem title="Settings" image="Gear" id="zko-tR-FA1">
-                                <connections>
-                                    <action selector="presentSettingsPopup" destination="6iY-5P-2YP" id="7E4-kp-1eW"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Info" icon="info" id="ocX-pu-3XX">
-                                <connections>
-                                    <action selector="presentInfo" destination="6iY-5P-2YP" id="zA0-Ow-rbP"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Developers" image="Group" id="oJ9-Zn-v7A">
-                                <connections>
-                                    <action selector="presentDevelopers" destination="6iY-5P-2YP" id="VLV-Dm-GcG"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
+                    <menu key="menu" id="OeA-dE-TRZ"/>
                     <connections>
                         <outlet property="recordTimer" destination="gJp-pI-gpi" id="HQF-pE-915"/>
                         <outlet property="settingsLabel" destination="Ntt-x7-Fls" id="TqN-pi-sHF"/>
