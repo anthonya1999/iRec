@@ -26,8 +26,6 @@
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
     
-    [self addFixedMenuItems];
-    
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                [NSNumber numberWithBool:YES], @"show_done_message",
                                [NSNumber numberWithBool:YES], @"show_timer_switch",
