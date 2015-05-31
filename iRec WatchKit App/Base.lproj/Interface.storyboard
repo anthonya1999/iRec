@@ -40,6 +40,11 @@
                                     <action selector="presentInfo" destination="6iY-5P-2YP" id="zA0-Ow-rbP"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Developers" image="Group" id="oJ9-Zn-v7A">
+                                <connections>
+                                    <action selector="presentDevelopers" destination="6iY-5P-2YP" id="VLV-Dm-GcG"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                     <connections>
@@ -142,6 +147,26 @@ iRec Settings
                 </controller>
             </objects>
             <point key="canvasLocation" x="714" y="688.28205128205138"/>
+        </scene>
+        <!--Close-->
+        <scene sceneID="5FN-3L-BAo">
+            <objects>
+                <controller identifier="developersInterfaceController" title="Close" id="bgz-yP-P4S">
+                    <items>
+                        <label width="136" height="50.5" alignment="left" text=" iRec Developers " textAlignment="center" numberOfLines="0" id="ncY-de-H16">
+                            <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
+                            <variation key="device=watch42mm" width="156"/>
+                        </label>
+                        <label width="136" height="100.5" alignment="left" text="@Emu4iOS, @iNoCydia_Devs, @AAgatiello  Extra Help: @HamzaSood" textAlignment="center" numberOfLines="0" id="9o2-OP-WKN">
+                            <color key="textColor" red="0.097376046499999994" green="0.65041885040000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <fontDescription key="font" type="system" pointSize="14"/>
+                            <variation key="device=watch38mm" height="100.5"/>
+                            <variation key="device=watch42mm" height="100.5" width="156"/>
+                        </label>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="919" y="495"/>
         </scene>
     </scenes>
 </document>

@@ -71,6 +71,10 @@
     [self presentControllerWithName:@"infoInterfaceController" context:nil];
 }
 
+- (IBAction)presentDevelopers {
+    [self presentControllerWithName:@"developersInterfaceController" context:nil];
+}
+
 - (IBAction)startStopRecording:(WKInterfaceButton *)sender {
     if ([buttonText isEqualToString:[NSString stringWithFormat:@"Start Recording"]]) {
         
