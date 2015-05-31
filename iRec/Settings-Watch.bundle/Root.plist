@@ -48,7 +48,7 @@
 			<key>Title</key>
 			<string>Additional Options</string>
 			<key>FooterText</key>
-			<string>Please go to the default Settings app for iOS, and then scroll down to &quot;iRec&quot; to change recording options – like:  • FPS (frames per second) • Bitrate &amp; Sample Rate • Orientation</string>
+			<string>Please go to the default Settings app for iOS, and then scroll down to &quot;iRec&quot; to change recording options — like:  • FPS (frames per second) • Bitrate &amp; Sample Rate • Orientation</string>
 		</dict>
 	</array>
 	<key>ApplicationGroupContainerIdentifier</key>
