@@ -113,10 +113,14 @@
             if (enabled) {
                 [_recordTimer setHidden:NO];
             }
+            else {
+                [_recordTimer setHidden:YES];
+            }
             
             [_recordTimer setDate:[NSDate dateWithTimeIntervalSinceNow:-1]];
             [_recordTimer start];
             [_settingsLabel setHidden:YES];
+                
             [self addMenuItems];
             [self addFixedMenuItems];
                 
