@@ -18,8 +18,6 @@
 #import <Crashlytics/Crashlytics.h>
 #import "WelcomeViewController.h"
 
-#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
-
 static NSString * const CachedSoftwareUpdateKey = @"cachedSoftwareUpdate";
 static NSString * const AppVersionKey = @"appVersion";
 static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
