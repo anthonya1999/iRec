@@ -35,12 +35,13 @@ After you have done this, iRec should successfully compile! Thank you for your i
   
 ####Apple Watch Support  
   
-![ScreenShot](https://pbs.twimg.com/media/CF4Z0WJUoAAynGq.jpg)  
+![ScreenShot](https://pbs.twimg.com/media/CGVpWsNUAAAczLT.jpg)  
+![ScreenShot](https://pbs.twimg.com/media/CGXCF2WUcAA_bGO.jpg)  
   
 iRec v1.2 and above now has support for the Apple Watch! You can remotely start recording from your watch, see how long you've been recording for, and customize more settings, directly from the Apple Watch app on your iPhone (see photo below).  
   
-![ScreenShot](https://pbs.twimg.com/media/CF9-3O6UoAAt-_w.jpg)
-
+![ScreenShot](https://pbs.twimg.com/media/CGVpWrbUYAABI8f.jpg:large)  
+  
 ####Known Issues  
   
 * If you are running iOS 8.3 or above, the resulting recording may freeze on a random frame at times, and then start recording again.  
