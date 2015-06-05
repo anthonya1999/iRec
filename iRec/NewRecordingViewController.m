@@ -251,6 +251,7 @@ deselect:
     [_startStopButton setTitle:@"Saving...Please wait..." forState:UIControlStateNormal];
     _startStopButton.userInteractionEnabled = YES;
     self.tableView.userInteractionEnabled = NO;
+    self.tabBarController.tabBar.userInteractionEnabled = NO;
     _nameField.userInteractionEnabled = NO;
 }
 
@@ -261,6 +262,7 @@ deselect:
     [_nameField setText:nil];
     _startStopButton.userInteractionEnabled = NO;
     _nameField.userInteractionEnabled = YES;
+    self.tabBarController.tabBar.userInteractionEnabled = YES;
     self.tableView.userInteractionEnabled = YES;
 }
 
