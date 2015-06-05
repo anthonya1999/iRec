@@ -24,11 +24,6 @@ CGFloat degreesToRadians(CGFloat degrees) {
     return degrees * M_PI / 180;
 };
 
-- (NSUserDefaults *)defaults {
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    return prefs;
-}
-
 - (id) init
 {
     self = [super init];
@@ -42,12 +37,13 @@ CGFloat degreesToRadians(CGFloat degrees) {
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-        if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]]) {
-            return 3;
-        }
+    NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+    if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
+        return 3;
     }
-    return 2;
+    else {
+        return 2;
+    }
 }
 
 - (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
@@ -143,53 +139,12 @@ fail:
     return YES;
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    
-    NSString* certPath = [[NSBundle mainBundle] pathForResource:@"iRec Beta" ofType:@"cer"];
-    if (certPath==nil) {
-        NSLog(@"Certificate not found in app bundle!");
-    }
-    NSData* certData = [NSData dataWithContentsOfFile:certPath];
-    SecCertificateRef cert = SecCertificateCreateWithData(NULL, (__bridge CFDataRef) certData);
-    SecPolicyRef policy = SecPolicyCreateBasicX509();
-    SecTrustRef trust;
-    OSStatus err = SecTrustCreateWithCertificates((__bridge CFArrayRef) [NSArray arrayWithObject:(__bridge id)cert], policy, &trust);
-    SecTrustResultType trustResult = -1;
-    err = SecTrustEvaluate(trust, &trustResult);
-    CFRelease(trust);
-    CFRelease(policy);
-    CFRelease(cert);
-    
-    if(trustResult == kSecTrustResultUnspecified) {
-        // Profile is installed, do nothing...
-    }
-    else {
-        // Profile not installed
-        UIGraphicsBeginImageContext(self.view.bounds.size);
-        CGContextRef c = UIGraphicsGetCurrentContext();
-        CGContextTranslateCTM(c, 0, 0);
-        [self.view.layer renderInContext:c];
-        UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-        viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-        UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-        [self.view addSubview:blurredView];
-        UIGraphicsEndImageContext();
-        
-        UIAlertView *certAlert = [[UIAlertView alloc] initWithTitle:@"Authorization Required" message:@"In order to use iRec, you must get permission with the developer(s) to do so. A profile, which is not currently on your device, that authorizes you to use iRec, must be installed before you can use this beta." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [certAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            if (buttonIndex == 0) {
-                [blurredView removeFromSuperview];
-                exit(0);
-            }
-        }];
-    }
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    if ([prefs boolForKey:@"dark_theme_switch"]) {
         _shareButtonOutlet.tintColor = [UIColor whiteColor];
     }
     else {
@@ -204,7 +159,7 @@ fail:
     isAudioRec = NO;
     
     
-    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
+    if ([prefs boolForKey:@"dark_theme_switch"]) {
         _nameField.keyboardAppearance = UIKeyboardAppearanceDark;
     }
     else {
@@ -260,10 +215,10 @@ fail:
                     // _recorder = nil;
                     [self startStopRecording];
                     //self.tabBarController.tabBar.userInteractionEnabled = YES;
-                    //[self setMergingText];
-                    //[self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:5.0];
-                    [self setButtonTextToNormal];
-                    //[self mergeAudio];
+                    [self setMergingText];
+                    [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
+                    //[self setButtonTextToNormal];
+                    [self mergeAudio];
                 }
             }
         }
@@ -313,8 +268,7 @@ deselect:
 #pragma mark - Data Validation
 
 - (NSString *)filePathForRecordingNamed:(NSString *)name {
-    //again, merging doesn't work on iPad...keep original name for now.
-    return [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _nameField.text]];
+    return [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mov", _nameField.text]];
     
 }
 
@@ -363,8 +317,9 @@ fail:
 - (int)framerate {
     //int requestedFramerate = [_framerateField.text intValue];
     int fps;
-    if ([self.defaults objectForKey:@"multi_fps"])
-        fps = [[self.defaults objectForKey:@"multi_fps"] doubleValue];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs objectForKey:@"multi_fps"])
+        fps = [[prefs objectForKey:@"multi_fps"] doubleValue];
     return fps; //> 0 ? fps : 29.97);
 }
 
@@ -372,8 +327,9 @@ fail:
 - (int)bitrate {
     //int requestedBitrate = [text_bitrate intValue];
     int bitrate;
-    if ([self.defaults objectForKey:@"multi_bitrate"])
-        bitrate = [[self.defaults objectForKey:@"multi_bitrate"] doubleValue];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs objectForKey:@"multi_bitrate"])
+        bitrate = [[prefs objectForKey:@"multi_bitrate"] doubleValue];
     return bitrate; //> 0 ? bitrate : 3500);
 }
 
@@ -420,15 +376,17 @@ fail:
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&speakerError];
         [[AVAudioSession sharedInstance] setActive:YES error:&sessionError];
         
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        
         float samplerate;
-        if ([self.defaults objectForKey:@"samplerate_value"])
-            samplerate = [[self.defaults objectForKey:@"samplerate_value"] floatValue];
+        if ([prefs objectForKey:@"samplerate_value"])
+            samplerate = [[prefs objectForKey:@"samplerate_value"] floatValue];
         
         int channels;
-        if ([self.defaults objectForKey:@"channels_number"])
-            channels = [[self.defaults objectForKey:@"channels_number"] doubleValue];
+        if ([prefs objectForKey:@"channels_number"])
+            channels = [[prefs objectForKey:@"channels_number"] doubleValue];
         
-        if ([self.defaults boolForKey:@"suspend_switch"])
+        if ([prefs boolForKey:@"suspend_switch"])
             [[UIApplication sharedApplication] performSelector:@selector(suspend)];
         
         self.isRecording = YES;
@@ -461,11 +419,6 @@ fail:
             NSError *error = nil;
             [[AVAudioSession sharedInstance] setActive:NO error:&error];
         }
-        
-        //Temporary, remove when audio merging is fixed:
-        NSString *audioToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf",_nameField.text]];
-        NSError *error = nil;
-        [[[NSFileManager alloc]init]removeItemAtPath:audioToDeletePath error:&error];
         
     }
     
@@ -674,6 +627,8 @@ fail:
 
 
 -(void)mergeAudio{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
     NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mov", _nameField.text]];
     NSURL *videoFileURL = [NSURL fileURLWithPath:videoURL];
     NSString *audioURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
@@ -700,15 +655,15 @@ fail:
             assetVideoTrack = assetArray[0];
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:audioURL] && [self.defaults boolForKey:@"switch_audio"]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:audioURL] && [prefs boolForKey:@"switch_audio"]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
         if ([assetArray count] > 0)
             assetAudioTrack = assetArray[0];
     }
     
-    //double degrees = 0.0;
-    //if ([prefs objectForKey:@"video_orientation"])
-    //	degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
+    double degrees = 0.0;
+    if ([prefs objectForKey:@"video_orientation"])
+        degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
     
     
     AVMutableComposition *mixComposition = [AVMutableComposition composition];
@@ -718,7 +673,7 @@ fail:
         AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
         [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
         if (assetAudioTrack != nil) [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
-        //[compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(degreesToRadians(degrees))];
+        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(degreesToRadians(degrees))];
     }
     
     if (assetAudioTrack != nil) {

@@ -66,13 +66,14 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
+    
     NSLog(@"Registering default values from Settings.bundle");
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithBool:YES], @"dark_theme_switch",
-                               [NSNumber numberWithBool:YES], @"suspend_switch",
-                               nil];
+                                [NSNumber numberWithBool:YES], @"dark_theme_switch",
+                                [NSNumber numberWithBool:YES], @"suspend_switch",
+                                nil];
     [defs registerDefaults:dictionary];
     [defs synchronize];
     
@@ -296,21 +297,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     [PFPush handlePush:userInfo];
 }
 
-- (void)backgroundForever {
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-    backgroundTaskID = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:^{
-        [self backgroundForever];
-        NSLog(@"Application will run in background forever until the task is stopped.");
-    }];
-}
-
-- (void)stopBackgroundTask {
-    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
-    if (backgroundTaskID != -1)
-        [[UIApplication sharedApplication] endBackgroundTask:backgroundTaskID];
-        NSLog(@"Background task ended.");
-}
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -319,24 +305,20 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    [self backgroundForever];
     NSLog(@"Application entered background.");
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    [self stopBackgroundTask];
     NSLog(@"Application entered foreground.");
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    [self stopBackgroundTask];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    [self stopBackgroundTask];
 }
 
 @end
