@@ -80,12 +80,14 @@ You also may choose to suspend (fade out) the app after you start recording.</st
 				<string>Default (29.97)</string>
 				<string>24</string>
 				<string>30</string>
+				<string>60</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>29.97</string>
 				<string>24</string>
 				<string>30</string>
+				<string>60</string>
 			</array>
 		</dict>
 		<dict>

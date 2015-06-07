@@ -700,7 +700,13 @@ fail:
     //[_startStopButton setTitle:@"Merging... Please Wait..." forState:UIControlStateNormal];
     //_startStopButton.userInteractionEnabled = NO;
     
-    
+    NSString *audioToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf",_nameField.text]];
+    NSString *videoToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4",_nameField.text]];
+    [[[NSFileManager alloc] init] removeItemAtPath:audioToDeletePath error:&error];
+    [[[NSFileManager alloc] init] removeItemAtPath:videoToDeletePath error:&error];
+    NSLog(@"Removed OLD video file at: %@",videoToDeletePath);
+    NSLog(@"Removed OLD audio file at: %@",audioToDeletePath);
+
     
     [_assetExport exportAsynchronouslyWithCompletionHandler:^(void){
         
@@ -708,20 +714,7 @@ fail:
         {
             case AVAssetExportSessionStatusCompleted:
             {
-                
-                //statusText.text = @"Export Completed";
-                //[_startStopButton setTitle:@"Start Recording" forState:UIControlStateNormal];
                 _nameField.userInteractionEnabled = YES;
-                //_startStopButton.userInteractionEnabled = YES;
-                
-                NSString *audioToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf",_nameField.text]];
-                NSString *videoToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4",_nameField.text]];
-                NSError *error = nil;
-                [[[NSFileManager alloc] init] removeItemAtPath:audioToDeletePath error:&error];
-                [[[NSFileManager alloc] init] removeItemAtPath:videoToDeletePath error:&error];
-                NSLog(@"Removed OLD video file at: %@",videoToDeletePath);
-                NSLog(@"Removed OLD audio file at: %@",audioToDeletePath);
-                
             }
                 break;
                 
