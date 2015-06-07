@@ -226,9 +226,11 @@ fail:
     
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-            if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
-                [[UIApplication sharedApplication] openURL:settingsURL];
+            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+                NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
+                    [[UIApplication sharedApplication] openURL:settingsURL];
+                }
             }
             else {
                 UIAlertView *settingsAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unfortunately, you can only open the Settings app directly in iOS 8 or above. Please go to your home screen, open the Settings app, and scroll down to \"iRec\" to change the application settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
@@ -684,7 +686,7 @@ fail:
     }
     
     AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition
-                                                                          presetName:AVAssetExportPresetPassthrough];
+                                                                          presetName:AVAssetExportPresetHighestQuality];
     
     
     NSString *savePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _nameField.text]];
