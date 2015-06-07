@@ -272,7 +272,7 @@ deselect:
 #pragma mark - Data Validation
 
 - (NSString *)filePathForRecordingNamed:(NSString *)name {
-    return [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mov", _nameField.text]];
+    return [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
     
 }
 
@@ -633,7 +633,7 @@ fail:
 -(void)mergeAudio{
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
-    NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mov", _nameField.text]];
+    NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
     NSURL *videoFileURL = [NSURL fileURLWithPath:videoURL];
     NSString *audioURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
     NSURL *audioFileURL = [NSURL fileURLWithPath:audioURL];
@@ -689,10 +689,10 @@ fail:
                                                                           presetName:AVAssetExportPresetHighestQuality];
     
     
-    NSString *savePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _nameField.text]];
+    NSString *savePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
     NSURL *savetUrl = [NSURL fileURLWithPath:savePath];
     
-    _assetExport.outputFileType = AVFileTypeQuickTimeMovie;
+    _assetExport.outputFileType = AVFileTypeMPEG4;
     _assetExport.outputURL = savetUrl;
     _assetExport.shouldOptimizeForNetworkUse = NO;
     
@@ -715,7 +715,7 @@ fail:
                 //_startStopButton.userInteractionEnabled = YES;
                 
                 NSString *audioToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf",_nameField.text]];
-                NSString *videoToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mov",_nameField.text]];
+                NSString *videoToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4",_nameField.text]];
                 NSError *error = nil;
                 [[[NSFileManager alloc] init] removeItemAtPath:audioToDeletePath error:&error];
                 [[[NSFileManager alloc] init] removeItemAtPath:videoToDeletePath error:&error];

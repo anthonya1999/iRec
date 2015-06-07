@@ -195,7 +195,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
 
 - (void)startRecording {
     NSError *error = nil;
-    _videoWriter = [[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:_videoPath] fileType:AVFileTypeQuickTimeMovie error:&error];
+    _videoWriter = [[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:_videoPath] fileType:AVFileTypeMPEG4 error:&error];
     
     //Better safe than sorry
     NSAssert(_videoPath, @"You're telling me to record but not where to put the result. How am I supposed to know where to put this frickin' video? :(");

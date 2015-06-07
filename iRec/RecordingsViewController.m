@@ -57,7 +57,7 @@
     else
         [_recordingNames removeAllObjects];
     for (NSString *file in [[[NSFileManager alloc]init]enumeratorAtPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]]) {
-        if ([file hasSuffix:@".mov"])
+        if ([file hasSuffix:@".mp4"])
             [_recordingNames addObject:[file stringByDeletingPathExtension]];
     }
     
@@ -189,7 +189,7 @@
         }
         if (buttonIndex == 1)
         {
-            NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _recFinalName]];
+            NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recFinalName]];
             NSURL *videoURL = [NSURL fileURLWithPath:URL];
             UISaveVideoAtPathToSavedPhotosAlbum(videoURL.path, nil, NULL, NULL);
             
@@ -254,7 +254,7 @@
  */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mov", _recordingNames[indexPath.row]]];
+    NSString *filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
     MPMoviePlayerViewController *moviePlayerController = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL fileURLWithPath:filePath]];
     [moviePlayerController.moviePlayer setShouldAutoplay:NO];
     [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerController  name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayerController.moviePlayer];
@@ -277,7 +277,7 @@
         NSString *videoToDelete = _recordingNames[indexPath.row];
         NSString *finalVideoToDeletePath = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
                                              stringByAppendingPathComponent:videoToDelete]
-                                             stringByAppendingPathExtension:@"mov"];
+                                             stringByAppendingPathExtension:@"mp4"];
         NSError *error = nil;
         [[[NSFileManager alloc] init] removeItemAtPath:finalVideoToDeletePath error:&error];
         [_recordingNames removeObjectIdenticalTo:videoToDelete];
