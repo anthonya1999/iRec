@@ -17,7 +17,7 @@
     ScreenRecorder *_recorder;
 }
 
-@property (nonatomic, strong) UIDocumentInteractionController *controller;
+//@property (nonatomic, strong) UIDocumentInteractionController *controller;
 //@property (nonatomic, strong) CLLocationManager *locationManager;
 //@property (nonatomic, strong) NSMutableArray *locations;
 

@@ -404,6 +404,7 @@ fail:
          nil];
         NSError *recorderError = nil;
         recorder = [[AVAudioRecorder alloc] initWithURL:fileURL settings:recordSettings error:&recorderError];
+        [recorder setDelegate:self];
         [recorder prepareToRecord];
         [recorder record];
     }
@@ -639,9 +640,8 @@ fail:
     NSURL *audioFileURL = [NSURL fileURLWithPath:audioURL];
     
     
-    NSDictionary *options = nil;
-    AVURLAsset* audioAsset = [[AVURLAsset alloc] initWithURL:audioFileURL options:options];
-    AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:videoFileURL options:options];
+    AVURLAsset* audioAsset = [[AVURLAsset alloc] initWithURL:audioFileURL options:nil];
+    AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:videoFileURL options:nil];
     
     
     

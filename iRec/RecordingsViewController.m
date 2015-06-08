@@ -12,6 +12,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface RecordingsViewController ()
 
@@ -167,6 +168,7 @@
      [popup showInView:[UIApplication sharedApplication].keyWindow];
      */
     
+    /*
     UIGraphicsBeginImageContext(self.view.bounds.size);
     CGContextRef c = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(c, 0, 0);
@@ -182,16 +184,18 @@
                                                    delegate:self
                                           cancelButtonTitle:@"No"
                                           otherButtonTitles:@"Yes", nil];
-    _recFinalName = [NSString stringWithFormat:@"%@", _recordingNames[indexPath.row]];
+    
     [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 0) {
             [blurredView removeFromSuperview];
         }
         if (buttonIndex == 1)
         {
-            NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recFinalName]];
-            NSURL *videoURL = [NSURL fileURLWithPath:URL];
-            UISaveVideoAtPathToSavedPhotosAlbum(videoURL.path, nil, NULL, NULL);
+            NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
+            NSURL *fileURL = [NSURL fileURLWithPath:URL];
+            //UISaveVideoAtPathToSavedPhotosAlbum(URL, self, nil, nil);
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeVideoAtPathToSavedPhotosAlbum:fileURL completionBlock:^(NSURL *assetURL, NSError *error) {}];
             
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"The recording \"%@\" has successfully been saved to your Camera Roll!", _recordingNames[indexPath.row]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
@@ -203,30 +207,22 @@
         }
         
     }];
+     */
     
-    /*
+    NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
+    NSURL *fileURL = [NSURL fileURLWithPath:URL];
      NSArray *objectsToShare = @[fileURL];
      UIActivityViewController *activityViewController =
      [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-     */
-    /*
-     NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,UIActivityTypePostToWeibo,UIActivityTypeMessage,UIActivityTypeMail,UIActivityTypePrint, UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
+ 
+     NSArray *excludedActivities = @[UIActivityTypePostToWeibo,UIActivityTypePrint, UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
      activityViewController.excludedActivityTypes = excludedActivities;
-     */
-    /*
-     [self presentViewController:activityViewController animated:YES completion:^(void){}];
-     */
-    /*if (fileURL)
-     {
-     self.controller = [UIDocumentInteractionController interactionControllerWithURL:fileURL];
-     self.controller.delegate = self;
-     
-     // Present "Open In Menu"
-     [self.controller presentOpenInMenuFromRect:[tableView frame] inView:self.view animated:YES];
-     }*/
+ 
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        activityViewController.popoverPresentationController.sourceView = self.view;
+    }
     
-    
-    
+     [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
 - (void)export {
