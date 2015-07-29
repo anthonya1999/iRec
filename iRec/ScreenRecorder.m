@@ -17,6 +17,10 @@ typedef struct __IOSurfaceAccelerator *IOSurfaceAcceleratorRef;
 typedef void *IOMobileFramebufferConnection;
 
 enum {
+    kIOServiceInteractionAllowed = 0x00000001
+};
+
+enum {
     kIOSurfaceLockReadOnly  = 0x00000001,
     kIOSurfaceLockAvoidSync = 0x00000002
 };
@@ -106,11 +110,14 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
         serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
     
     mach_port_t *mach_task_self_ = dlsym(IOKit, "mach_task_self_");
+    kern_return_t (*IOServiceAuthorize)(mach_port_t service, uint32_t options) = dlsym(IOKit, "IOServiceAuthorize");
     kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
     kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
     kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
+    
+    IOServiceAuthorize(serviceMatching, kIOServiceInteractionAllowed);
     
     IOMobileFramebufferSwapBegin(_framebufferConnection, NULL);
     IOMobileFramebufferSwapSetLayer(_framebufferConnection, 0, _screenSurface);
