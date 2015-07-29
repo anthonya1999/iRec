@@ -139,6 +139,8 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     NSParameterAssert(IOSurfaceGetTileFormat);
     OSType tileFormat = IOSurfaceGetTileFormat(_screenSurface);
     
+    const CFStringRef *kIOSurfaceIsGlobal = dlsym(_IOSurface, "kIOSurfaceIsGlobal");
+    NSParameterAssert(*kIOSurfaceIsGlobal);
     const CFStringRef *kIOSurfaceBytesPerElement = dlsym(_IOSurface, "kIOSurfaceBytesPerElement");
     NSParameterAssert(*kIOSurfaceBytesPerElement);
     const CFStringRef *kIOSurfaceAllocSize = dlsym(_IOSurface, "kIOSurfaceAllocSize");
@@ -153,14 +155,18 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     NSParameterAssert(*kIOSurfacePixelFormat);
     const CFStringRef *kIOSurfaceBufferTileFormat = dlsym(_IOSurface, "kIOSurfaceBufferTileFormat");
     NSParameterAssert(*kIOSurfaceBufferTileFormat);
+    const CFStringRef *kIOSurfaceCacheMode = dlsym(_IOSurface, "kIOSurfaceCacheMode");
+    NSParameterAssert(*kIOSurfaceCacheMode);
     
-    _properties = CFBridgingRetain(@{(__bridge NSString *)*kIOSurfaceBytesPerElement:  @(bytesPerElement),
+    _properties = CFBridgingRetain(@{(__bridge NSString *)*kIOSurfaceIsGlobal:         @YES,
+                                     (__bridge NSString *)*kIOSurfaceBytesPerElement:  @(bytesPerElement),
                                      (__bridge NSString *)*kIOSurfaceAllocSize:        @(_allocSize),
                                      (__bridge NSString *)*kIOSurfaceBytesPerRow:      @(_bytesPerRow),
                                      (__bridge NSString *)*kIOSurfaceWidth:            @(self.screenWidth),
                                      (__bridge NSString *)*kIOSurfaceHeight:           @(self.screenHeight),
                                      (__bridge NSString *)*kIOSurfacePixelFormat:      @(kCVPixelFormatType_32BGRA),
-                                     (__bridge NSString *)*kIOSurfaceBufferTileFormat: @(tileFormat)
+                                     (__bridge NSString *)*kIOSurfaceBufferTileFormat: @(tileFormat),
+                                     (__bridge NSString *)*kIOSurfaceCacheMode:        @(kIOMapInhibitCache)
                                      });
     
     kern_return_t (*IOSurfaceAcceleratorCreate)(CFAllocatorRef allocator, uint32_t type, IOSurfaceAcceleratorRef *outAccelerator) = dlsym(_IOSurface, "IOSurfaceAcceleratorCreate");
