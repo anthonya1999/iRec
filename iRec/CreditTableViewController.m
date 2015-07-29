@@ -14,7 +14,7 @@
 #import "LegalViewController.h"
 #import "BetaTestersViewController.h"
 #import "WatchSupportViewController.h"
-#import "UIImage+ImageEffects.h"
+#import "FXBlurView.h"
 
 @interface CreditTableViewController ()
 
@@ -148,40 +148,36 @@
     if (indexPath.section == 4) {
         if (indexPath.row == 0) {
             
-            UIGraphicsBeginImageContext(self.view.bounds.size);
-            CGContextRef c = UIGraphicsGetCurrentContext();
-            CGContextTranslateCTM(c, 0, 0);
-            [self.view.layer renderInContext:c];
-            UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-            viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-            UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-            [self.view addSubview:blurredView];
-            UIGraphicsEndImageContext();
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+            [blurView setDynamic:YES];
+            blurView.tintColor = [UIColor clearColor];
+            blurView.blurRadius = 8;
+            [self.view addSubview:blurView];
             
             UIAlertView *bugAlert = [[UIAlertView alloc] initWithTitle:@"Report Bug" message:@"Thank you for using iRec and giving us feedback so we can make it even better! Please tell us the bug you are experiencing via Twitter or E-Mail as specifically as possible! Are you sure you want to report a bug?" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Twitter", @"E-Mail", nil];
             
             [bugAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == 0) {
-                    [blurredView removeFromSuperview];
+                    [blurView removeFromSuperview];
                 }
                 if (buttonIndex == 1) {
                     //Twitter
                     SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
                     [tweetSheet setInitialText:@"@AAgatiello @Emu4iOS iRec Bug: *remove this text, and enter description here*"];
                     [self presentViewController:tweetSheet animated:YES completion:nil];
-                    [blurredView removeFromSuperview];
+                    [blurView removeFromSuperview];
                 }
                 if (buttonIndex == 2) {
                     //E-Mail
                     NSString *subject = @"iRec Bug";
-                    NSArray *recipients = [NSArray arrayWithObject:@"emu4ioshelp@gmail.com"];
+                    NSArray *recipients = [NSArray arrayWithObject:@"irecbug@gmail.com"];
                     MFMailComposeViewController *mc = [[MFMailComposeViewController alloc] init];
                     mc.mailComposeDelegate = self;
                     [mc setSubject:subject];
-                    [mc setMessageBody:nil isHTML:NO];
+                    [mc setMessageBody:@"" isHTML:NO];
                     [mc setToRecipients:recipients];
                     [self presentViewController:mc animated:YES completion:nil];
-                    [blurredView removeFromSuperview];
+                    [blurView removeFromSuperview];
                 }
                 else {
                     //do nothing

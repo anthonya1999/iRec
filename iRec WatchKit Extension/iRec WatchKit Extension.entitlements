@@ -6,9 +6,5 @@
 	<array>
 		<string>group.com.adhoc.iRec</string>
 	</array>
-	<key>keychain-access-groups</key>
-	<array>
-		<string>$(AppIdentifierPrefix)com.adhoc.iRec.watchkitextension</string>
-	</array>
 </dict>
 </plist>

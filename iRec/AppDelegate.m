@@ -6,7 +6,6 @@
 //
 //
 
-#import <Parse/Parse.h>
 #import "AppDelegate.h"
 #import "UpdateViewController.h"
 #import "NewRecordingViewController.h"
@@ -14,9 +13,10 @@
 #import "SoftwareUpdateOperation.h"
 #import "NSDate+Comparing.h"
 #import "UIAlertView+RSTAdditions.h"
+#import "WelcomeViewController.h"
+#import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "WelcomeViewController.h"
 
 static NSString * const CachedSoftwareUpdateKey = @"cachedSoftwareUpdate";
 static NSString * const AppVersionKey = @"appVersion";
@@ -27,8 +27,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 @end
 
 @implementation AppDelegate
-
-@synthesize backgroundTaskID;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.

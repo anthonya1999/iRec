@@ -16,6 +16,9 @@
 - (void)startRecording;
 - (void)stopRecording;
 
+- (NSInteger)screenWidth;
+- (NSInteger)screenHeight;
+
 @property (nonatomic) BOOL recording;
 @property (copy, nonatomic) NSString *videoPath;
 

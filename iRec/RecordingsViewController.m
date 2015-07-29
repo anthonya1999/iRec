@@ -8,7 +8,7 @@
 
 #import "RecordingsViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import "UIImage+ImageEffects.h"
+#import "FXBlurView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
@@ -117,15 +117,11 @@
 
 - (IBAction)deleteAllRecordings:(UIBarButtonItem *)sender {
     
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(c, 0, 0);
-    [self.view.layer renderInContext:c];
-    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-    [self.view addSubview:blurredView];
-    UIGraphicsEndImageContext();
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    [self.view addSubview:blurView];
     
     if (_recordingNames.count == 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"No Recordings" message:@"You currently do not have any recordings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -147,10 +143,10 @@
                         if (!removeSuccess) {}}}
                 else {}
                 [self viewWillAppear:YES];
-                [blurredView removeFromSuperview];
+                [blurView removeFromSuperview];
             }
             else  {
-                [blurredView removeFromSuperview];
+                [blurView removeFromSuperview];
                 [self viewWillAppear:YES];
             }
         }];

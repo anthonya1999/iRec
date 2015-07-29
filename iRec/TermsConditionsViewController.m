@@ -8,7 +8,7 @@
 
 #import "TermsConditionsViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import "UIImage+ImageEffects.h"
+#import "FXBlurView.h"
 
 @interface TermsConditionsViewController ()
 
@@ -62,42 +62,35 @@
 
 - (void)dismissTermsConditions {
     UIAlertView *dismissTermsAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"I agree to the iRec & Emu4iOS terms and conditions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Agree", nil];
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(c, 0, 0);
-    [self.view.layer renderInContext:c];
-    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-    [self.view addSubview:blurredView];
-    UIGraphicsEndImageContext();
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    [self.view addSubview:blurView];
+    
     [dismissTermsAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
 
         if (buttonIndex == 1) {
             [self dismissViewControllerAnimated:YES completion:nil];
-            [blurredView removeFromSuperview];
+            [blurView removeFromSuperview];
         }
         if (buttonIndex == 0) {
-            [blurredView removeFromSuperview];
+            [blurView removeFromSuperview];
         }
     }];
 }
 
 - (void)disagreeToTerms {
     UIAlertView *disagreeAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"You must agree to the iRec & Emu4iOS terms and conditions to use the application." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(c, 0, 0);
-    [self.view.layer renderInContext:c];
-    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-    [self.view addSubview:blurredView];
-    UIGraphicsEndImageContext();
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    [self.view addSubview:blurView];
 
     [disagreeAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 0) {
-            [blurredView removeFromSuperview];
+            [blurView removeFromSuperview];
         }
     }];
 }

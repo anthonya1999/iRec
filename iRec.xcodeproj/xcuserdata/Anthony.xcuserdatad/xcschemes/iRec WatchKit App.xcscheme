@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0640"
+   LastUpgradeVersion = "0700"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "927ADA261B13ACF200B4887C"
+               BlueprintIdentifier = "92E557051B3F1C7E0013CC7D"
                BuildableName = "iRec WatchKit App.app"
                BlueprintName = "iRec WatchKit App"
+               ReferencedContainer = "container:iRec.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "92E556F61B3F1C7E0013CC7D"
+               BuildableName = "iRec WatchKit Extension.appex"
+               BlueprintName = "iRec WatchKit Extension"
                ReferencedContainer = "container:iRec.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,20 +48,6 @@
                ReferencedContainer = "container:iRec.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "927ADA171B13ACF200B4887C"
-               BuildableName = "iRec WatchKit Extension.appex"
-               BlueprintName = "iRec WatchKit Extension"
-               ReferencedContainer = "container:iRec.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -60,12 +60,14 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "927ADA261B13ACF200B4887C"
+            BlueprintIdentifier = "92E557051B3F1C7E0013CC7D"
             BuildableName = "iRec WatchKit App.app"
             BlueprintName = "iRec WatchKit App"
             ReferencedContainer = "container:iRec.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -75,14 +77,15 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <RemoteRunnable
          runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.springboard"
+         BundleIdentifier = "com.apple.carousel"
          RemotePath = "/iRec">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "927ADA261B13ACF200B4887C"
+            BlueprintIdentifier = "92E557051B3F1C7E0013CC7D"
             BuildableName = "iRec WatchKit App.app"
             BlueprintName = "iRec WatchKit App"
             ReferencedContainer = "container:iRec.xcodeproj">
@@ -91,7 +94,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "927ADA261B13ACF200B4887C"
+            BlueprintIdentifier = "92E557051B3F1C7E0013CC7D"
             BuildableName = "iRec WatchKit App.app"
             BlueprintName = "iRec WatchKit App"
             ReferencedContainer = "container:iRec.xcodeproj">
@@ -108,11 +111,11 @@
       debugDocumentVersioning = "YES">
       <RemoteRunnable
          runnableDebuggingMode = "2"
-         BundleIdentifier = "com.apple.springboard"
+         BundleIdentifier = "com.apple.carousel"
          RemotePath = "/iRec">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "927ADA261B13ACF200B4887C"
+            BlueprintIdentifier = "92E557051B3F1C7E0013CC7D"
             BuildableName = "iRec WatchKit App.app"
             BlueprintName = "iRec WatchKit App"
             ReferencedContainer = "container:iRec.xcodeproj">
@@ -121,7 +124,7 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "927ADA261B13ACF200B4887C"
+            BlueprintIdentifier = "92E557051B3F1C7E0013CC7D"
             BuildableName = "iRec WatchKit App.app"
             BlueprintName = "iRec WatchKit App"
             ReferencedContainer = "container:iRec.xcodeproj">

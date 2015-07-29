@@ -10,7 +10,7 @@
 #import "ScreenRecorder.h"
 #import "WelcomeViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import "UIImage+ImageEffects.h"
+#import "FXBlurView.h"
 
 @implementation NewRecordingViewController {
     BOOL isAudioRec;
@@ -19,10 +19,6 @@
 }
 
 @synthesize isRecording = _isRecording;
-
-CGFloat degreesToRadians(CGFloat degrees) {
-    return degrees * M_PI / 180;
-};
 
 - (id) init
 {
@@ -78,21 +74,18 @@ CGFloat degreesToRadians(CGFloat degrees) {
 }
 
 - (BOOL)otherMediaIsPlaying {
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    
     if ([[AVAudioSession sharedInstance] isOtherAudioPlaying] == YES) {
         goto fail;
     }
     return NO;
     
 fail:
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(c, 0, 0);
-    [self.view.layer renderInContext:c];
-    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-    [self.view addSubview:blurredView];
-    UIGraphicsEndImageContext();
+    [self.view addSubview:blurView];
     
     UIAlertView *musicAlert = nil;
     NSString *musicAlertText = nil;
@@ -107,7 +100,7 @@ fail:
                     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
                     [[AVAudioSession sharedInstance] setActive:YES error:&error];
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
-                    [blurredView removeFromSuperview];
+                    [blurView removeFromSuperview];
                     [self startStopRecording];
                     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
                     [self setButtonTextToNormal];
@@ -129,7 +122,7 @@ fail:
                     [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
                     [[AVAudioSession sharedInstance] setActive:YES error:&error];
                     [[AVAudioSession sharedInstance] setActive:NO error:&error];
-                    [blurredView removeFromSuperview];
+                    [blurView removeFromSuperview];
                     [self startStopRecording];
                     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
                 }
@@ -277,6 +270,11 @@ deselect:
 }
 
 - (BOOL)hasValidName {
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    
     NSString *errorText = nil;
     UIAlertView *failAlert = nil;
     
@@ -298,20 +296,12 @@ deselect:
     
 fail:
     
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(c, 0, 0);
-    [self.view.layer renderInContext:c];
-    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-    [self.view addSubview:blurredView];
-    UIGraphicsEndImageContext();
+    [self.view addSubview:blurView];
     
     failAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:errorText delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [failAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 0) {
-            [blurredView removeFromSuperview];
+            [blurView removeFromSuperview];
         }
     }];
     
@@ -482,7 +472,7 @@ fail:
  
  degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
  
- [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(degreesToRadians(degrees))];
+ [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
  
  }
  
@@ -636,6 +626,7 @@ fail:
     
     NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
     NSURL *videoFileURL = [NSURL fileURLWithPath:videoURL];
+    
     NSString *audioURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
     NSURL *audioFileURL = [NSURL fileURLWithPath:audioURL];
     
@@ -677,7 +668,7 @@ fail:
         AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
         [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
         if (assetAudioTrack != nil) [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
-        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(degreesToRadians(degrees))];
+        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
     }
     
     if (assetAudioTrack != nil) {

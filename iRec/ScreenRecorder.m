@@ -7,24 +7,34 @@
 //
 
 #import "ScreenRecorder.h"
-#include <IOMobileFramebuffer/IOMobileFramebuffer.h>
-#include <IOSurface/IOSurface.h>
 #include <AVFoundation/AVFoundation.h>
 #include <sys/time.h>
+#import <dlfcn.h>
+#import <mach/mach.h>
+
+typedef struct __IOSurface *IOSurfaceRef;
+typedef struct __IOSurfaceAccelerator *IOSurfaceAcceleratorRef;
+typedef void *IOMobileFramebufferConnection;
+
+enum {
+    kIOSurfaceLockReadOnly  = 0x00000001,
+    kIOSurfaceLockAvoidSync = 0x00000002
+};
 
 @interface ScreenRecorder () {
     IOMobileFramebufferConnection _framebufferConnection;
     IOSurfaceRef _screenSurface, _mySurface;
-    CFDictionaryRef _mySurfaceAttributes;
     IOSurfaceAcceleratorRef _accelerator;
+    size_t _bytesPerRow, _allocSize;
     AVAssetWriter *_videoWriter;
-    AVAssetWriterInput *_videoWriterInput, *_audioWriterInput;
+    CFDictionaryRef _properties;
+    AVAssetWriterInput *_videoWriterInput; //*_audioWriterInput;
     AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
     dispatch_queue_t _videoQueue;
     NSLock *_pixelBufferLock;
     int _framerate, _bitrate;
+    void *_IOSurface;
 }
-
 
 @end
 
@@ -36,12 +46,6 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
 @implementation ScreenRecorder
 
 /*
-CGFloat degreesToRadians(CGFloat degrees) {
-    return degrees * M_PI / 180;
-};
-*/
-
-/*
 -(NSString *)DeviceModel
 {
     struct utsname systemInfo;
@@ -51,91 +55,121 @@ CGFloat degreesToRadians(CGFloat degrees) {
 }
 */
 
-#pragma mark - Create Surface
+#pragma mark - Initialization
 
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate {
      if ((self = [super init])) {
          _framerate = framerate;
          _bitrate = bitrate;
-         _videoQueue = dispatch_queue_create("com.agatiello.videoqueue", DISPATCH_QUEUE_SERIAL);
+         _videoQueue = dispatch_queue_create("video_queue", DISPATCH_QUEUE_SERIAL);
+         NSAssert(_videoQueue, @"Unable to create video queue.");
          _pixelBufferLock = [NSLock new];
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
-        
-         CFMutableDictionaryRef serviceMatching = IOServiceMatching("AppleCLCD");
-         io_service_t framebufferService = IOServiceGetMatchingService(kIOMasterPortDefault, serviceMatching);
-         NSAssert(framebufferService, @"Unable to get the IOService matching AppleCLCD.");
          
-         IOMobileFramebufferOpen(framebufferService, mach_task_self_, 0, &_framebufferConnection);
-         IOMobileFramebufferGetLayerDefaultSurface((void *)_framebufferConnection, 0, (void *)&_screenSurface);
+         void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_NOW);
+         NSParameterAssert(IOKit);
+         void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
+         NSParameterAssert(IOMobileFramebuffer);
          
-         uint32_t seed = IOSurfaceGetSeed(_screenSurface);
-         IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
-         size_t planeIndex = IOSurfaceGetPlaneCount(_screenSurface);
-         size_t planeBytesPerElement = IOSurfaceGetBytesPerElementOfPlane(_screenSurface, planeIndex);
-         size_t planeBytesPerRow = IOSurfaceGetBytesPerRowOfPlane(_screenSurface, planeIndex);
-         size_t planeHeight = IOSurfaceGetHeightOfPlane(_screenSurface, planeIndex);
-         size_t planeWidth = IOSurfaceGetWidthOfPlane(_screenSurface, planeIndex);
-         size_t planeElementHeight = IOSurfaceGetElementHeightOfPlane(_screenSurface, planeIndex);
-         size_t planeElementWidth = IOSurfaceGetElementWidthOfPlane(_screenSurface, planeIndex);
-         size_t screenHeight = IOSurfaceGetHeight(_screenSurface);
-         size_t screenWidth = IOSurfaceGetWidth(_screenSurface);
-         size_t bytesPerElement = IOSurfaceGetBytesPerElement(_screenSurface);
-         size_t bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
-         size_t allocSize = IOSurfaceGetAllocSize(_screenSurface);
-         size_t elementHeight = IOSurfaceGetElementHeight(_screenSurface);
-         size_t elementWidth = IOSurfaceGetElementWidth(_screenSurface);
-         OSType pixelFormat = IOSurfaceGetPixelFormat(_screenSurface);
+         mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
+         CFMutableDictionaryRef (*IOServiceMatching)(const char *name) = dlsym(IOKit, "IOServiceMatching");
+         mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
+             
+         mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleCLCD"));
+             if (!serviceMatching)
+                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleH1CLCD"));
+             if (!serviceMatching)
+                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleM2CLCD"));
+             if (!serviceMatching)
+                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleRGBOUT"));
+             if (!serviceMatching)
+                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMX31IPU"));
+             if (!serviceMatching)
+                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMobileCLCD"));
+             if (!serviceMatching)
+                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
+             
+         kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
+         kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
+         kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
+         kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
+         kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
+             
+         IOMobileFramebufferSwapBegin(_framebufferConnection, NULL);
+         IOMobileFramebufferSwapSetLayer(_framebufferConnection, 0, _screenSurface);
+         IOMobileFramebufferSwapEnd(_framebufferConnection);
+             
+         IOMobileFramebufferOpen(serviceMatching, mach_task_self(), 0, &_framebufferConnection);
+         IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
+             
+         dlclose(IOKit);
+         dlclose(IOMobileFramebuffer);
          
-         _mySurfaceAttributes = CFBridgingRetain(@{(__bridge NSString *)kIOSurfaceIsGlobal:             @YES,
-                                                   (__bridge NSString *)kIOSurfaceBytesPerRow:          @(bytesPerRow),
-                                                   (__bridge NSString *)kIOSurfaceBytesPerElement:      @(bytesPerElement),
-                                                   (__bridge NSString *)kIOSurfaceWidth:                @(screenWidth),
-                                                   (__bridge NSString *)kIOSurfaceHeight:               @(screenHeight),
-                                                   (__bridge NSString *)kIOSurfacePixelFormat:          @(pixelFormat),
-                                                   (__bridge NSString *)kIOSurfaceElementHeight:        @(elementHeight),
-                                                   (__bridge NSString *)kIOSurfaceElementWidth:         @(elementWidth),
-                                                   (__bridge NSString *)kIOSurfacePlaneBytesPerElement: @(planeBytesPerElement),
-                                                   (__bridge NSString *)kIOSurfacePlaneBytesPerRow:     @(planeBytesPerRow),
-                                                   (__bridge NSString *)kIOSurfacePlaneHeight:          @(planeHeight),
-                                                   (__bridge NSString *)kIOSurfacePlaneWidth:           @(planeWidth),
-                                                   (__bridge NSString *)kIOSurfacePlaneElementHeight:   @(planeElementHeight),
-                                                   (__bridge NSString *)kIOSurfacePlaneElementWidth:    @(planeElementWidth),
-                                                   (__bridge NSString *)kIOSurfaceAllocSize:            @(allocSize)
-                                                   });
-         
-         _mySurface = IOSurfaceCreate(_mySurfaceAttributes);
-         NSAssert(_mySurface, @"Error creating the IOSurface.");
-         IOSurfaceAcceleratorCreate(kCFAllocatorDefault, 0, &_accelerator);
-         IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
-     }
+         _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_NOW);
+         NSParameterAssert(_IOSurface);
+
+         size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
+         size_t (*IOSurfaceGetBytesPerRow)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerRow");
+         _allocSize = IOSurfaceGetAllocSize(_screenSurface);
+         _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
+    }
     return self;
+}
+
+#pragma mark - Create Surface
+
+- (IOSurfaceRef)createScreenSurface {
+    size_t (*IOSurfaceGetBytesPerElement)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerElement");
+    size_t bytesPerElement = IOSurfaceGetBytesPerElement(_screenSurface);
+    
+    OSType (*IOSurfaceGetTileFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetTileFormat");
+    OSType tileFormat = IOSurfaceGetTileFormat(_screenSurface);
+    
+    const CFStringRef *kIOSurfaceBytesPerElement = dlsym(_IOSurface, "kIOSurfaceBytesPerElement");
+    const CFStringRef *kIOSurfaceAllocSize = dlsym(_IOSurface, "kIOSurfaceAllocSize");
+    const CFStringRef *kIOSurfaceBytesPerRow = dlsym(_IOSurface, "kIOSurfaceBytesPerRow");
+    const CFStringRef *kIOSurfaceWidth = dlsym(_IOSurface, "kIOSurfaceWidth");
+    const CFStringRef *kIOSurfaceHeight = dlsym(_IOSurface, "kIOSurfaceHeight");
+    const CFStringRef *kIOSurfacePixelFormat = dlsym(_IOSurface, "kIOSurfacePixelFormat");
+    const CFStringRef *kIOSurfaceBufferTileFormat = dlsym(_IOSurface, "kIOSurfaceBufferTileFormat");
+    
+    _properties = CFBridgingRetain(@{(__bridge NSString *)*kIOSurfaceBytesPerElement:  @(bytesPerElement),
+                                     (__bridge NSString *)*kIOSurfaceAllocSize:        @(_allocSize),
+                                     (__bridge NSString *)*kIOSurfaceBytesPerRow:      @(_bytesPerRow),
+                                     (__bridge NSString *)*kIOSurfaceWidth:            @(self.screenWidth),
+                                     (__bridge NSString *)*kIOSurfaceHeight:           @(self.screenHeight),
+                                     (__bridge NSString *)*kIOSurfacePixelFormat:      @(kCVPixelFormatType_32BGRA),
+                                     (__bridge NSString *)*kIOSurfaceBufferTileFormat: @(tileFormat)
+                                     });
+    
+    kern_return_t (*IOSurfaceAcceleratorCreate)(CFAllocatorRef allocator, uint32_t type, IOSurfaceAcceleratorRef *outAccelerator) = dlsym(_IOSurface, "IOSurfaceAcceleratorCreate");
+    IOSurfaceRef (*IOSurfaceCreate)(CFDictionaryRef properties) = dlsym(_IOSurface, "IOSurfaceCreate");
+    
+    IOSurfaceAcceleratorCreate(kCFAllocatorDefault, 0, &_accelerator);
+    return IOSurfaceCreate(_properties);
 }
 
 #pragma mark - Initialize Recorder
 
-- (void)_setupVideoRecordingObjects {
+- (void)setupVideoRecordingObjects {
     NSAssert(_videoWriter, @"There is no video writer...WHAT?!");
     
     //CGAffineTransform playbackTransform;
-    //NSAssert(error==nil, @"AVAssetWriter failed to initialise: %@", error);
-    
+    //NSAssert(error==nil, @"AVAssetWriter failed to initialize: %@", error);
+
     [_videoWriter setMovieTimeScale:_framerate];
     
-    NSDictionary *compressionProperties = @{AVVideoMaxKeyFrameIntervalKey: @(_framerate),
-                                            AVVideoAverageBitRateKey:      @(_bitrate*1000),
-                                            AVVideoProfileLevelKey:        AVVideoProfileLevelH264HighAutoLevel
-                                            };
+    NSMutableDictionary * compressionProperties = [NSMutableDictionary dictionary];
+    [compressionProperties setObject: [NSNumber numberWithInt:_bitrate * 1000] forKey: AVVideoAverageBitRateKey];
+    [compressionProperties setObject: [NSNumber numberWithInt:_framerate] forKey: AVVideoMaxKeyFrameIntervalKey];
+    [compressionProperties setObject: AVVideoProfileLevelH264HighAutoLevel forKey: AVVideoProfileLevelKey];
     
-    size_t screenHeight = IOSurfaceGetHeight(_screenSurface);
-    size_t screenWidth = IOSurfaceGetWidth(_screenSurface);
-    size_t bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
-    OSType pixelFormat = IOSurfaceGetPixelFormat(_screenSurface);
-    
-    NSDictionary *outputSettings = @{AVVideoCodecKey:                 AVVideoCodecH264,
-                                     AVVideoWidthKey:                 @(screenWidth),
-                                     AVVideoHeightKey:                @(screenHeight),
-                                     AVVideoCompressionPropertiesKey: compressionProperties
-                                     };
+    NSMutableDictionary *outputSettings = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           AVVideoCodecH264, AVVideoCodecKey,
+                                           [NSNumber numberWithUnsignedLong:self.screenWidth], AVVideoWidthKey,
+                                           [NSNumber numberWithUnsignedLong:self.screenHeight], AVVideoHeightKey,
+                                           compressionProperties, AVVideoCompressionPropertiesKey,
+                                           nil];
     
     NSAssert([_videoWriter canApplyOutputSettings:outputSettings forMediaType:AVMediaTypeVideo], @"Strange error: AVVideoWriter isn't accepting our output settings.");
     
@@ -144,20 +178,20 @@ CGFloat degreesToRadians(CGFloat degrees) {
     NSAssert([_videoWriter canAddInput:_videoWriterInput], @"Strange error: AVVideoWriter doesn't want our input.");
     [_videoWriter addInput:_videoWriterInput];
     
-    NSDictionary *sourcePixelBufferAttributes = @{(__bridge NSString *)kCVPixelBufferPixelFormatTypeKey:      @(pixelFormat),
-                                                  (__bridge NSString *)kCVPixelBufferWidthKey:                @(screenWidth),
-                                                  (__bridge NSString *)kCVPixelBufferBytesPerRowAlignmentKey: @(bytesPerRow),
-                                                  (__bridge NSString *)kCVPixelBufferHeightKey:               @(screenHeight)
-                                                  };
+    NSDictionary *bufferAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      [NSNumber numberWithInt:kCVPixelFormatType_32BGRA], kCVPixelBufferPixelFormatTypeKey,
+                                      [NSNumber numberWithUnsignedLong:self.screenWidth], kCVPixelBufferWidthKey,
+                                      [NSNumber numberWithUnsignedLong:self.screenHeight], kCVPixelBufferHeightKey,
+                                      [NSNumber numberWithUnsignedLong:_bytesPerRow], kCVPixelBufferBytesPerRowAlignmentKey,
+                                      kCFAllocatorDefault, kCVPixelBufferMemoryAllocatorKey,
+                                      nil];
     
-    _pixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc]initWithAssetWriterInput:_videoWriterInput sourcePixelBufferAttributes:sourcePixelBufferAttributes];
+    _pixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc]initWithAssetWriterInput:_videoWriterInput sourcePixelBufferAttributes:bufferAttributes];
     [_videoWriterInput setExpectsMediaDataInRealTime:YES];
     
     /*
-     playbackTransform = CGAffineTransformMakeRotation(degreesToRadians(90));
+     playbackTransform = CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(90));
      _videoWriterInput.transform = playbackTransform;
-     
-     
      
      AudioChannelLayout acl;
      bzero(&acl, sizeof(acl));
@@ -201,7 +235,7 @@ CGFloat degreesToRadians(CGFloat degrees) {
     NSAssert(_videoPath, @"You're telling me to record but not where to put the result. How am I supposed to know where to put this frickin' video? :(");
     NSAssert(!_recording, @"Trying to start recording, but we're already recording?!!?!");
     
-    [self _setupVideoRecordingObjects];
+    [self setupVideoRecordingObjects];
     _recording = YES;
     
     NSLog(@"Recorder started.");
@@ -209,67 +243,74 @@ CGFloat degreesToRadians(CGFloat degrees) {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         struct timeval currentTime, lastSnapshot;
         lastSnapshot.tv_sec = lastSnapshot.tv_usec = 0;
-        
         unsigned int frame = 0;
-        int msBeforeNextCapture = 850 / _framerate;
+        int msBeforeNextCapture = 1000 / _framerate;
+        
         while (_recording) {
             gettimeofday(&currentTime, NULL);
-            currentTime.tv_usec /= 850;
-            unsigned long long delta = ((850*currentTime.tv_sec+currentTime.tv_usec) - (850*lastSnapshot.tv_sec+lastSnapshot.tv_usec));
+            currentTime.tv_usec /= 1000;
+            unsigned long long delta = ((1000 * currentTime.tv_sec + currentTime.tv_usec) - (1000 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
+            
             if (delta >= msBeforeNextCapture) {
                 CMTime presentTime = CMTimeMake(frame, _framerate);
-                [self _saveFrame:presentTime];
+                [self saveFrame:presentTime];
                 frame++;
                 lastSnapshot = currentTime;
             }
         }
         dispatch_async(_videoQueue, ^{
-            [self _recordingDone];
+            [self recordingDone];
         });
     });
 }
 
 #pragma mark - Capture Frame
 
-- (void)_saveFrame:(CMTime)frame {
-    uint32_t seed = IOSurfaceGetSeed(_screenSurface);
-    IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
-    IOSurfaceAcceleratorTransferSurface(_accelerator, _screenSurface, _mySurface, _mySurfaceAttributes, NULL);
-    IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
+- (void)saveFrame:(CMTime)frame {
+    if (!_mySurface) {
+        _mySurface = [self createScreenSurface];
+        NSAssert(_mySurface, @"Error creating the IOSurface.");
+    }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        if(!_pixelBufferAdaptor.pixelBufferPool) {
-            NSLog(@"Skipping frame: %lld", frame.value);
-            return;
-        }
-        
-        static CVPixelBufferRef pixelBuffer = NULL;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            NSAssert(_pixelBufferAdaptor.pixelBufferPool, @"The pixel buffer pool is returning NULL (nothing). Please ensure there is one before saving a frame!");
+    uint32_t (*IOSurfaceGetSeed)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetSeed");
+    kern_return_t (*IOSurfaceLock)(IOSurfaceRef buffer, uint32_t lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceLock");
+    kern_return_t (*IOSurfaceAcceleratorTransferSurface)(IOSurfaceAcceleratorRef accelerator, IOSurfaceRef sourceSurface, IOSurfaceRef destSurface, CFDictionaryRef properties, void *unknown) = dlsym(_IOSurface, "IOSurfaceAcceleratorTransferSurface");
+    kern_return_t (*IOSurfaceUnlock)(IOSurfaceRef buffer, uint32_t lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceUnlock");
+    void *(*IOSurfaceGetBaseAddress)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBaseAddress");
+    
+    uint32_t seed1 = IOSurfaceGetSeed(_screenSurface);
+    IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed1);
+    IOSurfaceAcceleratorTransferSurface(_accelerator, _screenSurface, _mySurface, _properties, NULL);
+    IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed1);
+
+    static CVPixelBufferRef pixelBuffer = NULL;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        [_pixelBufferLock lock];
+        CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, _pixelBufferAdaptor.pixelBufferPool, &pixelBuffer);
+        NSAssert(pixelBuffer, @"Why isn't the pixel buffer created?!");
+        [_pixelBufferLock unlock];
+    });
+   
+    uint32_t seed2 = IOSurfaceGetSeed(_mySurface);
+    IOSurfaceLock(_mySurface, kIOSurfaceLockReadOnly, &seed2);
+    void *baseAddress = IOSurfaceGetBaseAddress(_mySurface);
+    NSAssert(baseAddress, @"Unable to get base address from IOSurface.");
+    IOSurfaceUnlock(_mySurface, kIOSurfaceLockReadOnly, &seed2);
+    
+    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    void *pixelBufferBaseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
+    NSAssert(pixelBufferBaseAddress, @"Unable to get base address from pixel buffer.");
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+
+    memmove(pixelBufferBaseAddress, baseAddress, _allocSize);
+    
+    dispatch_async(_videoQueue, ^{
+        while(!_videoWriterInput.readyForMoreMediaData)
+            usleep(1000);
             [_pixelBufferLock lock];
-            CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, _pixelBufferAdaptor.pixelBufferPool, &pixelBuffer);
+            [_pixelBufferAdaptor appendPixelBuffer:pixelBuffer withPresentationTime:frame];
             [_pixelBufferLock unlock];
-            NSAssert(pixelBuffer, @"There's no pixel buffer?! AT ALL?!!! Something's messed up.");
-        });
-        
-        CVOptionFlags optionFlags = 0;
-        CVPixelBufferLockBaseAddress(pixelBuffer, optionFlags);
-        size_t allocSize = IOSurfaceGetAllocSize(_mySurface);
-        void *baseAddress = IOSurfaceGetBaseAddress(_mySurface);
-        void *pixelBufferBaseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
-        NSAssert(baseAddress, @"IOSurface can't get the base address? Check to see if the framework is functioning properly!");
-        NSAssert(pixelBufferBaseAddress, @"Be sure to check the pixel buffer, it cannot get the base address!");
-        memcpy(pixelBufferBaseAddress, baseAddress, allocSize);
-        CVPixelBufferUnlockBaseAddress(pixelBuffer, optionFlags);
-        
-        dispatch_async(_videoQueue, ^{
-            while(!_videoWriterInput.readyForMoreMediaData)
-                usleep(850);
-                [_pixelBufferLock lock];
-                [_pixelBufferAdaptor appendPixelBuffer:pixelBuffer withPresentationTime:frame];
-                [_pixelBufferLock unlock];
-        });
     });
 }
 
@@ -280,27 +321,30 @@ CGFloat degreesToRadians(CGFloat degrees) {
     [self setRecording:NO];
 }
 
-- (void)_recordingDone {
+- (void)recordingDone {
     [_videoWriterInput markAsFinished];
     [_videoWriter finishWritingWithCompletionHandler:^{
+        dlclose(_IOSurface);
         NSLog(@"Recording saved at path: %@",_videoPath);
-        _videoPath = nil;
-        _videoQueue = nil;
-        _videoWriter = nil;
-        _pixelBufferLock = nil;
-        _videoWriterInput = nil;
-        _pixelBufferAdaptor = nil;
-        CFRelease(_mySurface);
-        _mySurface = NULL;
-        CFRelease(_screenSurface);
-        _screenSurface = NULL;
-        CFRelease(_accelerator);
-        _accelerator = NULL;
-        CFRelease(_mySurfaceAttributes);
-        _mySurfaceAttributes = nil;
-        CFRelease((void *)_framebufferConnection);
-        _framebufferConnection = nil;
     }];
+}
+
+#pragma mark - Screen Width & Height
+
+- (NSInteger)screenHeight {
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
+    NSInteger screenHeight = screenSize.height;
+    return screenHeight;
+}
+
+- (NSInteger)screenWidth {
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
+    NSInteger screenWidth = screenSize.width;
+    return screenWidth;
 }
 
 /*

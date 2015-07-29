@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="7706" systemVersion="14E26a" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6iY-5P-2YP">
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="8121.20" systemVersion="15A204h" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="6iY-5P-2YP">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="8066.14"/>
     </dependencies>
     <scenes>
         <!--iRec Remote-->
@@ -37,7 +37,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="217.94871794871796" y="342.17948717948718"/>
+            <point key="canvasLocation" x="228" y="342"/>
         </scene>
         <!--Close-->
         <scene sceneID="z2o-XJ-x6h">
@@ -48,7 +48,7 @@
                             <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
                             <variation key="device=watch42mm" width="156"/>
                         </label>
-                        <label width="136" height="84.5" alignment="left" text="Please go on your iPhone and click on the &quot;Recordings&quot; tab to view your new recording." textAlignment="center" numberOfLines="0" id="P6X-KY-qgx">
+                        <label width="136" alignment="left" text="Please go on your iPhone and click on the &quot;Recordings&quot; tab to view your new recording." textAlignment="center" numberOfLines="0" id="P6X-KY-qgx">
                             <color key="textColor" red="0.097376046499999994" green="0.65041885040000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
                             <variation key="device=watch42mm" width="156"/>
@@ -70,11 +70,11 @@ iRec Settings
                             <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
                             <variation key="device=watch42mm" width="156"/>
                         </label>
-                        <label width="136" height="334.5" alignment="left" textAlignment="center" numberOfLines="0" id="ith-TN-tTW">
+                        <label width="136" alignment="left" textAlignment="center" numberOfLines="0" id="ith-TN-tTW">
                             <mutableString key="text">In order to change recording settings, please open the default Settings application on your iPhone, and scroll down to "iRec". You can change the FPS, bitrate, and more from there. Also, you can choose to display a confirmation when you're done recording, and to show a timer while recording through the Apple Watch app on your iPhone. </mutableString>
                             <color key="textColor" red="0.097376046499999994" green="0.65041885040000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
-                            <variation key="device=watch42mm" height="317.5" width="156"/>
+                            <variation key="device=watch42mm" width="156"/>
                         </label>
                     </items>
                 </controller>
@@ -117,11 +117,11 @@ iRec Settings
                             <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
                             <variation key="device=watch42mm" height="34" width="156"/>
                         </label>
-                        <label height="184" alignment="left" textAlignment="center" numberOfLines="0" id="bqg-sU-LB7">
+                        <label width="136" alignment="left" textAlignment="center" numberOfLines="0" id="bqg-sU-LB7">
                             <string key="text">Welcome to the iRec Remote! To find out more about this Apple Watch extension, please open iRec on your iPhone, click on the "Info" tab, and then on "Watch Support Info". </string>
                             <color key="textColor" red="0.097376046499999994" green="0.65041885040000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
-                            <variation key="device=watch42mm" height="168"/>
+                            <variation key="device=watch42mm" width="156"/>
                         </label>
                     </items>
                     <connections>
@@ -129,7 +129,7 @@ iRec Settings
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="714" y="749.96153846153857"/>
+            <point key="canvasLocation" x="714" y="748.43589743589746"/>
         </scene>
         <!--Close-->
         <scene sceneID="5FN-3L-BAo">
@@ -140,11 +140,10 @@ iRec Settings
                             <fontDescription key="font" type="system" weight="medium" pointSize="14"/>
                             <variation key="device=watch42mm" width="156"/>
                         </label>
-                        <label width="136" height="117.5" alignment="left" text="@Emu4iOS, @iNoCydia_Devs, @AAgatiello  Extra Help: @HamzaSood " textAlignment="center" numberOfLines="0" id="9o2-OP-WKN">
+                        <label width="136" alignment="left" text="@Emu4iOS, @iNoCydia_Devs, @AAgatiello  Extra Help: @HamzaSood " textAlignment="center" numberOfLines="0" id="9o2-OP-WKN">
                             <color key="textColor" red="0.097376046499999994" green="0.65041885040000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
-                            <variation key="device=watch38mm" height="100.5"/>
-                            <variation key="device=watch42mm" height="117.5" width="156"/>
+                            <variation key="device=watch42mm" width="156"/>
                         </label>
                     </items>
                 </controller>

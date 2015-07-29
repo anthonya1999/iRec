@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="15A178w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tCX-ba-3kB">
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <animations/>
+                                <items>
+                                    <tabBarItem title="Record" image="camera" id="mqd-mE-p5C"/>
+                                    <tabBarItem title="Recordings" image="video" id="TOk-kT-R6S"/>
+                                    <tabBarItem title="Info" image="info" id="frv-HW-3C2"/>
+                                </items>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="selectedImageTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tabBar>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PvN-0P-esf">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <animations/>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="textShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Record" id="fni-yn-wMD"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="tCX-ba-3kB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2sr-z8-YDc"/>
+                            <constraint firstItem="PvN-0P-esf" firstAttribute="trailing" secondItem="tCX-ba-3kB" secondAttribute="trailing" id="LiF-eP-MGe"/>
+                            <constraint firstItem="PvN-0P-esf" firstAttribute="leading" secondItem="tCX-ba-3kB" secondAttribute="leading" id="WHS-4x-Ss9"/>
+                            <constraint firstAttribute="trailing" secondItem="tCX-ba-3kB" secondAttribute="trailing" id="XDj-Ne-xlW"/>
+                            <constraint firstItem="tCX-ba-3kB" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="qTJ-zn-s1P"/>
+                            <constraint firstItem="PvN-0P-esf" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" id="xqR-Xk-P0x"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="eX9-Lh-yyd"/>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="865" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="camera" width="30" height="30"/>
+        <image name="info" width="30" height="30"/>
+        <image name="video" width="30" height="30"/>
+    </resources>
+</document>

@@ -9,11 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate> {
-    UIBackgroundTaskIdentifier backgroundTaskID;
-}
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-@property (nonatomic) UIBackgroundTaskIdentifier backgroundTaskID;
 
 @end
