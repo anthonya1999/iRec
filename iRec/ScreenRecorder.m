@@ -7,10 +7,10 @@
 //
 
 #import "ScreenRecorder.h"
-#include <AVFoundation/AVFoundation.h>
+#import <AVFoundation/AVFoundation.h>
 #include <sys/time.h>
-#import <dlfcn.h>
-#import <mach/mach.h>
+#include <dlfcn.h>
+#include <mach/mach.h>
 
 typedef struct __IOSurface *IOSurfaceRef;
 typedef struct __IOSurfaceAccelerator *IOSurfaceAcceleratorRef;
