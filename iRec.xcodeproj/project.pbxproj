@@ -40,16 +40,16 @@
 		920CD04A1A94DFD5004BD668 /* NSDate+Comparing.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD0491A94DFD5004BD668 /* NSDate+Comparing.m */; };
 		920CD04D1A94E05D004BD668 /* BetaTestersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD04C1A94E05D004BD668 /* BetaTestersViewController.m */; };
 		920CD0551A94E8C9004BD668 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 920CD0541A94E8C9004BD668 /* Settings.bundle */; };
-		92561DE21B596E5600DF6F75 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DDF1B596E5600DF6F75 /* Bolts.framework */; };
-		92561DE31B596E5600DF6F75 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE01B596E5600DF6F75 /* Crashlytics.framework */; };
-		92561DE41B596E5600DF6F75 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE11B596E5600DF6F75 /* Fabric.framework */; };
-		92561DE61B596FF500DF6F75 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE51B596FF500DF6F75 /* Parse.framework */; };
 		92561DE81B59701D00DF6F75 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE71B59701D00DF6F75 /* libsqlite3.tbd */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
 		92B45FC41B57581600C0D1A9 /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B45FC31B57581600C0D1A9 /* FXBlurView.m */; };
+		92C6D5621B693A4A0013FBFB /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6D55E1B693A4A0013FBFB /* Bolts.framework */; };
+		92C6D5631B693A4A0013FBFB /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6D55F1B693A4A0013FBFB /* Crashlytics.framework */; };
+		92C6D5641B693A4A0013FBFB /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6D5601B693A4A0013FBFB /* Fabric.framework */; };
+		92C6D5651B693A4A0013FBFB /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92C6D5611B693A4A0013FBFB /* Parse.framework */; };
 		92DE37321B322D0700BD6EFD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92DE37311B322D0700BD6EFD /* LaunchScreen.storyboard */; };
 		92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E557011B3F1C7E0013CC7D /* Assets.xcassets */; };
 		92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
@@ -173,10 +173,6 @@
 		920CD0531A94E7B9004BD668 /* iRec.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iRec.entitlements; sourceTree = "<group>"; };
 		920CD0541A94E8C9004BD668 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		921C214C1B0E95E900CAB36B /* iRec Beta.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iRec Beta.cer"; sourceTree = "<group>"; };
-		92561DDF1B596E5600DF6F75 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
-		92561DE01B596E5600DF6F75 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
-		92561DE11B596E5600DF6F75 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		92561DE51B596FF500DF6F75 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		92561DE71B59701D00DF6F75 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		9259B5881A9FEC0A0072AD4F /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
@@ -188,6 +184,10 @@
 		927ADA421B13B2E400B4887C /* WatchSupportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchSupportViewController.m; sourceTree = "<group>"; };
 		92B45FC21B57581600C0D1A9 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		92B45FC31B57581600C0D1A9 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		92C6D55E1B693A4A0013FBFB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Frameworks/Bolts.framework; sourceTree = "<group>"; };
+		92C6D55F1B693A4A0013FBFB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Frameworks/Crashlytics.framework; sourceTree = "<group>"; };
+		92C6D5601B693A4A0013FBFB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Frameworks/Fabric.framework; sourceTree = "<group>"; };
+		92C6D5611B693A4A0013FBFB /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = Frameworks/Parse.framework; sourceTree = "<group>"; };
 		92D8AC501B1AB3DA0090CBA5 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		92DE37311B322D0700BD6EFD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		92E556F71B3F1C7E0013CC7D /* iRec WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "iRec WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -214,10 +214,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				92561DE81B59701D00DF6F75 /* libsqlite3.tbd in Frameworks */,
-				92561DE61B596FF500DF6F75 /* Parse.framework in Frameworks */,
-				92561DE21B596E5600DF6F75 /* Bolts.framework in Frameworks */,
-				92561DE31B596E5600DF6F75 /* Crashlytics.framework in Frameworks */,
-				92561DE41B596E5600DF6F75 /* Fabric.framework in Frameworks */,
+				92C6D5631B693A4A0013FBFB /* Crashlytics.framework in Frameworks */,
+				92C6D5621B693A4A0013FBFB /* Bolts.framework in Frameworks */,
+				92C6D5641B693A4A0013FBFB /* Fabric.framework in Frameworks */,
+				92C6D5651B693A4A0013FBFB /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,10 +286,10 @@
 			isa = PBXGroup;
 			children = (
 				92561DE71B59701D00DF6F75 /* libsqlite3.tbd */,
-				92561DE51B596FF500DF6F75 /* Parse.framework */,
-				92561DDF1B596E5600DF6F75 /* Bolts.framework */,
-				92561DE01B596E5600DF6F75 /* Crashlytics.framework */,
-				92561DE11B596E5600DF6F75 /* Fabric.framework */,
+				92C6D55E1B693A4A0013FBFB /* Bolts.framework */,
+				92C6D55F1B693A4A0013FBFB /* Crashlytics.framework */,
+				92C6D5601B693A4A0013FBFB /* Fabric.framework */,
+				92C6D5611B693A4A0013FBFB /* Parse.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -703,7 +703,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run a81e246bd18c9094c888ecad3c0e5b6c9eb9f70d c725884174c9ee9cb544f5cac73a71c3ae669f4214acd7a1852aff4d130e8f97";
+			shellScript = "./Frameworks/Fabric.framework/run a81e246bd18c9094c888ecad3c0e5b6c9eb9f70d c725884174c9ee9cb544f5cac73a71c3ae669f4214acd7a1852aff4d130e8f97";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -828,7 +828,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -882,7 +882,7 @@
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/**";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREFIX_HEADER = iRec/Prefix.pch;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
