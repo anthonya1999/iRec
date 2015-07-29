@@ -10,8 +10,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 
-@interface ScreenRecorder : NSObject
-
 __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
@@ -28,6 +26,8 @@ enum {
 };
 
 __END_DECLS
+
+@interface ScreenRecorder : NSObject
 
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate;
 - (int)openFramebuffer;
