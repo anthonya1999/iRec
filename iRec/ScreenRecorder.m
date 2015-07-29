@@ -66,44 +66,7 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
          _pixelBufferLock = [NSLock new];
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
          
-         void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_NOW);
-         NSParameterAssert(IOKit);
-         void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
-         NSParameterAssert(IOMobileFramebuffer);
-         
-         mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
-         CFMutableDictionaryRef (*IOServiceMatching)(const char *name) = dlsym(IOKit, "IOServiceMatching");
-         mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
-             
-         mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleCLCD"));
-             if (!serviceMatching)
-                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleH1CLCD"));
-             if (!serviceMatching)
-                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleM2CLCD"));
-             if (!serviceMatching)
-                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleRGBOUT"));
-             if (!serviceMatching)
-                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMX31IPU"));
-             if (!serviceMatching)
-                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMobileCLCD"));
-             if (!serviceMatching)
-                 serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
-             
-         kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
-         kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
-         kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
-         kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
-         kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
-             
-         IOMobileFramebufferSwapBegin(_framebufferConnection, NULL);
-         IOMobileFramebufferSwapSetLayer(_framebufferConnection, 0, _screenSurface);
-         IOMobileFramebufferSwapEnd(_framebufferConnection);
-             
-         IOMobileFramebufferOpen(serviceMatching, mach_task_self(), 0, &_framebufferConnection);
-         IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
-             
-         dlclose(IOKit);
-         dlclose(IOMobileFramebuffer);
+         [self openFramebuffer];
          
          _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_NOW);
          NSParameterAssert(_IOSurface);
@@ -114,6 +77,48 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
          _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
     }
     return self;
+}
+
+#pragma mark - Open Framebuffer
+
+- (int)openFramebuffer {
+    void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_NOW);
+    NSParameterAssert(IOKit);
+    void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
+    NSParameterAssert(IOMobileFramebuffer);
+    
+    mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
+    CFMutableDictionaryRef (*IOServiceMatching)(const char *name) = dlsym(IOKit, "IOServiceMatching");
+    mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
+    
+    mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleCLCD"));
+    if (!serviceMatching)
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleH1CLCD"));
+    if (!serviceMatching)
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleM2CLCD"));
+    if (!serviceMatching)
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleRGBOUT"));
+    if (!serviceMatching)
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMX31IPU"));
+    if (!serviceMatching)
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMobileCLCD"));
+    if (!serviceMatching)
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
+    
+    kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
+    kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
+    kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
+    kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
+    kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
+    
+    IOMobileFramebufferSwapBegin(_framebufferConnection, NULL);
+    IOMobileFramebufferSwapSetLayer(_framebufferConnection, 0, _screenSurface);
+    IOMobileFramebufferSwapEnd(_framebufferConnection);
+    
+    IOMobileFramebufferOpen(serviceMatching, mach_task_self(), 0, &_framebufferConnection);
+    IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
+    
+    return dlclose(IOKit) && dlclose(IOMobileFramebuffer);
 }
 
 #pragma mark - Create Surface
