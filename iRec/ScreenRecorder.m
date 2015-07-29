@@ -62,7 +62,9 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
          NSParameterAssert(_IOSurface);
 
          size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
+         NSParameterAssert(IOSurfaceGetAllocSize);
          size_t (*IOSurfaceGetBytesPerRow)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerRow");
+         NSParameterAssert(IOSurfaceGetBytesPerRow);
          _allocSize = IOSurfaceGetAllocSize(_screenSurface);
          _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
     }
@@ -77,31 +79,41 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
     NSParameterAssert(IOMobileFramebuffer);
     
-    mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
     CFMutableDictionaryRef (*IOServiceMatching)(const char *name) = dlsym(IOKit, "IOServiceMatching");
-    mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
+    NSParameterAssert(IOServiceMatching);
+    mach_port_t (*IOServiceGetMatchingService)(void *masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
+    NSParameterAssert(IOServiceGetMatchingService);
     
-    mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleCLCD"));
+    mach_port_t serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleCLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleH1CLCD"));
+        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleH1CLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleM2CLCD"));
+        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleM2CLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleRGBOUT"));
+        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleRGBOUT"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMX31IPU"));
+        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleMX31IPU"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMobileCLCD"));
+        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleMobileCLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
+        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("IOMobileFramebuffer"));
+    
+    NSAssert(serviceMatching, @"Unable to get IOService matching display types.");
     
     mach_port_t *mach_task_self_ = dlsym(IOKit, "mach_task_self_");
+    NSParameterAssert(*mach_task_self_);
     kern_return_t (*IOServiceAuthorize)(mach_port_t service, uint32_t options) = dlsym(IOKit, "IOServiceAuthorize");
+    NSParameterAssert(IOServiceAuthorize);
     kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
+    NSParameterAssert(IOMobileFramebufferOpen);
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
+    NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
     kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
+    NSParameterAssert(IOMobileFramebufferSwapBegin);
     kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
+    NSParameterAssert(IOMobileFramebufferSwapSetLayer);
     kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
+    NSParameterAssert(IOMobileFramebufferSwapEnd);
     
     IOServiceAuthorize(serviceMatching, kIOServiceInteractionAllowed);
     
@@ -120,18 +132,27 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
 
 - (IOSurfaceRef)createScreenSurface {
     size_t (*IOSurfaceGetBytesPerElement)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerElement");
+    NSParameterAssert(IOSurfaceGetBytesPerElement);
     size_t bytesPerElement = IOSurfaceGetBytesPerElement(_screenSurface);
     
     OSType (*IOSurfaceGetTileFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetTileFormat");
+    NSParameterAssert(IOSurfaceGetTileFormat);
     OSType tileFormat = IOSurfaceGetTileFormat(_screenSurface);
     
     const CFStringRef *kIOSurfaceBytesPerElement = dlsym(_IOSurface, "kIOSurfaceBytesPerElement");
+    NSParameterAssert(*kIOSurfaceBytesPerElement);
     const CFStringRef *kIOSurfaceAllocSize = dlsym(_IOSurface, "kIOSurfaceAllocSize");
+    NSParameterAssert(*kIOSurfaceAllocSize);
     const CFStringRef *kIOSurfaceBytesPerRow = dlsym(_IOSurface, "kIOSurfaceBytesPerRow");
+    NSParameterAssert(*kIOSurfaceBytesPerRow);
     const CFStringRef *kIOSurfaceWidth = dlsym(_IOSurface, "kIOSurfaceWidth");
+    NSParameterAssert(*kIOSurfaceWidth);
     const CFStringRef *kIOSurfaceHeight = dlsym(_IOSurface, "kIOSurfaceHeight");
+    NSParameterAssert(*kIOSurfaceHeight);
     const CFStringRef *kIOSurfacePixelFormat = dlsym(_IOSurface, "kIOSurfacePixelFormat");
+    NSParameterAssert(*kIOSurfacePixelFormat);
     const CFStringRef *kIOSurfaceBufferTileFormat = dlsym(_IOSurface, "kIOSurfaceBufferTileFormat");
+    NSParameterAssert(*kIOSurfaceBufferTileFormat);
     
     _properties = CFBridgingRetain(@{(__bridge NSString *)*kIOSurfaceBytesPerElement:  @(bytesPerElement),
                                      (__bridge NSString *)*kIOSurfaceAllocSize:        @(_allocSize),
@@ -143,7 +164,9 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
                                      });
     
     kern_return_t (*IOSurfaceAcceleratorCreate)(CFAllocatorRef allocator, uint32_t type, IOSurfaceAcceleratorRef *outAccelerator) = dlsym(_IOSurface, "IOSurfaceAcceleratorCreate");
+    NSParameterAssert(IOSurfaceAcceleratorCreate);
     IOSurfaceRef (*IOSurfaceCreate)(CFDictionaryRef properties) = dlsym(_IOSurface, "IOSurfaceCreate");
+    NSParameterAssert(IOSurfaceCreate);
     
     IOSurfaceAcceleratorCreate(kCFAllocatorDefault, 0, &_accelerator);
     return IOSurfaceCreate(_properties);
@@ -273,10 +296,15 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     }
     
     uint32_t (*IOSurfaceGetSeed)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetSeed");
+    NSParameterAssert(IOSurfaceGetSeed);
     kern_return_t (*IOSurfaceLock)(IOSurfaceRef buffer, uint32_t lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceLock");
+    NSParameterAssert(IOSurfaceLock);
     kern_return_t (*IOSurfaceAcceleratorTransferSurface)(IOSurfaceAcceleratorRef accelerator, IOSurfaceRef sourceSurface, IOSurfaceRef destSurface, CFDictionaryRef properties, void *unknown) = dlsym(_IOSurface, "IOSurfaceAcceleratorTransferSurface");
+    NSParameterAssert(IOSurfaceAcceleratorTransferSurface);
     kern_return_t (*IOSurfaceUnlock)(IOSurfaceRef buffer, uint32_t lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceUnlock");
+    NSParameterAssert(IOSurfaceUnlock);
     void *(*IOSurfaceGetBaseAddress)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBaseAddress");
+    NSParameterAssert(IOSurfaceGetBaseAddress);
     
     uint32_t seed1 = IOSurfaceGetSeed(_screenSurface);
     IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed1);
