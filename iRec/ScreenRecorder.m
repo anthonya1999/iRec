@@ -71,7 +71,7 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
 
 #pragma mark - Open Framebuffer
 
-- (int)openFramebuffer {
+- (void)openFramebuffer {
     void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_NOW);
     NSParameterAssert(IOKit);
     void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
@@ -112,7 +112,8 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     IOMobileFramebufferOpen(serviceMatching, *mach_task_self_, 0, &_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
     
-    return dlclose(IOKit) && dlclose(IOMobileFramebuffer);
+    dlclose(IOKit);
+    dlclose(IOMobileFramebuffer);
 }
 
 #pragma mark - Create Surface

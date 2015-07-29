@@ -30,7 +30,7 @@ __END_DECLS
 @interface ScreenRecorder : NSObject
 
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate;
-- (int)openFramebuffer;
+- (void)openFramebuffer;
 - (IOSurfaceRef)createScreenSurface;
 - (void)setupVideoRecordingObjects;
 - (void)saveFrame:(CMTime)frame;
