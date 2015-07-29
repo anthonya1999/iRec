@@ -105,6 +105,7 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     if (!serviceMatching)
         serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
     
+    mach_port_t *mach_task_self_ = dlsym(IOKit, "mach_task_self_");
     kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
@@ -115,7 +116,7 @@ NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_err
     IOMobileFramebufferSwapSetLayer(_framebufferConnection, 0, _screenSurface);
     IOMobileFramebufferSwapEnd(_framebufferConnection);
     
-    IOMobileFramebufferOpen(serviceMatching, mach_task_self(), 0, &_framebufferConnection);
+    IOMobileFramebufferOpen(serviceMatching, *mach_task_self_, 0, &_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
     
     return dlclose(IOKit) && dlclose(IOMobileFramebuffer);
