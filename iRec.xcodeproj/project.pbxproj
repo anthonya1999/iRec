@@ -184,6 +184,7 @@
 		927ADA421B13B2E400B4887C /* WatchSupportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchSupportViewController.m; sourceTree = "<group>"; };
 		92B45FC21B57581600C0D1A9 /* FXBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FXBlurView.h; sourceTree = "<group>"; };
 		92B45FC31B57581600C0D1A9 /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
+		92BF90BC1B69B4BA00BA0E4E /* DataTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataTypes.h; sourceTree = "<group>"; };
 		92C6D5661B693BF20013FBFB /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = Frameworks/Bolts.framework; sourceTree = "<group>"; };
 		92C6D5671B693BF20013FBFB /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Frameworks/Crashlytics.framework; sourceTree = "<group>"; };
 		92C6D5681B693BF20013FBFB /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Frameworks/Fabric.framework; sourceTree = "<group>"; };
@@ -297,6 +298,7 @@
 		920CCFF01A94DC57004BD668 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				92BF90BC1B69B4BA00BA0E4E /* DataTypes.h */,
 				920CCFE41A94DB1A004BD668 /* ScreenRecorder.h */,
 				920CCFE51A94DB1A004BD668 /* ScreenRecorder.m */,
 			);
