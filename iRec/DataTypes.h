@@ -12,14 +12,20 @@ typedef struct __IOSurface *IOSurfaceRef;
 typedef struct __IOSurfaceAccelerator *IOSurfaceAcceleratorRef;
 typedef void *IOMobileFramebufferConnection;
 
+#pragma mark - IOServiceAuthorize
+
 enum {
     kIOServiceInteractionAllowed = 0x00000001
 };
+
+#pragma mark - IOSurfaceLock & IOSurfaceUnlock
 
 enum {
     kIOSurfaceLockReadOnly  = 0x00000001,
     kIOSurfaceLockAvoidSync = 0x00000002
 };
+
+#pragma mark - IOSurfaceCacheMode
 
 enum {
     kIODefaultCache		 = 0,
