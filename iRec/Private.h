@@ -1,5 +1,5 @@
 //
-//  DataTypes.h
+//  Private.h
 //  iRec
 //
 //  Created by Anthony Agatiello on 7/29/15.
@@ -27,7 +27,6 @@ typedef CF_OPTIONS(uint32_t, IOSurfaceLockOptions)
     kIOSurfaceLockReadOnly  = 0x00000001,
     kIOSurfaceLockAvoidSync = 0x00000002
 };
-
 
 #pragma mark - IOSurfaceCacheMode
 
