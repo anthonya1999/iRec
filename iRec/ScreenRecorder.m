@@ -82,6 +82,10 @@
     NSParameterAssert(IOMobileFramebufferSwapSetLayer);
     kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
     NSParameterAssert(IOMobileFramebufferSwapEnd);
+    kern_return_t (*IOServiceClose)(IOMobileFramebufferConnection connection) = dlsym(IOKit, "IOServiceClose");
+    NSParameterAssert(IOServiceClose);
+    kern_return_t (*IOConnectRelease)(IOMobileFramebufferConnection connection) = dlsym(IOKit, "IOConnectRelease");
+    NSParameterAssert(IOConnectRelease);
     
     IOServiceAuthorize(serviceMatching, kIOServiceInteractionAllowed);
     
@@ -91,6 +95,9 @@
     
     IOMobileFramebufferOpen(serviceMatching, *mach_task_self_, 0, &_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
+    
+    IOServiceClose(_framebufferConnection);
+    IOConnectRelease(_framebufferConnection);
     
     dlclose(IOKit);
     dlclose(IOMobileFramebuffer);
