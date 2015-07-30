@@ -11,39 +11,7 @@
 #include <dlfcn.h>
 #include <mach/mach.h>
 
-@interface ScreenRecorder () {
-    IOMobileFramebufferConnection _framebufferConnection;
-    IOSurfaceRef _screenSurface, _mySurface;
-    IOSurfaceAcceleratorRef _accelerator;
-    size_t _bytesPerRow, _allocSize;
-    AVAssetWriter *_videoWriter;
-    CFDictionaryRef _properties;
-    AVAssetWriterInput *_videoWriterInput; //*_audioWriterInput;
-    AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
-    dispatch_queue_t _videoQueue;
-    NSLock *_pixelBufferLock;
-    int _framerate, _bitrate;
-    void *_IOSurface;
-}
-
-@end
-
-#define AssertSuccess(call, descriptionString) do {\
-kern_return_t kernreturn = call; \
-NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_error_string(kernreturn)); \
-} while(0)
-
 @implementation ScreenRecorder
-
-/*
--(NSString *)DeviceModel
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    return [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
-}
-*/
 
 #pragma mark - Initialization
 

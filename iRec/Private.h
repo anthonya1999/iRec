@@ -6,6 +6,8 @@
 //  Copyright © 2015 ADA Tech, LLC. All rights reserved.
 //
 
+@implementation NSObject (Private)
+
 __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
@@ -58,3 +60,17 @@ enum {
 
 __END_DECLS
 
+IOMobileFramebufferConnection _framebufferConnection;
+IOSurfaceRef _screenSurface, _mySurface;
+IOSurfaceAcceleratorRef _accelerator;
+size_t _bytesPerRow, _allocSize;
+AVAssetWriter *_videoWriter;
+CFDictionaryRef _properties;
+AVAssetWriterInput *_videoWriterInput; //*_audioWriterInput;
+AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
+dispatch_queue_t _videoQueue;
+NSLock *_pixelBufferLock;
+int _framerate, _bitrate;
+void *_IOSurface;
+
+@end

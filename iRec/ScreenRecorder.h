@@ -8,12 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
-#import "DataTypes.h"
 #import <UIKit/UIKit.h>
+#import "Private.h"
 
 @interface ScreenRecorder : NSObject
 
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate;
+
 - (void)openFramebuffer;
 - (IOSurfaceRef)createScreenSurface;
 - (void)setupVideoRecordingObjects;
