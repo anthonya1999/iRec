@@ -110,10 +110,6 @@
     NSParameterAssert(IOSurfaceGetBytesPerElement);
     size_t bytesPerElement = IOSurfaceGetBytesPerElement(_screenSurface);
     
-    OSType (*IOSurfaceGetTileFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetTileFormat");
-    NSParameterAssert(IOSurfaceGetTileFormat);
-    OSType tileFormat = IOSurfaceGetTileFormat(_screenSurface);
-    
     const CFStringRef *kIOSurfaceIsGlobal = dlsym(_IOSurface, "kIOSurfaceIsGlobal");
     NSParameterAssert(*kIOSurfaceIsGlobal);
     const CFStringRef *kIOSurfaceBytesPerElement = dlsym(_IOSurface, "kIOSurfaceBytesPerElement");
@@ -128,8 +124,6 @@
     NSParameterAssert(*kIOSurfaceHeight);
     const CFStringRef *kIOSurfacePixelFormat = dlsym(_IOSurface, "kIOSurfacePixelFormat");
     NSParameterAssert(*kIOSurfacePixelFormat);
-    const CFStringRef *kIOSurfaceBufferTileFormat = dlsym(_IOSurface, "kIOSurfaceBufferTileFormat");
-    NSParameterAssert(*kIOSurfaceBufferTileFormat);
     const CFStringRef *kIOSurfaceCacheMode = dlsym(_IOSurface, "kIOSurfaceCacheMode");
     NSParameterAssert(*kIOSurfaceCacheMode);
     
@@ -140,7 +134,6 @@
                                      (__bridge NSString *)*kIOSurfaceWidth:            @(self.screenWidth),
                                      (__bridge NSString *)*kIOSurfaceHeight:           @(self.screenHeight),
                                      (__bridge NSString *)*kIOSurfacePixelFormat:      @(kCVPixelFormatType_32BGRA),
-                                     (__bridge NSString *)*kIOSurfaceBufferTileFormat: @(tileFormat),
                                      (__bridge NSString *)*kIOSurfaceCacheMode:        @(kIOMapInhibitCache)
                                      });
     
