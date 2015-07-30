@@ -1,5 +1,5 @@
 //
-//  Declarations.h
+//  DataTypes.h
 //  iRec
 //
 //  Created by Anthony Agatiello on 7/29/15.
