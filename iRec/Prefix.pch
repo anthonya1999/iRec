@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 ADA Tech, LLC. All rights reserved.
 //
 
+#include "TargetConditionals.h"
+
 #ifndef iRec_Prefix_pch
 #define iRec_Prefix_pch
 
@@ -20,4 +22,8 @@
 #define DEGREES_TO_RADIANS(degrees)                 ((degrees) / 180.0 * M_PI)
 #define AssertSuccess(call, descriptionString) do {\kern_return_t kernreturn = call; \NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_error_string(kernreturn)); \} while(0)
 
+#endif
+
+#if TARGET_IPHONE_SIMULATOR
+#error If you wish to run/build for the iOS Simulator, then please comment out this line with caution. When you press Start Recording, the app will crash, as the simulator does not have the frameworks that are used to make the app function.
 #endif
