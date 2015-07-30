@@ -20,10 +20,12 @@ enum {
 
 #pragma mark - IOSurfaceLock & IOSurfaceUnlock
 
-enum {
+typedef CF_OPTIONS(uint32_t, IOSurfaceLockOptions)
+{
     kIOSurfaceLockReadOnly  = 0x00000001,
     kIOSurfaceLockAvoidSync = 0x00000002
 };
+
 
 #pragma mark - IOSurfaceCacheMode
 
