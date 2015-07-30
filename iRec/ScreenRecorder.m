@@ -76,7 +76,7 @@
     NSParameterAssert(IOMobileFramebufferOpen);
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
-    kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
+    kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection connection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
     NSParameterAssert(IOMobileFramebufferSwapBegin);
     kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
     NSParameterAssert(IOMobileFramebufferSwapSetLayer);
