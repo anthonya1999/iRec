@@ -42,29 +42,31 @@
 #pragma mark - Open Framebuffer
 
 - (void)openFramebuffer {
-    void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/IOKit", RTLD_NOW);
+    void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit", RTLD_NOW);
     NSParameterAssert(IOKit);
     void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
     NSParameterAssert(IOMobileFramebuffer);
     
+    mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
+    NSParameterAssert(kIOMasterPortDefault);
     CFMutableDictionaryRef (*IOServiceMatching)(const char *name) = dlsym(IOKit, "IOServiceMatching");
     NSParameterAssert(IOServiceMatching);
-    mach_port_t (*IOServiceGetMatchingService)(void *masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
+    mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
     NSParameterAssert(IOServiceGetMatchingService);
     
-    mach_port_t serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleCLCD"));
+    mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleCLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleH1CLCD"));
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleH1CLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleM2CLCD"));
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleM2CLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleRGBOUT"));
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleRGBOUT"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleMX31IPU"));
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMX31IPU"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("AppleMobileCLCD"));
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMobileCLCD"));
     if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(NULL, IOServiceMatching("IOMobileFramebuffer"));
+        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
     
     NSAssert(serviceMatching, @"Unable to get IOService matching display types.");
     
@@ -74,6 +76,8 @@
     NSParameterAssert(IOServiceAuthorize);
     kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
     NSParameterAssert(IOMobileFramebufferOpen);
+    kern_return_t (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
+    NSParameterAssert(IOMobileFramebufferGetMainDisplay);
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
     kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection connection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
@@ -94,6 +98,7 @@
     IOMobileFramebufferSwapEnd(_framebufferConnection);
     
     IOMobileFramebufferOpen(serviceMatching, *mach_task_self_, 0, &_framebufferConnection);
+    IOMobileFramebufferGetMainDisplay(&_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
     
     IOServiceClose(serviceMatching);
