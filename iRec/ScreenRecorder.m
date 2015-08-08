@@ -305,10 +305,10 @@
     NSAssert(baseAddress, @"Unable to get base address from IOSurface.");
     IOSurfaceUnlock(_mySurface, kIOSurfaceLockReadOnly, &seed2);
     
-    CVPixelBufferLockBaseAddress(pixelBuffer, 0);
+    CVPixelBufferLockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
     void *pixelBufferBaseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
     NSAssert(pixelBufferBaseAddress, @"Unable to get base address from pixel buffer.");
-    CVPixelBufferUnlockBaseAddress(pixelBuffer, 0);
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
 
     memmove(pixelBufferBaseAddress, baseAddress, _allocSize);
     
