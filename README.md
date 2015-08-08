@@ -1,5 +1,7 @@
 ### iRec - iOS 7-8 Screen Recorder
 
+[![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
+
 ![ScreenShot](https://pbs.twimg.com/media/CATNEPXWQAAJWSt.jpg)
 
 ####Setup
