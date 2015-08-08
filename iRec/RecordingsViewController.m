@@ -12,6 +12,7 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+#import <AVKit/AVKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
 
 @interface RecordingsViewController ()
@@ -40,7 +41,6 @@
         }
         [self populateNamesArray];
         [self.tableView reloadData];
-        //[self.refreshControl addTarget:self action:@selector(refresh) forControlEvents:UIControlEventValueChanged];
     }
     if (_recordingNames.count == 0) {
         [_deleteAllButton setHidden:YES];
@@ -49,7 +49,6 @@
         [_deleteAllButton setHidden:NO];
     }
 }
-
 
 //Populate the array with the files from the documents folder
 - (void)populateNamesArray {
@@ -62,13 +61,6 @@
             [_recordingNames addObject:[file stringByDeletingPathExtension]];
     }
     
-}
-
-//Refreshes the array
-- (void)refresh {
-    //[self populateNamesArray];
-    //[self.tableView reloadData];
-    //[self.refreshControl endRefreshing];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -88,7 +80,6 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecordingNameCell" forIndexPath:indexPath];
     [cell.textLabel setText:_recordingNames[indexPath.row]];
-    //tableView.backgroundColor = [UIColor colorWithRed:125.0f/255.0f green:125.0f/255.0f blue:125.0f/255.0f alpha:1.0f];
     return cell;
 }
 
@@ -156,55 +147,6 @@
 #pragma mark - UITableViewDelegate Methods
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    /*
-     UIActionSheet *popup = [[UIActionSheet alloc] initWithTitle:@"Choose Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:
-     @"Export to Camera Roll", _recordingNames[indexPath.row],
-     nil];
-     popup.tag = 1;
-     [popup showInView:[UIApplication sharedApplication].keyWindow];
-     */
-    
-    /*
-    UIGraphicsBeginImageContext(self.view.bounds.size);
-    CGContextRef c = UIGraphicsGetCurrentContext();
-    CGContextTranslateCTM(c, 0, 0);
-    [self.view.layer renderInContext:c];
-    UIImage* viewImage = UIGraphicsGetImageFromCurrentImageContext();
-    viewImage = [viewImage applyBlurWithRadius:4.0 tintColor:[UIColor clearColor] saturationDeltaFactor:1.0 maskImage:nil];
-    UIImageView *blurredView = [[UIImageView alloc] initWithImage:viewImage];
-    [self.view addSubview:blurredView];
-    UIGraphicsEndImageContext();
-
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Export"
-                                                    message:[NSString stringWithFormat:@"Are you sure you want to export \"%@\" to your Camera Roll?", _recordingNames[indexPath.row]]
-                                                   delegate:self
-                                          cancelButtonTitle:@"No"
-                                          otherButtonTitles:@"Yes", nil];
-    
-    [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-        if (buttonIndex == 0) {
-            [blurredView removeFromSuperview];
-        }
-        if (buttonIndex == 1)
-        {
-            NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
-            NSURL *fileURL = [NSURL fileURLWithPath:URL];
-            //UISaveVideoAtPathToSavedPhotosAlbum(URL, self, nil, nil);
-            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-            [library writeVideoAtPathToSavedPhotosAlbum:fileURL completionBlock:^(NSURL *assetURL, NSError *error) {}];
-            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:[NSString stringWithFormat:@"The recording \"%@\" has successfully been saved to your Camera Roll!", _recordingNames[indexPath.row]] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-            [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-                if (buttonIndex == 0) {
-                    [blurredView removeFromSuperview];
-                }
-            }];
-            NSLog(@"Export success!");
-        }
-        
-    }];
-     */
-    
     NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
     NSURL *fileURL = [NSURL fileURLWithPath:URL];
      NSArray *objectsToShare = @[fileURL];
@@ -221,38 +163,24 @@
      [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
-- (void)export {
-   
-}
-
-/*
- - (void)actionSheet:(UIActionSheet *)popup clickedButtonAtIndex:(NSInteger)buttonIndex {
- 
- switch (popup.tag) {
- case 1: {
- switch (buttonIndex) {
- case 0:
- [self export];
- break;
- default:
- break;
- }
- break;
- }
- default:
- break;
- }
- }
- */
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString *filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
-    MPMoviePlayerViewController *moviePlayerController = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL fileURLWithPath:filePath]];
-    [moviePlayerController.moviePlayer setShouldAutoplay:NO];
-    [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerController  name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayerController.moviePlayer];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayerController.moviePlayer];
-    [self.navigationController presentMoviePlayerViewControllerAnimated:moviePlayerController];
+    
+    if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
+        MPMoviePlayerViewController *moviePlayerController = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL fileURLWithPath:filePath]];
+        [moviePlayerController.moviePlayer setShouldAutoplay:NO];
+        [[NSNotificationCenter defaultCenter] removeObserver:moviePlayerController name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayerController.moviePlayer];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(videoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:moviePlayerController.moviePlayer];
+        [self.navigationController presentMoviePlayerViewControllerAnimated:moviePlayerController];
+    }
+    
+    else {
+        AVPlayerViewController *playerViewController = [[AVPlayerViewController alloc] init];
+        AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:[NSURL fileURLWithPath:filePath]];
+        playerViewController.player = [AVPlayer playerWithPlayerItem:item];
+        [self presentViewController:playerViewController animated:NO completion:nil];
+    }
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -267,9 +195,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *videoToDelete = _recordingNames[indexPath.row];
-        NSString *finalVideoToDeletePath = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
-                                             stringByAppendingPathComponent:videoToDelete]
-                                             stringByAppendingPathExtension:@"mp4"];
+        NSString *finalVideoToDeletePath = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:videoToDelete] stringByAppendingPathExtension:@"mp4"];
         NSError *error = nil;
         [[[NSFileManager alloc] init] removeItemAtPath:finalVideoToDeletePath error:&error];
         [_recordingNames removeObjectIdenticalTo:videoToDelete];
@@ -278,25 +204,6 @@
         [self viewWillAppear:YES];
     }
 }
-
-
-/*
- #pragma mark -
- #pragma mark UIBarButtonItem Actions
- 
- - (IBAction)editButtonPressed:(UIBarButtonItem *)sender {
- [self.navigationItem setLeftBarButtonItem:_doneButton animated:YES];
- [self.navigationItem setRightBarButtonItem:nil animated:YES];
- [self.tableView setEditing:YES animated:YES];
- }
- 
- 
- - (IBAction)doneButtonPressed:(UIBarButtonItem *)sender {
- [self.navigationItem setLeftBarButtonItem:_editButton animated:YES];
- [self.tableView setEditing:NO animated:YES];
- }
- 
- */
 
 
 #pragma mark - New Recording
@@ -309,12 +216,10 @@
     }
 }
 
-
 - (void)newRecordingViewController:(NewRecordingViewController *)viewController didAddNewRecording:(NSString *)recordingName {
     [_recordingNames addObject:recordingName];
     [_recordingNames sortUsingSelector:@selector(caseInsensitiveCompare:)];
     [self.tableView reloadData];
 }
-
 
 @end
