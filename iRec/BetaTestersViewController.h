@@ -10,4 +10,6 @@
 
 @interface BetaTestersViewController : UITableViewController
 
+- (void)openTwitterAccountWithUsername:(NSString *)username;
+
 @end

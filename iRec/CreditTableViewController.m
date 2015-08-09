@@ -37,94 +37,22 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            NSString *scheme = @"";
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
-            {
-                scheme = [NSString stringWithFormat:@"twitter://user?screen_name=Emu4iOS"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
-            {
-                scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/Emu4iOS"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
-            {
-                scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=Emu4iOS"];
-            }
-            else
-            {
-                scheme = [NSString stringWithFormat:@"http://twitter.com/Emu4iOS"];
-            }
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
+            [self openTwitterAccountWithUsername:@"Emu4iOS"];
         }
         
-        
         if (indexPath.row == 1) {
-            
-            NSString *scheme = @"";
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
-            {
-                scheme = [NSString stringWithFormat:@"twitter://user?screen_name=iNoCydia_Devs"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
-            {
-                scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/iNoCydia_Devs"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
-            {
-                scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=iNoCydia_Devs"];
-            }
-            else
-            {
-                scheme = [NSString stringWithFormat:@"http://twitter.com/iNoCydia_Devs"];
-            }
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
+            [self openTwitterAccountWithUsername:@"iNoCydia_Devs"];
         }
         
         if (indexPath.row == 2) {
-            NSString *scheme = @"";
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
-            {
-                scheme = [NSString stringWithFormat:@"twitter://user?screen_name=AAgatiello"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
-            {
-                scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/AAgatiello"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
-            {
-                scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=AAgatiello"];
-            }
-            else
-            {
-                scheme = [NSString stringWithFormat:@"http://twitter.com/AAgatiello"];
-            }
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
+            [self openTwitterAccountWithUsername:@"AAgatiello"];
         }
+        
         if (indexPath.row == 3) {
-            NSString *scheme = @"";
-            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
-            {
-                scheme = [NSString stringWithFormat:@"twitter://user?screen_name=HamzaSood"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
-            {
-                scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/HamzaSood"];
-            }
-            else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
-            {
-                scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=HamzaSood"];
-            }
-            else
-            {
-                scheme = [NSString stringWithFormat:@"http://twitter.com/HamzaSood"];
-            }
-            
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
+            [self openTwitterAccountWithUsername:@"HamzaSood"];
         }
         
         if (indexPath.row == 4) {
@@ -233,6 +161,28 @@
     NSString *bundleVersionForLabel = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
     NSString *versionForLabel = [NSString stringWithFormat:@"v%@",bundleVersionForLabel];
     _versionLabel.text = versionForLabel;
+}
+
+- (void)openTwitterAccountWithUsername:(NSString *)username {
+    NSString *scheme = @"";
+    if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitter://"]]) // Twitter
+    {
+        scheme = [NSString stringWithFormat:@"twitter://user?screen_name=%@",username];
+    }
+    else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"tweetbot://"]]) // Tweetbot
+    {
+        scheme = [NSString stringWithFormat:@"tweetbot:///user_profile/%@",username];
+    }
+    else if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"twitterrific://"]]) // Twitterrific
+    {
+        scheme = [NSString stringWithFormat:@"twitterrific:///profile?screen_name=%@",username];
+    }
+    else
+    {
+        scheme = [NSString stringWithFormat:@"http://twitter.com/%@",username];
+    }
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:scheme]];
 }
 
 @end
