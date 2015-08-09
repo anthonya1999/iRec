@@ -8,7 +8,7 @@
 
 #import "TermsConditionsViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import "FXBlurView.h"
+#import <FXBlurView/FXBlurView.h>
 
 @interface TermsConditionsViewController ()
 
