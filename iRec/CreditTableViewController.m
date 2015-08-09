@@ -6,7 +6,6 @@
 //
 //
 
-#import <MessageUI/MessageUI.h>
 #import <Social/Social.h>
 #import "CreditTableViewController.h"
 #import "UIAlertView+RSTAdditions.h"
