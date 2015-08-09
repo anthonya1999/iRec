@@ -276,11 +276,11 @@
     
     uint32_t (*IOSurfaceGetSeed)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetSeed");
     NSParameterAssert(IOSurfaceGetSeed);
-    kern_return_t (*IOSurfaceLock)(IOSurfaceRef buffer, uint32_t lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceLock");
+    kern_return_t (*IOSurfaceLock)(IOSurfaceRef buffer, IOSurfaceLockOptions lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceLock");
     NSParameterAssert(IOSurfaceLock);
     kern_return_t (*IOSurfaceAcceleratorTransferSurface)(IOSurfaceAcceleratorRef accelerator, IOSurfaceRef sourceSurface, IOSurfaceRef destSurface, CFDictionaryRef properties, void *unknown) = dlsym(_IOSurface, "IOSurfaceAcceleratorTransferSurface");
     NSParameterAssert(IOSurfaceAcceleratorTransferSurface);
-    kern_return_t (*IOSurfaceUnlock)(IOSurfaceRef buffer, uint32_t lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceUnlock");
+    kern_return_t (*IOSurfaceUnlock)(IOSurfaceRef buffer, IOSurfaceLockOptions lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceUnlock");
     NSParameterAssert(IOSurfaceUnlock);
     void *(*IOSurfaceGetBaseAddress)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBaseAddress");
     NSParameterAssert(IOSurfaceGetBaseAddress);
