@@ -1,7 +1,5 @@
-### iRec - iOS 7-8 Screen Recorder
-
-[![License](http://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
-
+### iRec - iOS 7-8 Screen Recorder  
+  
 ![ScreenShot](https://pbs.twimg.com/media/CATNEPXWQAAJWSt.jpg)
 
 ####Setup
@@ -51,3 +49,5 @@ iRec v1.2 and above now has support for the Apple Watch! You can remotely start 
 * If you are running iOS 8.3 or above, the resulting recording may freeze on a random frame at times, and then start recording again.  
 * Apple Watch remote does not work yet, it is only a GUI.
 * On iOS 9 devices, the app crashes when you start recording.
+
+Copyright © 2015 Anthony Agatiello
