@@ -33,8 +33,11 @@
          NSParameterAssert(IOSurfaceGetAllocSize);
          size_t (*IOSurfaceGetBytesPerRow)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerRow");
          NSParameterAssert(IOSurfaceGetBytesPerRow);
+         OSType (*IOSurfaceGetPixelFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetPixelFormat");
+         NSParameterAssert(IOSurfaceGetPixelFormat);
          _allocSize = IOSurfaceGetAllocSize(_screenSurface);
          _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
+         _pixelFormat = IOSurfaceGetPixelFormat(_screenSurface);
     }
     return self;
 }
@@ -138,7 +141,7 @@
                                      (__bridge NSString *)*kIOSurfaceBytesPerRow:      @(_bytesPerRow),
                                      (__bridge NSString *)*kIOSurfaceWidth:            @(self.screenWidth),
                                      (__bridge NSString *)*kIOSurfaceHeight:           @(self.screenHeight),
-                                     (__bridge NSString *)*kIOSurfacePixelFormat:      @(kCVPixelFormatType_32BGRA),
+                                     (__bridge NSString *)*kIOSurfacePixelFormat:      @(_pixelFormat),
                                      (__bridge NSString *)*kIOSurfaceCacheMode:        @(kIOMapInhibitCache)
                                      });
     
@@ -181,7 +184,7 @@
     [_videoWriter addInput:_videoWriterInput];
     
     NSDictionary *bufferAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSNumber numberWithInt:kCVPixelFormatType_32BGRA], kCVPixelBufferPixelFormatTypeKey,
+                                      [NSNumber numberWithInt:_pixelFormat], kCVPixelBufferPixelFormatTypeKey,
                                       [NSNumber numberWithUnsignedLong:self.screenWidth], kCVPixelBufferWidthKey,
                                       [NSNumber numberWithUnsignedLong:self.screenHeight], kCVPixelBufferHeightKey,
                                       [NSNumber numberWithUnsignedLong:_bytesPerRow], kCVPixelBufferBytesPerRowAlignmentKey,
