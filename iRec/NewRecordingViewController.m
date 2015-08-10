@@ -188,29 +188,17 @@ fail:
             if (_recorder == nil) {
                 if (!self.hasValidName)
                     goto deselect;
-                /*
-                 Now uses AppDelegate to handle when app goes into background/foreground.
-                 [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:nil]; //temp hack for 3 minutes
-                 */
-                _nameField.userInteractionEnabled = NO;
-                //self.tabBarController.tabBar.userInteractionEnabled = NO;
-                [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
-                //[self record];
-                //[_startButton setAlpha:0.1];
-                //[_stopButton setAlpha:1.0];
-                [self startStopRecording];
+                    _nameField.userInteractionEnabled = NO;
+                    [UIApplication sharedApplication].applicationIconBadgeNumber = 1;
+                    [self startStopRecording];
             }
             
             else {
                 if (_recorder) {
-                    //[_recorder stopRecording];
                     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
-                    // _recorder = nil;
                     [self startStopRecording];
-                    //self.tabBarController.tabBar.userInteractionEnabled = YES;
                     [self setMergingText];
                     [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
-                    //[self setButtonTextToNormal];
                     [self mergeAudio];
                 }
             }
@@ -344,9 +332,7 @@ fail:
         activityViewController.popoverPresentationController.barButtonItem = activityType;
         activityViewController.popoverPresentationController.permittedArrowDirections = UIPopoverArrowDirectionAny;
     }
-    
 }
-
 
 - (void)startStopRecording
 {
@@ -414,255 +400,43 @@ fail:
             NSError *error = nil;
             [[AVAudioSession sharedInstance] setActive:NO error:&error];
         }
-        
     }
-    
 }
 
-
-/*
- -(void)rotateVideo{
- 
- NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
- 
- 
- 
- NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
- 
- NSURL *videoFileURL = [NSURL fileURLWithPath:videoURL];
- 
- 
- 
- AVURLAsset* videoAsset = [[AVURLAsset alloc]initWithURL:videoFileURL options:nil];
- 
- 
- 
- 
- 
- AVAssetTrack *assetVideoTrack = nil;
- 
- 
- 
- 
- 
- if ([[NSFileManager defaultManager] fileExistsAtPath:videoURL]) {
- 
- NSArray *assetArray = [videoAsset tracksWithMediaType:AVMediaTypeVideo];
- 
- if ([assetArray count] > 0)
- 
- assetVideoTrack = assetArray[0];
- 
- }
- 
- 
- 
- AVMutableComposition *mixComposition = [AVMutableComposition composition];
- 
- 
- 
- if (assetVideoTrack != nil) {
- 
- AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
- 
- [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:nil];
- double degrees = 0.0;
- 
- if ([prefs objectForKey:@"video_orientation"])
- 
- degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
- 
- [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
- 
- }
- 
- AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition
- 
- presetName:AVAssetExportPresetHighestQuality];
- 
- 
- 
- 
- 
- NSString *savePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
- 
- NSURL    *savetUrl = [NSURL fileURLWithPath:savePath];
- 
- 
- 
- _assetExport.outputFileType = AVFileTypeMPEG4;
- 
- _assetExport.outputURL = savetUrl;
- 
- _assetExport.shouldOptimizeForNetworkUse = NO;
- 
- 
- 
- 
- 
- [_startStopButton setTitle:@"Setting Orientation... Please Wait..." forState:UIControlStateNormal];
- 
- //_startStopButton.userInteractionEnabled = NO;
- 
- 
- 
- 
- 
- 
- 
- [_assetExport exportAsynchronouslyWithCompletionHandler:^(void){
- 
- 
- 
- switch(_assetExport.status)
- 
- {
- 
- case AVAssetExportSessionStatusCompleted:
- 
- {
- 
- 
- 
- //statusText.text = @"Export Completed";
- 
- //[_startStopButton setTitle:@"Start Recording" forState:UIControlStateNormal];
- 
- //_nameField.userInteractionEnabled = YES;
- 
- //_startStopButton.userInteractionEnabled = YES;
- 
- 
- 
- NSString *videoToDelete = [NSString stringWithFormat:@"%@", _nameField.text];
- 
- NSString *videoToDeletePath = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]
- 
- stringByAppendingPathComponent:videoToDelete]
- 
- stringByAppendingPathExtension:@"mp4"];
- 
- [[[NSFileManager alloc]init]removeItemAtPath:videoToDeletePath error:NULL];
- //[self mergeAudio];
- 
- 
- }
- 
- break;
- 
- 
- 
- case AVAssetExportSessionStatusWaiting:
- 
- {
- 
- //statusText.text = @"Waiting...";
- 
- [_startStopButton setTitle:@"Waiting..." forState:UIControlStateNormal];
- 
- }
- 
- break;
- 
- case AVAssetExportSessionStatusExporting:
- 
- {
- 
- //statusText.text = @"Exporting...";
- 
- [_startStopButton setTitle:@"Exporting..." forState:UIControlStateNormal];
- 
- }
- 
- break;
- 
- 
- 
- case AVAssetExportSessionStatusFailed:
- 
- {
- 
- //statusText.text = @"FAILED. Trying again...";
- 
- [_startStopButton setTitle:@"FAILED. Trying again..." forState:UIControlStateNormal];
- 
- [self rotateVideo];
- 
- 
- 
- }
- 
- break;
- 
- }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- }
- 
- ];
- 
- 
- 
- }
- 
- */
-
-
-
-
--(void)mergeAudio{
+- (void)mergeAudio {
+    double degrees = 0.0;
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    if ([prefs objectForKey:@"video_orientation"])
+        degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
     
-    NSString *videoURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
-    NSURL *videoFileURL = [NSURL fileURLWithPath:videoURL];
+    NSString *videoPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
+    NSString *audioPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
     
-    NSString *audioURL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
-    NSURL *audioFileURL = [NSURL fileURLWithPath:audioURL];
+    NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
+    NSURL *audioURL = [NSURL fileURLWithPath:audioPath];
     
+    NSError *error = nil;
+    NSDictionary *options = nil;
     
-    AVURLAsset* audioAsset = [[AVURLAsset alloc] initWithURL:audioFileURL options:nil];
-    AVURLAsset* videoAsset = [[AVURLAsset alloc] initWithURL:videoFileURL options:nil];
-    
-    
-    
+    AVURLAsset *videoAsset = [[AVURLAsset alloc] initWithURL:videoURL options:options];
+    AVURLAsset *audioAsset = [[AVURLAsset alloc] initWithURL:audioURL options:options];
     
     AVAssetTrack *assetVideoTrack = nil;
     AVAssetTrack *assetAudioTrack = nil;
     
-    
-    
-    
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:videoURL]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {
         NSArray *assetArray = [videoAsset tracksWithMediaType:AVMediaTypeVideo];
         if ([assetArray count] > 0)
             assetVideoTrack = assetArray[0];
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:audioURL] && [prefs boolForKey:@"switch_audio"]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath] && [prefs boolForKey:@"switch_audio"]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
         if ([assetArray count] > 0)
             assetAudioTrack = assetArray[0];
     }
     
-    double degrees = 0.0;
-    if ([prefs objectForKey:@"video_orientation"])
-        degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
-    
-    
     AVMutableComposition *mixComposition = [AVMutableComposition composition];
-    NSError *error = nil;
     
     if (assetVideoTrack != nil) {
         AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
@@ -676,82 +450,35 @@ fail:
         [compositionAudioTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, audioAsset.duration) ofTrack:assetAudioTrack atTime:kCMTimeZero error:&error];
     }
     
-    AVAssetExportSession* _assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition
-                                                                          presetName:AVAssetExportPresetHighestQuality];
+    NSString *exportPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
+    NSURL *exportURL = [NSURL fileURLWithPath:exportPath];
     
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
+    [exportSession setOutputFileType:AVFileTypeMPEG4];
+    [exportSession setOutputURL:exportURL];
+    [exportSession setShouldOptimizeForNetworkUse:NO];
     
-    NSString *savePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
-    NSURL *savetUrl = [NSURL fileURLWithPath:savePath];
-    
-    _assetExport.outputFileType = AVFileTypeMPEG4;
-    _assetExport.outputURL = savetUrl;
-    _assetExport.shouldOptimizeForNetworkUse = NO;
-    
-    NSLog(@"NEW video saved at: %@",savetUrl);
-    //[_startStopButton setTitle:@"Merging... Please Wait..." forState:UIControlStateNormal];
-    //_startStopButton.userInteractionEnabled = NO;
-    
-    NSString *audioToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf",_nameField.text]];
-    NSString *videoToDeletePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4",_nameField.text]];
-    [[[NSFileManager alloc] init] removeItemAtPath:audioToDeletePath error:&error];
-    [[[NSFileManager alloc] init] removeItemAtPath:videoToDeletePath error:&error];
-    NSLog(@"Removed OLD video file at: %@",videoToDeletePath);
-    NSLog(@"Removed OLD audio file at: %@",audioToDeletePath);
-
-    
-    [_assetExport exportAsynchronouslyWithCompletionHandler:^(void){
-        
-        switch(_assetExport.status)
-        {
-            case AVAssetExportSessionStatusCompleted:
-            {
-                _nameField.userInteractionEnabled = YES;
-            }
+    [exportSession exportAsynchronouslyWithCompletionHandler:^(void){
+        switch (exportSession.status) {
+            case AVAssetExportSessionStatusCompleted:{
+                NSError *error = nil;
+                [[NSFileManager defaultManager] removeItemAtPath:videoPath error:&error];
+                [[NSFileManager defaultManager] removeItemAtPath:audioPath error:&error];
                 break;
-                
-            case AVAssetExportSessionStatusWaiting:
-            {
-                //statusText.text = @"Waiting...";
-                //[_startStopButton setTitle:@"Waiting..." forState:UIControlStateNormal];
             }
-                break;
-            case AVAssetExportSessionStatusExporting:
-            {
-                //statusText.text = @"Exporting...";
-                //[_startStopButton setTitle:@"Exporting..." forState:UIControlStateNormal];
-            }
-                break;
                 
             case AVAssetExportSessionStatusFailed:
-            {
-                //statusText.text = @"FAILED. Trying again...";
-                //[_startStopButton setTitle:@"FAILED. Trying again..." forState:UIControlStateNormal];
-                [self mergeAudio];
-                
-            }
+                NSLog(@"Failed: %@", exportSession.error);
                 break;
+                
             case AVAssetExportSessionStatusCancelled:
-            {
-                
-            }
+                NSLog(@"Canceled: %@", exportSession.error);
                 break;
-            case AVAssetExportSessionStatusUnknown:
-            {
                 
-            }
+            default:
                 break;
         }
-        
-        
-        
-        
-        
-        
-    }
-     ];
-    
-    
-    
+    }];
 }
 
 @end
