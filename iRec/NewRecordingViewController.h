@@ -13,7 +13,7 @@
 @class ScreenRecorder;
 @protocol NewRecordingViewControllerDelegate;
 
-@interface NewRecordingViewController : UITableViewController <UIAlertViewDelegate, AVAudioRecorderDelegate/*AVAudioPlayerDelegate, AVCaptureFileOutputRecordingDelegate, CLLocationManagerDelegate*/> {
+@interface NewRecordingViewController : UITableViewController <UIAlertViewDelegate, AVAudioRecorderDelegate> {
     ScreenRecorder *_recorder;
     IBOutlet UITextField *_nameField;
     IBOutlet UIButton *_startStopButton;
@@ -28,7 +28,6 @@
 @property (nonatomic) BOOL isRecording;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareButtonOutlet;
 @property (weak, nonatomic) id<NewRecordingViewControllerDelegate> delegate;
-//@property (nonatomic, strong) CLLocationManager *locationManager;
 
 @end
 

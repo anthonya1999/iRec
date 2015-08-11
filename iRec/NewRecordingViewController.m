@@ -158,25 +158,6 @@ fail:
     else {
         _nameField.keyboardAppearance = UIKeyboardAppearanceLight;
     }
-    
-    /*
-     //Need to add a check if location services are actived
-     if([CLLocationManager locationServicesEnabled]){
-     
-     NSLog(@"Location Services Enabled");
-     
-     if([CLLocationManager authorizationStatus]==kCLAuthorizationStatusDenied){
-     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"PLEASE READ" message:@"It is important that you allow location services for iRec. It allows to record while iRec is in multitasking for more than, the default, 3 minutes." delegate:self cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
-     [alert show];
-     }
-     }
-     
-     //Allows for infinite backgrounding/recording. Starts location search loop
-     self.locationManager = [[CLLocationManager alloc] init];
-     self.locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers;
-     self.locationManager.delegate = self;
-     [self.locationManager startUpdatingLocation];
-     */
 }
 
 #pragma mark - UITableViewDelegate Methods
@@ -199,7 +180,10 @@ fail:
                     [self startStopRecording];
                     [self setMergingText];
                     [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
-                    [self mergeAudio];
+                    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
+                        [self mergeAudio];
+                    }
+                    [self removeOldVideoFallback];
                 }
             }
         }
@@ -430,7 +414,7 @@ fail:
             assetVideoTrack = assetArray[0];
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath] && [prefs boolForKey:@"switch_audio"]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
         if ([assetArray count] > 0)
             assetAudioTrack = assetArray[0];
@@ -464,21 +448,35 @@ fail:
                 NSError *error = nil;
                 [[NSFileManager defaultManager] removeItemAtPath:videoPath error:&error];
                 [[NSFileManager defaultManager] removeItemAtPath:audioPath error:&error];
+                [self removeOldVideoFallback];
                 break;
             }
                 
             case AVAssetExportSessionStatusFailed:
                 NSLog(@"Failed: %@", exportSession.error);
+                [self removeOldVideoFallback];
                 break;
                 
             case AVAssetExportSessionStatusCancelled:
                 NSLog(@"Canceled: %@", exportSession.error);
+                [self removeOldVideoFallback];
                 break;
                 
             default:
+                [self removeOldVideoFallback];
                 break;
         }
     }];
+}
+
+- (void)removeOldVideoFallback {
+    NSString *oldVideoPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
+    NSString *newVideoPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
+    
+    if ([[NSFileManager defaultManager] fileExistsAtPath:oldVideoPath]) {
+        NSError *error = nil;
+        [[NSFileManager defaultManager] moveItemAtPath:oldVideoPath toPath:newVideoPath error:&error];
+    }
 }
 
 @end
