@@ -56,7 +56,7 @@
         _recordingNames = [[NSMutableArray alloc]init];
     else
         [_recordingNames removeAllObjects];
-    for (NSString *file in [[[NSFileManager alloc]init]enumeratorAtPath:[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"]]) {
+    for (NSString *file in [[[NSFileManager alloc] init] enumeratorAtPath:[documentsDirectory stringByAppendingPathComponent:@""]]) {
         if ([file hasSuffix:@".mp4"])
             [_recordingNames addObject:[file stringByDeletingPathExtension]];
     }
@@ -123,7 +123,7 @@
         [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
             if (buttonIndex == 1)
             {
-                NSString *savePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/"]];
+                NSString *savePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@""]];
                 NSFileManager *fileMgr = [[NSFileManager alloc] init];
                 NSError *error = nil;
                 NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:savePath error:&error];
@@ -147,7 +147,7 @@
 #pragma mark - UITableViewDelegate Methods
 
 -(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
-    NSString *URL = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
+    NSString *URL = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _recordingNames[indexPath.row]]];
     NSURL *fileURL = [NSURL fileURLWithPath:URL];
      NSArray *objectsToShare = @[fileURL];
      UIActivityViewController *activityViewController =
@@ -164,7 +164,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *filePath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _recordingNames[indexPath.row]]];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _recordingNames[indexPath.row]]];
     
     if (SYSTEM_VERSION_LESS_THAN(@"8.0")) {
         MPMoviePlayerViewController *moviePlayerController = [[MPMoviePlayerViewController alloc]initWithContentURL:[NSURL fileURLWithPath:filePath]];
@@ -195,7 +195,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSString *videoToDelete = _recordingNames[indexPath.row];
-        NSString *finalVideoToDeletePath = [[[NSHomeDirectory() stringByAppendingPathComponent:@"Documents"] stringByAppendingPathComponent:videoToDelete] stringByAppendingPathExtension:@"mp4"];
+        NSString *finalVideoToDeletePath = [[[documentsDirectory stringByAppendingPathComponent:@""] stringByAppendingPathComponent:videoToDelete] stringByAppendingPathExtension:@"mp4"];
         NSError *error = nil;
         [[[NSFileManager alloc] init] removeItemAtPath:finalVideoToDeletePath error:&error];
         [_recordingNames removeObjectIdenticalTo:videoToDelete];

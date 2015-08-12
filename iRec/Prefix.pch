@@ -21,6 +21,7 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 #define DEGREES_TO_RADIANS(degrees)                 ((degrees) / 180.0 * M_PI)
 #define AssertSuccess(call, descriptionString) do {\kern_return_t kernreturn = call; \NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_error_string(kernreturn)); \} while(0)
+#define documentsDirectory [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
 
 #endif
 

@@ -237,7 +237,7 @@ deselect:
 #pragma mark - Data Validation
 
 - (NSString *)filePathForRecordingNamed:(NSString *)name {
-    return [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
+    return [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
     
 }
 
@@ -320,7 +320,7 @@ fail:
 
 - (void)startStopRecording
 {
-    NSString *urlString = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
+    NSString *urlString = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf", _nameField.text]];
     NSURL *fileURL = [NSURL fileURLWithPath:urlString];
     
     //If the app is not recording, we want to start recording
@@ -393,8 +393,8 @@ fail:
     if ([prefs objectForKey:@"video_orientation"])
         degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
     
-    NSString *videoPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
-    NSString *audioPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.caf", _nameField.text]];
+    NSString *videoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
+    NSString *audioPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf", _nameField.text]];
     
     NSURL *videoURL = [NSURL fileURLWithPath:videoPath];
     NSURL *audioURL = [NSURL fileURLWithPath:audioPath];
@@ -434,7 +434,7 @@ fail:
         [compositionAudioTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, audioAsset.duration) ofTrack:assetAudioTrack atTime:kCMTimeZero error:&error];
     }
     
-    NSString *exportPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
+    NSString *exportPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _nameField.text]];
     NSURL *exportURL = [NSURL fileURLWithPath:exportPath];
     
     AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];
@@ -470,8 +470,8 @@ fail:
 }
 
 - (void)removeOldVideoFallback {
-    NSString *oldVideoPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@-1.mp4", _nameField.text]];
-    NSString *newVideoPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Documents/%@.mp4", _nameField.text]];
+    NSString *oldVideoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
+    NSString *newVideoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _nameField.text]];
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:oldVideoPath]) {
         NSError *error = nil;
