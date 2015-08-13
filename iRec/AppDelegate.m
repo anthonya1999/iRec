@@ -65,21 +65,23 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     }
     
     
-    NSLog(@"Registering default values from Settings.bundle");
+    NSLog(@"Registering default values from Settings bundle");
     NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithBool:YES], @"dark_theme_switch",
                                 [NSNumber numberWithBool:YES], @"suspend_switch",
+                                [NSNumber numberWithBool:YES], @"thumbnail_switch",
+                                [NSNumber numberWithBool:YES], @"discard_switch",
                                 nil];
     [defs registerDefaults:dictionary];
     [defs synchronize];
     
-    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];
     
     if(!settingsBundle)
     {
-        NSLog(@"Could not find Settings.bundle");
+        NSLog(@"Could not find Settings bundle");
     }
     
     NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];

@@ -9,6 +9,7 @@ pod 'Parse'
 pod 'Crashlytics'
 pod 'Fabric'
 pod 'AFNetworking'
+pod 'InAppSettingsKit'
 
 end
 

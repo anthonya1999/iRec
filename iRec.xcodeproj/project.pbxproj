@@ -23,7 +23,7 @@
 		920CD00E1A94DF48004BD668 /* UpdateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD00B1A94DF48004BD668 /* UpdateViewController.m */; };
 		920CD04A1A94DFD5004BD668 /* NSDate+Comparing.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD0491A94DFD5004BD668 /* NSDate+Comparing.m */; };
 		920CD04D1A94E05D004BD668 /* BetaTestersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD04C1A94E05D004BD668 /* BetaTestersViewController.m */; };
-		920CD0551A94E8C9004BD668 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 920CD0541A94E8C9004BD668 /* Settings.bundle */; };
+		920CD0551A94E8C9004BD668 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 920CD0541A94E8C9004BD668 /* InAppSettings.bundle */; };
 		92561DE81B59701D00DF6F75 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE71B59701D00DF6F75 /* libsqlite3.tbd */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
@@ -115,7 +115,7 @@
 		920CD04B1A94E05D004BD668 /* BetaTestersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BetaTestersViewController.h; sourceTree = "<group>"; };
 		920CD04C1A94E05D004BD668 /* BetaTestersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BetaTestersViewController.m; sourceTree = "<group>"; };
 		920CD0531A94E7B9004BD668 /* iRec.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = iRec.entitlements; sourceTree = "<group>"; };
-		920CD0541A94E8C9004BD668 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		920CD0541A94E8C9004BD668 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		921C214C1B0E95E900CAB36B /* iRec Beta.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iRec Beta.cer"; sourceTree = "<group>"; };
 		92561DE71B59701D00DF6F75 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		9259B5881A9FEC0A0072AD4F /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
@@ -213,7 +213,7 @@
 				920CCFF11A94DC6A004BD668 /* Tab Bar */,
 				920CCFCD1A94DAD1004BD668 /* Images.xcassets */,
 				920CD0531A94E7B9004BD668 /* iRec.entitlements */,
-				920CD0541A94E8C9004BD668 /* Settings.bundle */,
+				920CD0541A94E8C9004BD668 /* InAppSettings.bundle */,
 				92F122DA1B141286001E1061 /* Settings-Watch.bundle */,
 				920CCFBD1A94DAD1004BD668 /* Supporting Files */,
 			);
@@ -558,7 +558,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				920CD0551A94E8C9004BD668 /* Settings.bundle in Resources */,
+				920CD0551A94E8C9004BD668 /* InAppSettings.bundle in Resources */,
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
 				92F122DB1B141286001E1061 /* Settings-Watch.bundle in Resources */,
 				926D31791B77CBDB004220DF /* LaunchScreen.storyboard in Resources */,

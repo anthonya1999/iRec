@@ -23,11 +23,11 @@
                                     <rect key="frame" x="0.0" y="0.0" width="533" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="os6-8q-Hjy">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="518" id="os6-8q-Hjy">
                                             <rect key="frame" x="15" y="0.0" width="518" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -164,44 +164,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection footerTitle="Open the default Settings application to change recording and customization options." id="BJ3-N0-Wxa">
-                                <cells>
-                                    <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="TAA-sq-ap9">
-                                        <rect key="frame" x="0.0" y="274.5" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TAA-sq-ap9" id="RSJ-Zs-ChE">
-                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gear" translatesAutoresizingMaskIntoConstraints="NO" id="toZ-ZS-ge6">
-                                                    <rect key="frame" x="18" y="7" width="30" height="30"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="za7-yb-na2"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Open Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ut-dj-rxZ">
-                                                    <rect key="frame" x="57" y="0.0" width="533" height="44"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstItem="2ut-dj-rxZ" firstAttribute="centerY" secondItem="toZ-ZS-ge6" secondAttribute="centerY" id="2SA-Zh-o02"/>
-                                                <constraint firstItem="2ut-dj-rxZ" firstAttribute="top" secondItem="RSJ-Zs-ChE" secondAttribute="top" id="KR1-rz-MQn"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="2ut-dj-rxZ" secondAttribute="trailing" constant="-31" id="QDe-sh-b9g"/>
-                                                <constraint firstItem="2ut-dj-rxZ" firstAttribute="leading" secondItem="toZ-ZS-ge6" secondAttribute="trailing" constant="9" id="YvC-HA-fOh"/>
-                                                <constraint firstItem="toZ-ZS-ge6" firstAttribute="top" secondItem="RSJ-Zs-ChE" secondAttribute="topMargin" constant="-1" id="nBP-59-cts"/>
-                                                <constraint firstItem="toZ-ZS-ge6" firstAttribute="leading" secondItem="RSJ-Zs-ChE" secondAttribute="leadingMargin" constant="10" id="yTy-y0-RB8"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="zX8-Kl-Stc" id="n6o-2P-z34"/>
@@ -225,7 +187,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9LQ-Io-9nJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-45" y="740"/>
+            <point key="canvasLocation" x="767" y="740"/>
         </scene>
         <!--Recordings-->
         <scene sceneID="55V-Tt-sqP">
@@ -261,6 +223,7 @@
         <scene sceneID="wVv-Tq-Pi9">
             <objects>
                 <tabBarController definesPresentationContext="YES" id="lUL-eJ-Jzy" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="0C5-mD-xpA"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="QuY-dj-YYC">
@@ -272,6 +235,7 @@
                     <connections>
                         <segue destination="fNJ-CO-Wfe" kind="relationship" relationship="viewControllers" id="Igf-Xz-DUE"/>
                         <segue destination="Idl-O2-ORc" kind="relationship" relationship="viewControllers" id="ZTX-is-13Y"/>
+                        <segue destination="lhr-3v-lLH" kind="relationship" relationship="viewControllers" id="0Ne-5f-jAt"/>
                         <segue destination="uSF-Wo-KkX" kind="relationship" relationship="viewControllers" id="4iu-YZ-XG8"/>
                     </connections>
                 </tabBarController>
@@ -302,7 +266,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FkP-tL-4oF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-756" y="740"/>
+            <point key="canvasLocation" x="56" y="740"/>
         </scene>
         <!--Beta Testers-->
         <scene sceneID="3WY-tM-aI4">
@@ -978,14 +942,60 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="96K-c7-siR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="672" y="740"/>
+            <point key="canvasLocation" x="1484" y="740"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="CHm-Oo-sEj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lhr-3v-lLH" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="2la-zc-Q01" customClass="TabBar">
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="settings-filled"/>
+                        </userDefinedRuntimeAttributes>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ASG-dx-yIK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="fR4-Ha-5js" kind="relationship" relationship="rootViewController" id="Dq3-qc-f7m"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ati-9X-GEk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1465" y="732"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="8DC-5q-VTG">
+            <objects>
+                <tableViewController id="fR4-Ha-5js" customClass="IASKAppSettingsViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="tob-0s-4Bd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="fR4-Ha-5js" id="7fx-Am-V7a"/>
+                            <outlet property="delegate" destination="fR4-Ha-5js" id="aj2-Nd-rTO"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Settings" id="AjO-Is-X4S"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hf6-Oq-saq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-756" y="732"/>
         </scene>
     </scenes>
     <resources>
         <image name="bug" width="30" height="30"/>
         <image name="camera" width="30" height="30"/>
-        <image name="gear" width="30" height="30"/>
         <image name="info" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
         <image name="update_icon" width="60" height="60"/>
         <image name="video" width="30" height="30"/>
     </resources>

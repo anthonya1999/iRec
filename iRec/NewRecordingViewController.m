@@ -32,16 +32,6 @@
     return self;
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-        NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-        if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
-            return 3;
-        }
-    }
-    return 2;
-}
-
 - (id)activityViewControllerPlaceholderItem:(UIActivityViewController *)activityViewController
 {
     return shareString1;
@@ -179,27 +169,12 @@ fail:
                     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
                     [self startStopRecording];
                     [self setMergingText];
-                    [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
                     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
                         [self mergeAudio];
                     }
+                    [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
                     [self removeOldVideoFallback];
                 }
-            }
-        }
-    }
-    
-    if (indexPath.section == 2) {
-        if (indexPath.row == 0) {
-            if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
-                NSURL *settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-                if ([[UIApplication sharedApplication] canOpenURL:settingsURL]) {
-                    [[UIApplication sharedApplication] openURL:settingsURL];
-                }
-            }
-            else {
-                UIAlertView *settingsAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Unfortunately, you can only open the Settings app directly in iOS 8 or above. Please go to your home screen, open the Settings app, and scroll down to \"iRec\" to change the application settings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
-                [settingsAlert show];
             }
         }
     }
@@ -226,19 +201,54 @@ deselect:
     [_startStopButton setTitle:@"Start Recording" forState:UIControlStateNormal];
     [_startStopButton setTitleColor:[UIColor colorWithRed:0/255.f green:200/255.f blue:0/255.f alpha:1.0] forState:UIControlStateNormal];
     [_startStopButton setTitleShadowColor:[UIColor colorWithRed:0/255.f green:200/255.f blue:0/255.f alpha:1.0] forState:UIControlStateNormal];
-    [_nameField setText:nil];
     _startStopButton.userInteractionEnabled = NO;
     _nameField.userInteractionEnabled = YES;
     self.tabBarController.tabBar.userInteractionEnabled = YES;
     self.tableView.userInteractionEnabled = YES;
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"discard_switch"]) {
+        [self showDiscardOrSaveAlert];
+    }
+    else {
+        [_nameField setText:nil];
+    }
 }
 
-
-#pragma mark - Data Validation
-
-- (NSString *)filePathForRecordingNamed:(NSString *)name {
-    return [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
+- (void)showDiscardOrSaveAlert {
+    UIAlertView *discardSaveAlert = [[UIAlertView alloc] initWithTitle:@"Discard or Save?" message:[NSString stringWithFormat:@"Would you like to discard or save the recording named \"%@\"?", _nameField.text] delegate:self cancelButtonTitle:@"Discard" otherButtonTitles:@"Save", nil];
     
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    
+    [self.view addSubview:blurView];
+    
+    [discardSaveAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+        if (buttonIndex == 0) {
+            UIAlertView *confirmationAlert = [[UIAlertView alloc] initWithTitle:@"Confirmation" message:@"Are you sure you want to discard this recording?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+            
+            [confirmationAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == 1) {
+                    NSError *error = nil;
+                    NSString *videoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _nameField.text]];
+                    [[NSFileManager defaultManager] removeItemAtPath:videoPath error:&error];
+                    [blurView removeFromSuperview];
+                    [_nameField setText:nil];
+                }
+                if (buttonIndex == 0) {
+                    [self showDiscardOrSaveAlert];
+                }
+            }];
+        }
+        if (buttonIndex == 1) {
+            for (UIView *subView in self.view.subviews) {
+                if ([subView isKindOfClass:[FXBlurView class]]) {
+                    [subView removeFromSuperview];
+                }
+            }
+            [_nameField setText:nil];
+        }
+    }];
 }
 
 - (BOOL)hasValidName {
@@ -258,7 +268,7 @@ deselect:
     
     else {
         NSFileManager *fileManager = [[NSFileManager alloc] init];
-        if ([fileManager fileExistsAtPath:[self filePathForRecordingNamed:_nameField.text]]) {
+        if ([fileManager fileExistsAtPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _nameField.text]]]) {
             errorText = @"Please enter a different name, that one has already been taken.";
             goto fail;
         }
@@ -330,7 +340,7 @@ fail:
         
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1];
         _recorder = [[ScreenRecorder alloc]initWithFramerate:self.framerate bitrate:self.bitrate];
-        [_recorder setVideoPath:[self filePathForRecordingNamed:_nameField.text]];
+        [_recorder setVideoPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]]];
         [_recorder startRecording];
         
         NSError *sessionError = nil;

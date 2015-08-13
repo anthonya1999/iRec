@@ -53,10 +53,10 @@
 //Populate the array with the files from the documents folder
 - (void)populateNamesArray {
     if (_recordingNames == nil)
-        _recordingNames = [[NSMutableArray alloc]init];
+        _recordingNames = [[NSMutableArray alloc] init];
     else
         [_recordingNames removeAllObjects];
-    for (NSString *file in [[[NSFileManager alloc] init] enumeratorAtPath:[documentsDirectory stringByAppendingPathComponent:@""]]) {
+    for (NSString *file in [[[NSFileManager alloc] init] enumeratorAtPath:documentsDirectory]) {
         if ([file hasSuffix:@".mp4"])
             [_recordingNames addObject:[file stringByDeletingPathExtension]];
     }
@@ -76,13 +76,50 @@
     return _recordingNames.count;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.defaults boolForKey:@"thumbnails_switch"]) {
+        return 120;
+    }
+    else {
+        return 44;
+    }
+}
+
+- (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL {
+    UIImage *theImage = nil;
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:contentURL options:nil];
+    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    generator.appliesPreferredTrackTransform = YES;
+    NSError *error = nil;
+    CMTime time = CMTimeMake([asset duration].timescale, [asset duration].timescale / 2);
+    CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:nil error:&error];
+    
+    theImage = [[UIImage alloc] initWithCGImage:imgRef];
+    CGImageRelease(imgRef);
+    
+    return theImage;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecordingNameCell" forIndexPath:indexPath];
-    [cell.textLabel setText:_recordingNames[indexPath.row]];
-    return cell;
+    
+    if ([self.defaults boolForKey:@"thumbnails_switch"]) {
+        [cell.textLabel setText:[NSString stringWithFormat:@"            %@", _recordingNames[indexPath.row]]];
+        
+        UIImageView *thumbnailImageView = [[UIImageView alloc] initWithImage:[self thumbnailFromVideoAtURL:[NSURL fileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _recordingNames[indexPath.row]]]]]];
+        [thumbnailImageView setFrame:CGRectMake(-18, 5, 110, 110)];
+        thumbnailImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [cell.contentView addSubview:thumbnailImageView];
+    }
+    
+    else {
+        [cell.textLabel setText:_recordingNames[indexPath.row]];
+        cell.textLabel.font = [cell.textLabel.font fontWithSize:16];
+    }
+    
+     return cell;
 }
-
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
     NSString *footerText = nil;
