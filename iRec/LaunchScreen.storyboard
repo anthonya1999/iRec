@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8173.3" systemVersion="15A244d" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
+                        <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJn-IU-ivP">
+                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <animations/>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <textAttributes key="titleTextAttributes">
+                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </textAttributes>
+                                <items>
+                                    <navigationItem title="Record" id="ThJ-o9-fee"/>
+                                </items>
+                            </navigationBar>
+                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v46-wM-82A">
+                                <rect key="frame" x="0.0" y="551" width="600" height="49"/>
+                                <animations/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <items>
+                                    <tabBarItem title="Record" image="camera" id="2Do-kg-6ze"/>
+                                    <tabBarItem title="Recordings" image="video" id="swm-pZ-fOE"/>
+                                    <tabBarItem title="Settings" image="settings" id="U4s-gf-u6X"/>
+                                    <tabBarItem title="Info" image="info" id="zy3-s4-zrW"/>
+                                </items>
+                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            </tabBar>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="hJn-IU-ivP" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" id="DJx-jW-5S0"/>
+                            <constraint firstItem="hJn-IU-ivP" firstAttribute="leading" secondItem="v46-wM-82A" secondAttribute="leading" id="JCF-xh-iVC"/>
+                            <constraint firstItem="hJn-IU-ivP" firstAttribute="trailing" secondItem="v46-wM-82A" secondAttribute="trailing" id="baU-Ok-r71"/>
+                            <constraint firstItem="v46-wM-82A" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="hNU-ty-51k"/>
+                            <constraint firstItem="v46-wM-82A" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="jy9-RM-v2s"/>
+                            <constraint firstAttribute="trailing" secondItem="hJn-IU-ivP" secondAttribute="trailing" id="y5w-bC-3mJ"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="53" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="camera" width="30" height="30"/>
+        <image name="info" width="30" height="30"/>
+        <image name="settings" width="30" height="30"/>
+        <image name="video" width="30" height="30"/>
+    </resources>
+</document>

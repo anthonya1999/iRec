@@ -27,8 +27,8 @@
 		92561DE81B59701D00DF6F75 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE71B59701D00DF6F75 /* libsqlite3.tbd */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
-		926D31791B77CBDB004220DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 926D317B1B77CBDB004220DF /* LaunchScreen.storyboard */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
+		9273F63D1B7D597400D0257B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9273F63C1B7D597400D0257B /* LaunchScreen.storyboard */; };
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
 		92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E557011B3F1C7E0013CC7D /* Assets.xcassets */; };
 		92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
@@ -122,9 +122,9 @@
 		9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		92657C541AC0A67E009112E4 /* LegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalViewController.h; sourceTree = "<group>"; };
 		92657C551AC0A67E009112E4 /* LegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalViewController.m; sourceTree = "<group>"; };
-		926D317A1B77CBDB004220DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9270221D1AF9964100A78EE9 /* TermsConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsConditionsViewController.h; sourceTree = "<group>"; };
 		9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsConditionsViewController.m; sourceTree = "<group>"; };
+		9273F63C1B7D597400D0257B /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		927ADA411B13B2E400B4887C /* WatchSupportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSupportViewController.h; sourceTree = "<group>"; };
 		927ADA421B13B2E400B4887C /* WatchSupportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchSupportViewController.m; sourceTree = "<group>"; };
 		92B4AA701B7A843300EBAA6B /* iRec.ipa */ = {isa = PBXFileReference; lastKnownFileType = file; path = iRec.ipa; sourceTree = "<group>"; };
@@ -338,7 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				920CCFCA1A94DAD1004BD668 /* Main.storyboard */,
-				926D317B1B77CBDB004220DF /* LaunchScreen.storyboard */,
+				9273F63C1B7D597400D0257B /* LaunchScreen.storyboard */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -561,7 +561,7 @@
 				920CD0551A94E8C9004BD668 /* InAppSettings.bundle in Resources */,
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
 				92F122DB1B141286001E1061 /* Settings-Watch.bundle in Resources */,
-				926D31791B77CBDB004220DF /* LaunchScreen.storyboard in Resources */,
+				9273F63D1B7D597400D0257B /* LaunchScreen.storyboard in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,14 +690,6 @@
 				920CCFCB1A94DAD1004BD668 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		926D317B1B77CBDB004220DF /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				926D317A1B77CBDB004220DF /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
