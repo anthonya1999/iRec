@@ -29,6 +29,7 @@
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
+		92AC5E991B7E4AEE005935B4 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 92AC5E981B7E4AEE005935B4 /* Settings.bundle */; };
 		92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E557011B3F1C7E0013CC7D /* Assets.xcassets */; };
 		92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
 		92E5570F1B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5570E1B3F1C7E0013CC7D /* Assets.xcassets */; };
@@ -125,6 +126,7 @@
 		9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsConditionsViewController.m; sourceTree = "<group>"; };
 		927ADA411B13B2E400B4887C /* WatchSupportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSupportViewController.h; sourceTree = "<group>"; };
 		927ADA421B13B2E400B4887C /* WatchSupportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchSupportViewController.m; sourceTree = "<group>"; };
+		92AC5E981B7E4AEE005935B4 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		92B4AA701B7A843300EBAA6B /* iRec.ipa */ = {isa = PBXFileReference; lastKnownFileType = file; path = iRec.ipa; sourceTree = "<group>"; };
 		92BF90BC1B69B4BA00BA0E4E /* Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		92D8AC501B1AB3DA0090CBA5 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				920CCFCD1A94DAD1004BD668 /* Images.xcassets */,
 				920CD0531A94E7B9004BD668 /* iRec.entitlements */,
 				920CD0541A94E8C9004BD668 /* InAppSettings.bundle */,
+				92AC5E981B7E4AEE005935B4 /* Settings.bundle */,
 				92F122DA1B141286001E1061 /* Settings-Watch.bundle */,
 				920CCFBD1A94DAD1004BD668 /* Supporting Files */,
 			);
@@ -558,6 +561,7 @@
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
 				92F122DB1B141286001E1061 /* Settings-Watch.bundle in Resources */,
 				9255475B1B7D8E2700F075B6 /* LaunchScreen.storyboard in Resources */,
+				92AC5E991B7E4AEE005935B4 /* Settings.bundle in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

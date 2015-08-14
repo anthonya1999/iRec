@@ -150,13 +150,6 @@
 {
     [super viewDidLoad];
     
-    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    }
-    else {
-        //set nothing differently...
-    }
-    
     NSString *bundleVersionForLabel = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
     NSString *versionForLabel = [NSString stringWithFormat:@"v%@",bundleVersionForLabel];
     _versionLabel.text = versionForLabel;

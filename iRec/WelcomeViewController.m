@@ -35,9 +35,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIBarButtonItem *newBackButton = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    if ([self.defaults boolForKey:@"dark_theme_switch"]) {
-        self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    }
     [[self navigationItem] setBackBarButtonItem:newBackButton];
     
     [[self.appIconImage layer] setCornerRadius:20.0];
