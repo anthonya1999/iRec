@@ -9,7 +9,7 @@ pod 'Parse'
 pod 'Crashlytics'
 pod 'Fabric'
 pod 'AFNetworking'
-pod 'InAppSettingsKit'
+pod 'InAppSettingsKit', :git => 'https://github.com/anthonya1999/InAppSettingsKit'
 
 end
 

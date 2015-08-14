@@ -17,6 +17,7 @@
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 
 static NSString * const CachedSoftwareUpdateKey = @"cachedSoftwareUpdate";
 static NSString * const AppVersionKey = @"appVersion";
@@ -59,9 +60,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
             [self.window makeKeyAndVisible];
             [self.window.rootViewController presentViewController:navigationController animated:YES completion:NULL];
         });
-        
-        [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"showedWarningAlert"];
-        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     
@@ -114,13 +112,10 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
         [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
         [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
+        [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
         [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
         
-    }
-    else {
-        //Only change the status bar color...
-        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     }
     
     [defs registerDefaults:defaultsToRegister];
