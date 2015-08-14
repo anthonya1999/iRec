@@ -25,7 +25,6 @@
 		920CD04D1A94E05D004BD668 /* BetaTestersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD04C1A94E05D004BD668 /* BetaTestersViewController.m */; };
 		920CD0551A94E8C9004BD668 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 920CD0541A94E8C9004BD668 /* InAppSettings.bundle */; };
 		9255475B1B7D8E2700F075B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255475D1B7D8E2700F075B6 /* LaunchScreen.storyboard */; };
-		92561DE81B59701D00DF6F75 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 92561DE71B59701D00DF6F75 /* libsqlite3.tbd */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
@@ -118,7 +117,6 @@
 		920CD0541A94E8C9004BD668 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		921C214C1B0E95E900CAB36B /* iRec Beta.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = "iRec Beta.cer"; sourceTree = "<group>"; };
 		9255475C1B7D8E2700F075B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		92561DE71B59701D00DF6F75 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/usr/lib/libsqlite3.tbd; sourceTree = DEVELOPER_DIR; };
 		9259B5881A9FEC0A0072AD4F /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		92657C541AC0A67E009112E4 /* LegalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LegalViewController.h; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92561DE81B59701D00DF6F75 /* libsqlite3.tbd in Frameworks */,
 				62F96E36EEA0D9ED69F28856 /* libPods-iRec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,7 +232,6 @@
 		920CCFE71A94DB79004BD668 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				92561DE71B59701D00DF6F75 /* libsqlite3.tbd */,
 				B05BB99ABEFABB2006815283 /* libPods-iRec.a */,
 			);
 			name = Frameworks;
@@ -763,6 +759,51 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"Bolts\"",
+					"-l\"FXBlurView\"",
+					"-l\"InAppSettingsKit\"",
+					"-l\"Parse\"",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"MessageUI\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-lsqlite3",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2cd6921f-c580-4314-9e4b-6892b609aec2";
@@ -810,6 +851,51 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"AFNetworking\"",
+					"-l\"Bolts\"",
+					"-l\"FXBlurView\"",
+					"-l\"InAppSettingsKit\"",
+					"-l\"Parse\"",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"Accelerate\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CFNetwork\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Crashlytics\"",
+					"-framework",
+					"\"Fabric\"",
+					"-framework",
+					"\"MessageUI\"",
+					"-framework",
+					"\"MobileCoreServices\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"Security\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-framework",
+					"\"UIKit\"",
+					"-weak_framework",
+					"\"Accounts\"",
+					"-weak_framework",
+					"\"Social\"",
+					"-lsqlite3",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "67d0ec5f-9992-4bdc-b4b4-e4906c5e1027";
