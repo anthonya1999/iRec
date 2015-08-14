@@ -17,7 +17,6 @@
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import <InAppSettingsKit/IASKAppSettingsViewController.h>
 
 static NSString * const CachedSoftwareUpdateKey = @"cachedSoftwareUpdate";
 static NSString * const AppVersionKey = @"appVersion";
