@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8142"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -13,22 +14,22 @@
                         <viewControllerLayoutGuide type="top" id="Llm-lL-Icb"/>
                         <viewControllerLayoutGuide type="bottom" id="xb3-aO-Qok"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                    <view key="view" userInteractionEnabled="NO" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hJn-IU-ivP">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cQG-pP-yI8">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <animations/>
                                 <color key="barTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <textAttributes key="titleTextAttributes">
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </textAttributes>
                                 <items>
-                                    <navigationItem title="Record" id="ThJ-o9-fee"/>
+                                    <navigationItem title="Record" id="foS-XI-Pdw"/>
                                 </items>
                             </navigationBar>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v46-wM-82A">
+                            <tabBar userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v46-wM-82A">
                                 <rect key="frame" x="0.0" y="551" width="600" height="49"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -44,14 +45,16 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="hJn-IU-ivP" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="8" id="DJx-jW-5S0"/>
-                            <constraint firstItem="hJn-IU-ivP" firstAttribute="leading" secondItem="v46-wM-82A" secondAttribute="leading" id="JCF-xh-iVC"/>
-                            <constraint firstItem="hJn-IU-ivP" firstAttribute="trailing" secondItem="v46-wM-82A" secondAttribute="trailing" id="baU-Ok-r71"/>
-                            <constraint firstItem="v46-wM-82A" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="hNU-ty-51k"/>
-                            <constraint firstItem="v46-wM-82A" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="jy9-RM-v2s"/>
-                            <constraint firstAttribute="trailing" secondItem="hJn-IU-ivP" secondAttribute="trailing" id="y5w-bC-3mJ"/>
+                            <constraint firstItem="v46-wM-82A" firstAttribute="trailing" secondItem="cQG-pP-yI8" secondAttribute="trailing" id="1jv-hQ-fdL"/>
+                            <constraint firstItem="v46-wM-82A" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="EN2-QZ-JdC"/>
+                            <constraint firstItem="cQG-pP-yI8" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" constant="20" id="Yc3-oI-6gt"/>
+                            <constraint firstItem="cQG-pP-yI8" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="aj5-wI-m92"/>
+                            <constraint firstAttribute="trailing" secondItem="cQG-pP-yI8" secondAttribute="trailing" id="iqG-0y-D9x"/>
+                            <constraint firstItem="v46-wM-82A" firstAttribute="leading" secondItem="cQG-pP-yI8" secondAttribute="leading" id="kYG-WF-Crq"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
