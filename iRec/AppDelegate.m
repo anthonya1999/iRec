@@ -81,7 +81,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         NSLog(@"Could not find Settings bundle");
     }
     
-    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.inApp.plist"]];
     NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
     NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
     
