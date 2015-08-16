@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 ADA Tech, LLC. All rights reserved.
 //
 
+#import "ScreenRecorder.h"
 #import "TermsConditionsViewController.h"
 #import "UIAlertView+RSTAdditions.h"
 #import <FXBlurView/FXBlurView.h>
@@ -62,7 +63,8 @@
 
 - (void)dismissTermsConditions {
     UIAlertView *dismissTermsAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"I agree to the iRec & Emu4iOS terms and conditions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Agree", nil];
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
@@ -85,7 +87,8 @@
 
 - (void)disagreeToTerms {
     UIAlertView *disagreeAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"You must agree to the iRec & Emu4iOS terms and conditions to use the application." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;

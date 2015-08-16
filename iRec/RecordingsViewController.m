@@ -145,8 +145,8 @@
 
 - (IBAction)deleteAllRecordings:(UIBarButtonItem *)sender {
     
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
-    [blurView setDynamic:YES];
+    ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
     [self.view addSubview:blurView];

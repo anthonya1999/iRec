@@ -64,7 +64,8 @@
 }
 
 - (BOOL)otherMediaIsPlaying {
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
+    ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
@@ -216,8 +217,8 @@ deselect:
 - (void)showDiscardOrSaveAlert {
     UIAlertView *discardSaveAlert = [[UIAlertView alloc] initWithTitle:@"Discard or Save?" message:[NSString stringWithFormat:@"Would you like to discard or save the recording named \"%@\"?", _nameField.text] delegate:self cancelButtonTitle:@"Discard" otherButtonTitles:@"Save", nil];
     
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
-    [blurView setDynamic:YES];
+    ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
     
@@ -252,8 +253,8 @@ deselect:
 }
 
 - (BOOL)hasValidName {
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:self.view.frame];
-    [blurView setDynamic:YES];
+    ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
     
