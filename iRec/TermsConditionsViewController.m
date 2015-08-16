@@ -64,7 +64,7 @@
 - (void)dismissTermsConditions {
     UIAlertView *dismissTermsAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"I agree to the iRec & Emu4iOS terms and conditions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Agree", nil];
     ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight])];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth] * 4, [screenRecorder screenHeight] * 4)];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
