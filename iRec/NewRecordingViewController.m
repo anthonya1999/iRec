@@ -233,8 +233,12 @@ deselect:
                     NSError *error = nil;
                     NSString *videoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _nameField.text]];
                     [[NSFileManager defaultManager] removeItemAtPath:videoPath error:&error];
-                    [blurView removeFromSuperview];
                     [_nameField setText:nil];
+                    for (UIView *subView in self.view.subviews) {
+                        if ([subView isKindOfClass:[FXBlurView class]]) {
+                            [subView removeFromSuperview];
+                        }
+                    }
                 }
                 if (buttonIndex == 0) {
                     [self showDiscardOrSaveAlert];

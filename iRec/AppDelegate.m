@@ -114,7 +114,9 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
         [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
-        
+    }
+    else {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     }
     
     [defs registerDefaults:defaultsToRegister];
