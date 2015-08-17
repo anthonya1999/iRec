@@ -2,18 +2,6 @@
 
 ![ScreenShot](https://pbs.twimg.com/media/CMUz-4dVEAAvss9.jpg)
 
-####Setup
-
-Run the following commands in terminal:  
-* Only run if Cocoapods is not already installed:  
-<code>sudo gem install cocoapods</code>   
-* Change the directory to where the project is located by dragging the folder onto the terminal window:  
-<code>cd path-to-project</code>  
-* Install the Pods:  
-<code>pod install</code>  
-
-Now just launch the iRec.xcworkspace file, and compile as normal!
-
 ####NOTE: As of commit 8d256dd, the (old) setup and the steps below are no longer needed! Please follow the instructions above instead.
 
 To install and deploy iRec to your device through Xcode, you must find and setup the PrivateFramework headers for IOKit, IOSurface, CoreSurface, and IOMobileFramebuffer (64-bit-safe version), and place them in the framework. I cannot provide these files in the project, due to legal reasons. However, you may grab the first two here:  
