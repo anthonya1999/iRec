@@ -10,7 +10,7 @@
 #import "ScreenRecorder.h"
 #import "WelcomeViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import <FXBlurView/FXBlurView.h>
+#import "FXBlurView.h"
 
 @implementation NewRecordingViewController {
     BOOL isAudioRec;

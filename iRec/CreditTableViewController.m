@@ -14,7 +14,7 @@
 #import "LegalViewController.h"
 #import "BetaTestersViewController.h"
 #import "WatchSupportViewController.h"
-#import <FXBlurView/FXBlurView.h>
+#import "FXBlurView.h"
 
 @interface CreditTableViewController ()
 

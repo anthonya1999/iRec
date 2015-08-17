@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 ADA Tech, LLC. All rights reserved.
 //
 
-#import <AFNetworking/AFNetworking.h>
+#import "AFNetworking.h"
 #import "UpdateViewController.h"
 #import "AppDelegate.h"
 #import "UIAlertView+RSTAdditions.h"

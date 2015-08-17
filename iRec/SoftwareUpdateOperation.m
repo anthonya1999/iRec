@@ -8,7 +8,7 @@
 
 #import "SoftwareUpdateOperation.h"
 
-#import <AFNetworking/AFNetworking.h>
+#import "AFNetworking.h"
 #import "AFNetworkActivityIndicatorManager.h"
 
 static NSString * const SoftwareUpdateRootAddress = @"http://104.131.174.145/";

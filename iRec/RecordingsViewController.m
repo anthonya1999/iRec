@@ -8,7 +8,7 @@
 
 #import "RecordingsViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import <FXBlurView/FXBlurView.h>
+#import "FXBlurView.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>

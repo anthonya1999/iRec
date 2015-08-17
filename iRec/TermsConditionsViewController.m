@@ -9,7 +9,7 @@
 #import "ScreenRecorder.h"
 #import "TermsConditionsViewController.h"
 #import "UIAlertView+RSTAdditions.h"
-#import <FXBlurView/FXBlurView.h>
+#import "FXBlurView.h"
 
 @interface TermsConditionsViewController ()
 
