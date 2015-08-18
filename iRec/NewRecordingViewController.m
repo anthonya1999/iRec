@@ -131,9 +131,6 @@ fail:
     if ([prefs boolForKey:@"dark_theme_switch"]) {
         _shareButtonOutlet.tintColor = [UIColor whiteColor];
     }
-    else {
-        //do nothing different...
-    }
     
     self.isRecording = NO;
     _nameField.userInteractionEnabled = YES;
@@ -417,8 +414,8 @@ fail:
     NSError *error = nil;
     NSDictionary *options = nil;
     
-    AVURLAsset *videoAsset = [[AVURLAsset alloc] initWithURL:videoURL options:options];
-    AVURLAsset *audioAsset = [[AVURLAsset alloc] initWithURL:audioURL options:options];
+    AVURLAsset *videoAsset = [AVURLAsset URLAssetWithURL:videoURL options:options];
+    AVURLAsset *audioAsset = [AVURLAsset URLAssetWithURL:audioURL options:options];
     
     AVAssetTrack *assetVideoTrack = nil;
     AVAssetTrack *assetAudioTrack = nil;
