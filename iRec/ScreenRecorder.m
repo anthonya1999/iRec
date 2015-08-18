@@ -81,12 +81,6 @@
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
-    kern_return_t (*IOMobileFramebufferSwapBegin)(IOMobileFramebufferConnection connection, int *token) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapBegin");
-    NSParameterAssert(IOMobileFramebufferSwapBegin);
-    kern_return_t (*IOMobileFramebufferSwapSetLayer)(IOMobileFramebufferConnection connection, int layerid, IOSurfaceRef buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapSetLayer");
-    NSParameterAssert(IOMobileFramebufferSwapSetLayer);
-    kern_return_t (*IOMobileFramebufferSwapEnd)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferSwapEnd");
-    NSParameterAssert(IOMobileFramebufferSwapEnd);
     kern_return_t (*IOServiceClose)(mach_port_t service) = dlsym(IOKit, "IOServiceClose");
     NSParameterAssert(IOServiceClose);
     kern_return_t (*IOConnectRelease)(IOMobileFramebufferConnection connection) = dlsym(IOKit, "IOConnectRelease");
@@ -97,10 +91,6 @@
         NSParameterAssert(IOServiceAuthorize);
         IOServiceAuthorize(serviceMatching, kIOServiceInteractionAllowed);
     }
-    
-    IOMobileFramebufferSwapBegin(_framebufferConnection, NULL);
-    IOMobileFramebufferSwapSetLayer(_framebufferConnection, 0, _screenSurface);
-    IOMobileFramebufferSwapEnd(_framebufferConnection);
     
     IOMobileFramebufferOpen(serviceMatching, *mach_task_self_, 0, &_framebufferConnection);
     IOMobileFramebufferGetMainDisplay(&_framebufferConnection);
