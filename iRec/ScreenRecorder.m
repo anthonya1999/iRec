@@ -26,7 +26,7 @@
          
          [self openFramebuffer];
          
-         _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_NOW);
+         _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_LAZY);
          NSParameterAssert(_IOSurface);
 
          size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
@@ -45,9 +45,9 @@
 #pragma mark - Open Framebuffer
 
 - (void)openFramebuffer {
-    void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit", RTLD_NOW);
+    void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit", RTLD_LAZY);
     NSParameterAssert(IOKit);
-    void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_NOW);
+    void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_LAZY);
     NSParameterAssert(IOMobileFramebuffer);
     
     mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
