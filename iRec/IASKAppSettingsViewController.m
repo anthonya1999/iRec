@@ -163,7 +163,6 @@ CGRect IASKCGRectSwap(CGRect rect);
 - (void)configure {
 	_reloadDisabled = NO;
 	_showDoneButton = YES;
-	_showCreditsFooter = YES; // display credits for InAppSettingsKit creators
 }
 
 - (void)viewDidLoad {
@@ -459,7 +458,7 @@ CGRect IASKCGRectSwap(CGRect rect);
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section
 {
 	NSString *footerText = [self.settingsReader footerTextForSection:section];
-	if (_showCreditsFooter && (section == [self.settingsReader numberOfSections]-1)) {
+	if (section == [self.settingsReader numberOfSections]-1) {
 		// show credits since this is the last section
 		if ((footerText == nil) || ([footerText length] == 0)) {
 			// show nothing
@@ -721,7 +720,6 @@ CGRect IASKCGRectSwap(CGRect rect);
         
         IASKAppSettingsViewController *targetViewController = [[[self class] alloc] init];
         targetViewController.showDoneButton = NO;
-        targetViewController.showCreditsFooter = NO; // Does not reload the tableview (but next setters do it)
         targetViewController.delegate = self.delegate;
         targetViewController.settingsStore = self.settingsStore;
         targetViewController.file = specifier.file;

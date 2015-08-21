@@ -25,19 +25,7 @@
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
          
          [self openFramebuffer];
-         
-         _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_LAZY);
-         NSParameterAssert(_IOSurface);
-
-         size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
-         NSParameterAssert(IOSurfaceGetAllocSize);
-         size_t (*IOSurfaceGetBytesPerRow)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerRow");
-         NSParameterAssert(IOSurfaceGetBytesPerRow);
-         OSType (*IOSurfaceGetPixelFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetPixelFormat");
-         NSParameterAssert(IOSurfaceGetPixelFormat);
-         _allocSize = IOSurfaceGetAllocSize(_screenSurface);
-         _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
-         _pixelFormat = IOSurfaceGetPixelFormat(_screenSurface);
+         [self setupScreenSurface];
     }
     return self;
 }
@@ -101,6 +89,24 @@
     
     dlclose(IOKit);
     dlclose(IOMobileFramebuffer);
+}
+
+#pragma mark - Setup Surface
+
+- (void)setupScreenSurface {
+    _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_LAZY);
+    NSParameterAssert(_IOSurface);
+    
+    size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
+    NSParameterAssert(IOSurfaceGetAllocSize);
+    size_t (*IOSurfaceGetBytesPerRow)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerRow");
+    NSParameterAssert(IOSurfaceGetBytesPerRow);
+    OSType (*IOSurfaceGetPixelFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetPixelFormat");
+    NSParameterAssert(IOSurfaceGetPixelFormat);
+    
+    _allocSize = IOSurfaceGetAllocSize(_screenSurface);
+    _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
+    _pixelFormat = IOSurfaceGetPixelFormat(_screenSurface);
 }
 
 #pragma mark - Create Surface
