@@ -77,7 +77,7 @@
         if (indexPath.row == 0) {
             
             ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
-            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth] * 4, [screenRecorder screenHeight] * 4)];
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth] * 4, [screenRecorder screenHeight])];
             [blurView setDynamic:YES];
             blurView.tintColor = [UIColor clearColor];
             blurView.blurRadius = 8;
