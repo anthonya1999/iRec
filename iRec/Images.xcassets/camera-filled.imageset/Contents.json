@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "video_camera_filled-512 copy 2.png"
+      "filename" : "video_camera_filled-512 copy 2.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "video_camera_filled-512 copy.png"
+      "filename" : "video_camera_filled-512 copy.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "video_camera_filled-512.png"
+      "filename" : "video_camera_filled-512.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

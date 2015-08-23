@@ -2,18 +2,18 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "info-512 copy 2.png"
+      "filename" : "info-512 copy 2.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "info-512 copy.png"
+      "filename" : "info-512 copy.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "info-512.png"
+      "filename" : "info-512.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

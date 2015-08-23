@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "UpdateViewController.h"
-#import "NewRecordingViewController.h"
 #import "SoftwareUpdate.h"
 #import "SoftwareUpdateOperation.h"
 #import "NSDate+Comparing.h"
@@ -31,7 +30,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
+
     [Parse setApplicationId:@"l0lKvRthodCZ2iMpZW2AXYYtr2lzI8u2xhkJT8Kn" clientKey:@"lX13j5I2hrp5QH8KO4KLxVdPOtLknORUfYci0zog"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
