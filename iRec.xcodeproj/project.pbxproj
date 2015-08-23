@@ -12,7 +12,6 @@
 		920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 920CCFCA1A94DAD1004BD668 /* Main.storyboard */; };
 		920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 920CCFCD1A94DAD1004BD668 /* Images.xcassets */; };
 		920CCFE61A94DB1A004BD668 /* ScreenRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CCFE51A94DB1A004BD668 /* ScreenRecorder.m */; };
-		920CCFF41A94DC77004BD668 /* TabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CCFF31A94DC77004BD668 /* TabBar.m */; };
 		920CCFF81A94DC9C004BD668 /* NewRecordingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CCFF71A94DC9C004BD668 /* NewRecordingViewController.m */; };
 		920CCFFC1A94DE0E004BD668 /* RecordingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CCFFB1A94DE0E004BD668 /* RecordingsViewController.m */; };
 		920CD0041A94DF08004BD668 /* CreditTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 920CD0031A94DF08004BD668 /* CreditTableViewController.m */; };
@@ -142,8 +141,6 @@
 		920CCFCD1A94DAD1004BD668 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		920CCFE41A94DB1A004BD668 /* ScreenRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScreenRecorder.h; sourceTree = "<group>"; };
 		920CCFE51A94DB1A004BD668 /* ScreenRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenRecorder.m; sourceTree = "<group>"; };
-		920CCFF21A94DC77004BD668 /* TabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBar.h; sourceTree = "<group>"; };
-		920CCFF31A94DC77004BD668 /* TabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBar.m; sourceTree = "<group>"; };
 		920CCFF61A94DC9C004BD668 /* NewRecordingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewRecordingViewController.h; sourceTree = "<group>"; };
 		920CCFF71A94DC9C004BD668 /* NewRecordingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewRecordingViewController.m; sourceTree = "<group>"; };
 		920CCFFA1A94DE0E004BD668 /* RecordingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordingsViewController.h; sourceTree = "<group>"; };
@@ -380,8 +377,6 @@
 		920CCFF11A94DC6A004BD668 /* Tab Bar */ = {
 			isa = PBXGroup;
 			children = (
-				920CCFF21A94DC77004BD668 /* TabBar.h */,
-				920CCFF31A94DC77004BD668 /* TabBar.m */,
 				920CCFF51A94DC7D004BD668 /* New Recording */,
 				920CCFF91A94DDFB004BD668 /* Recordings */,
 				920CD0011A94DEF3004BD668 /* Info */,
@@ -1077,7 +1072,6 @@
 				9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */,
 				921277B01B8964A90053F0AE /* AFHTTPRequestOperationManager.m in Sources */,
 				9212779B1B8964980053F0AE /* IASKTextField.m in Sources */,
-				920CCFF41A94DC77004BD668 /* TabBar.m in Sources */,
 				921277D71B8965200053F0AE /* UIAlertView+RSTAdditions.m in Sources */,
 				921277B41B8964A90053F0AE /* AFURLConnectionOperation.m in Sources */,
 				921277D11B8964B70053F0AE /* UIWebView+AFNetworking.m in Sources */,

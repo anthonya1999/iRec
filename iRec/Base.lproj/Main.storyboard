@@ -71,11 +71,7 @@
         <scene sceneID="k6c-kD-dpG">
             <objects>
                 <navigationController definesPresentationContext="YES" id="uSF-Wo-KkX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Info" image="info" id="HS9-GN-728" customClass="TabBar">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="info-filled"/>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Info" image="info" selectedImage="info-filled" id="HS9-GN-728"/>
                     <navigationItem key="navigationItem" id="vDS-uR-lMy"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="gQg-DS-nOh">
@@ -193,11 +189,7 @@
         <scene sceneID="55V-Tt-sqP">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Idl-O2-ORc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Recordings" image="video" id="7Bs-WJ-z5G" customClass="TabBar">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="video-filled"/>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Recordings" image="video" selectedImage="video-filled" id="7Bs-WJ-z5G"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="mvM-NG-qdx">
@@ -247,11 +239,7 @@
         <scene sceneID="HGw-DC-ZcQ">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fNJ-CO-Wfe" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Record" image="camera" id="n4Q-ft-Ks3" customClass="TabBar">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="camera-filled"/>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Record" image="camera" selectedImage="camera-filled" id="n4Q-ft-Ks3"/>
                     <toolbarItems/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Spl-BG-Id2">
@@ -477,7 +465,7 @@
                             <tableViewSection headerTitle="Credits" footerTitle="Click on a Twitter username to go to their profile." id="KRe-1H-YnR">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="PzT-3a-Wtw" detailTextLabel="c0F-Jq-Roz" style="IBUITableViewCellStyleValue1" id="xQU-kQ-KSq">
-                                        <rect key="frame" x="0.0" y="309.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="310" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xQU-kQ-KSq" id="ljN-J9-LvN">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -505,7 +493,7 @@
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="os5-Z1-DGB" detailTextLabel="tv9-km-prm" style="IBUITableViewCellStyleValue1" id="kjA-vx-RYO">
-                                        <rect key="frame" x="0.0" y="353.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="354" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kjA-vx-RYO" id="6rA-wq-a2I">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -533,7 +521,7 @@
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="Sgr-jO-7mw" detailTextLabel="vOO-wh-aQ5" style="IBUITableViewCellStyleValue1" id="1RK-M8-4V5">
-                                        <rect key="frame" x="0.0" y="397.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="398" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1RK-M8-4V5" id="tEN-xc-4YY">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -561,7 +549,7 @@
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="FAD-S9-OLt" detailTextLabel="Up1-6K-1Cs" style="IBUITableViewCellStyleValue1" id="ojh-he-ADE">
-                                        <rect key="frame" x="0.0" y="441.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="442" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ojh-he-ADE" id="Fe1-Q6-LPX">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -589,7 +577,7 @@
                                         <animations/>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="T9e-uk-rV6" style="IBUITableViewCellStyleDefault" id="EtG-4b-cTs">
-                                        <rect key="frame" x="0.0" y="485.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="486" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EtG-4b-cTs" id="DpE-2R-XbW">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -613,7 +601,7 @@
                             <tableViewSection headerTitle="Apple Watch" footerTitle="Learn how Apple Watch + iRec work together." id="tCB-a9-H4Z">
                                 <cells>
                                     <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="4eK-fE-Uhq" style="IBUITableViewCellStyleDefault" id="UWO-gv-ymd">
-                                        <rect key="frame" x="0.0" y="595.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="596.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UWO-gv-ymd" id="mY6-9X-9Ne">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -637,7 +625,7 @@
                             <tableViewSection headerTitle="Bug Reporting" footerTitle="Since this is a beta version of iRec, you may report bugs to us via Twitter." id="Wgk-ZC-vZz">
                                 <cells>
                                     <tableViewCell multipleTouchEnabled="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ed6-2c-h3g">
-                                        <rect key="frame" x="0.0" y="705.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="707" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ed6-2c-h3g" id="joC-We-cnK">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -675,7 +663,7 @@
                             <tableViewSection headerTitle="Legal" footerTitle="Please read the legal agreement before using this application." id="db3-w5-xWL">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="869-2Q-I0R" style="IBUITableViewCellStyleDefault" id="Z9h-u7-nk3">
-                                        <rect key="frame" x="0.0" y="815.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="817.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z9h-u7-nk3" id="s2x-5H-1zl">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -948,11 +936,7 @@
         <scene sceneID="CHm-Oo-sEj">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="lhr-3v-lLH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="2la-zc-Q01" customClass="TabBar">
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="string" keyPath="selectedImageName" value="settings-filled"/>
-                        </userDefinedRuntimeAttributes>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="Settings" image="settings" selectedImage="settings-filled" id="2la-zc-Q01"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ASG-dx-yIK">
@@ -994,9 +978,13 @@
     <resources>
         <image name="bug" width="30" height="30"/>
         <image name="camera" width="27" height="27"/>
+        <image name="camera-filled" width="27" height="27"/>
         <image name="info" width="27" height="27"/>
+        <image name="info-filled" width="27" height="27"/>
         <image name="settings" width="27" height="27"/>
+        <image name="settings-filled" width="27" height="27"/>
         <image name="update_icon" width="60" height="60"/>
         <image name="video" width="27" height="27"/>
+        <image name="video-filled" width="27" height="27"/>
     </resources>
 </document>

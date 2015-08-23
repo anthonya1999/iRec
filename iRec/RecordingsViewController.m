@@ -105,6 +105,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecordingNameCell" forIndexPath:indexPath];
     
     if ([self.defaults boolForKey:@"thumbnails_switch"]) {
+        cell.textLabel.font = [cell.textLabel.font fontWithSize:18];
         [cell.textLabel setText:[NSString stringWithFormat:@"            %@", _recordingNames[indexPath.row]]];
         
         UIImageView *thumbnailImageView = [[UIImageView alloc] initWithImage:[self thumbnailFromVideoAtURL:[NSURL fileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _recordingNames[indexPath.row]]]]]];
