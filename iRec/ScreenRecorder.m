@@ -9,7 +9,6 @@
 #import "ScreenRecorder.h"
 #include <sys/time.h>
 #include <dlfcn.h>
-#include <mach/mach.h>
 
 @implementation ScreenRecorder
 
@@ -21,6 +20,8 @@
          _bitrate = bitrate;
          _videoQueue = dispatch_queue_create("video_queue", DISPATCH_QUEUE_SERIAL);
          NSAssert(_videoQueue, @"Unable to create video queue.");
+         _pixelBufferLock = [[NSLock alloc] init];
+         NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
          
          [self openFramebuffer];
     }
@@ -60,7 +61,7 @@
     
     mach_port_t *mach_task_self_ = dlsym(IOKit, "mach_task_self_");
     NSParameterAssert(*mach_task_self_);
-    kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, task_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
+    kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, mach_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
     NSParameterAssert(IOMobileFramebufferOpen);
     kern_return_t (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
@@ -193,22 +194,19 @@
     
     CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef surface, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
     NSParameterAssert(CVPixelBufferCreateWithIOSurface);
-
-    CFDictionaryRef bufferAttributes = CFBridgingRetain(@{(id)kCVPixelBufferIOSurfacePropertiesKey : @{}});
-    CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, bufferAttributes, &_pixelBuffer);
-    NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
-    dlclose(CoreVideo);
     
-    NSLock *pixelBufferLock = [[NSLock alloc] init];
-    NSAssert(pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
+    CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
+    NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
     
     dispatch_async(_videoQueue, ^{
         while(!_videoWriterInput.readyForMoreMediaData)
             usleep(1000);
-            [pixelBufferLock lock];
+            [_pixelBufferLock lock];
             [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-            [pixelBufferLock unlock];
+            [_pixelBufferLock unlock];
     });
+    
+    dlclose(CoreVideo);
 }
 
 #pragma mark - Stop & Finalize Recorder
@@ -230,6 +228,7 @@
         _videoWriter = nil;
         _videoWriterInput = nil;
         _pixelBufferAdaptor = nil;
+        _pixelBufferLock = nil;
         _videoQueue = nil;
         _videoPath = nil;
     }];
