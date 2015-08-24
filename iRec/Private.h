@@ -67,7 +67,6 @@ CFDictionaryRef _properties;
 AVAssetWriterInput *_videoWriterInput; //*_audioWriterInput;
 AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
 dispatch_queue_t _videoQueue;
-NSLock *_pixelBufferLock;
 int _framerate, _bitrate;
 void *_IOSurface;
 

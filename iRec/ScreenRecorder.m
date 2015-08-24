@@ -21,8 +21,6 @@
          _bitrate = bitrate;
          _videoQueue = dispatch_queue_create("video_queue", DISPATCH_QUEUE_SERIAL);
          NSAssert(_videoQueue, @"Unable to create video queue.");
-         _pixelBufferLock = [[NSLock alloc] init];
-         NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
          
          [self openFramebuffer];
          [self setupScreenSurface];
@@ -283,12 +281,15 @@
     NSAssert(pixelBuffer, @"Why isn't the pixel buffer created?!");
     dlclose(CoreVideo);
     
+    NSLock *pixelBufferLock = [[NSLock alloc] init];
+    NSAssert(pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
+    
     dispatch_async(_videoQueue, ^{
         while(!_videoWriterInput.readyForMoreMediaData)
             usleep(1000);
-            [_pixelBufferLock lock];
+            [pixelBufferLock lock];
             [_pixelBufferAdaptor appendPixelBuffer:pixelBuffer withPresentationTime:frame];
-            [_pixelBufferLock unlock];
+            [pixelBufferLock unlock];
     });
 }
 
