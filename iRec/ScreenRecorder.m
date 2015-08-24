@@ -99,8 +99,12 @@
     [compressionProperties setObject: [NSNumber numberWithInt:_framerate] forKey: AVVideoMaxKeyFrameIntervalKey];
     [compressionProperties setObject: AVVideoProfileLevelH264HighAutoLevel forKey: AVVideoProfileLevelKey];
     
-    NSInteger screenWidth = [[UIScreen mainScreen] applicationFrame].size.width;
-    NSInteger screenHeight = [[UIScreen mainScreen] applicationFrame].size.height;
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGFloat screenScale = [[UIScreen mainScreen] scale];
+    CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
+    
+    NSInteger screenWidth = screenSize.width;
+    NSInteger screenHeight = screenSize.height;
     
     NSMutableDictionary *outputSettings = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                            AVVideoCodecH264, AVVideoCodecKey,
@@ -207,7 +211,7 @@
     });
 }
 
-#pragma mark - Stop, Finalize Recorder, and Release Objects
+#pragma mark - Stop & Finalize Recorder
 
 - (void)stopRecording {
     NSLog(@"Recorder stopped.");
@@ -216,9 +220,23 @@
 
 - (void)recordingDone {
     [_videoWriterInput markAsFinished];
-    [_videoWriter finishWritingWithCompletionHandler:^{
-        NSLog(@"Recording saved at path: %@",_videoPath);
-    }];
+    [_videoWriter finishWritingWithCompletionHandler:^{}];
+}
+
+#pragma mark - Release Objects
+
+- (void)dealloc {
+    CFRelease(_screenSurface);
+    _screenSurface = NULL;
+    CFRelease(_framebufferConnection);
+    _framebufferConnection = NULL;
+    CVPixelBufferRelease(_pixelBuffer);
+    _pixelBuffer = NULL;
+    _videoWriter = nil;
+    _videoWriterInput = nil;
+    _pixelBufferAdaptor = nil;
+    _videoQueue = nil;
+    _videoPath = nil;
 }
 
 @end
