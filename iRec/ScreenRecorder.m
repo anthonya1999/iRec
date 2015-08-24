@@ -97,14 +97,11 @@
     _IOSurface = dlopen("/System/Library/PrivateFrameworks/IOSurface.framework/IOSurface", RTLD_LAZY);
     NSParameterAssert(_IOSurface);
     
-    size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
-    NSParameterAssert(IOSurfaceGetAllocSize);
     size_t (*IOSurfaceGetBytesPerRow)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerRow");
     NSParameterAssert(IOSurfaceGetBytesPerRow);
     OSType (*IOSurfaceGetPixelFormat)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetPixelFormat");
     NSParameterAssert(IOSurfaceGetPixelFormat);
     
-    _allocSize = IOSurfaceGetAllocSize(_screenSurface);
     _bytesPerRow = IOSurfaceGetBytesPerRow(_screenSurface);
     _pixelFormat = IOSurfaceGetPixelFormat(_screenSurface);
 }
@@ -115,6 +112,10 @@
     size_t (*IOSurfaceGetBytesPerElement)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBytesPerElement");
     NSParameterAssert(IOSurfaceGetBytesPerElement);
     size_t bytesPerElement = IOSurfaceGetBytesPerElement(_screenSurface);
+    
+    size_t (*IOSurfaceGetAllocSize)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetAllocSize");
+    NSParameterAssert(IOSurfaceGetAllocSize);
+    size_t allocSize = IOSurfaceGetAllocSize(_screenSurface);
     
     const CFStringRef *kIOSurfaceIsGlobal = dlsym(_IOSurface, "kIOSurfaceIsGlobal");
     NSParameterAssert(*kIOSurfaceIsGlobal);
@@ -135,7 +136,7 @@
     
     _properties = CFBridgingRetain(@{(__bridge NSString *)*kIOSurfaceIsGlobal:         @YES,
                                      (__bridge NSString *)*kIOSurfaceBytesPerElement:  @(bytesPerElement),
-                                     (__bridge NSString *)*kIOSurfaceAllocSize:        @(_allocSize),
+                                     (__bridge NSString *)*kIOSurfaceAllocSize:        @(allocSize),
                                      (__bridge NSString *)*kIOSurfaceBytesPerRow:      @(_bytesPerRow),
                                      (__bridge NSString *)*kIOSurfaceWidth:            @(self.screenWidth),
                                      (__bridge NSString *)*kIOSurfaceHeight:           @(self.screenHeight),
@@ -283,35 +284,27 @@
     NSParameterAssert(IOSurfaceAcceleratorTransferSurface);
     kern_return_t (*IOSurfaceUnlock)(IOSurfaceRef buffer, IOSurfaceLockOptions lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceUnlock");
     NSParameterAssert(IOSurfaceUnlock);
-    void *(*IOSurfaceGetBaseAddress)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetBaseAddress");
-    NSParameterAssert(IOSurfaceGetBaseAddress);
     
-    uint32_t seed1 = IOSurfaceGetSeed(_screenSurface);
-    IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed1);
+    uint32_t seed = IOSurfaceGetSeed(_screenSurface);
+    IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
     IOSurfaceAcceleratorTransferSurface(_accelerator, _screenSurface, _mySurface, _properties, NULL);
-    IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed1);
+    IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
+    
+    void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
+    NSParameterAssert(CoreVideo);
+    kern_return_t (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef surface, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
+    NSParameterAssert(CVPixelBufferCreateWithIOSurface);
 
     static CVPixelBufferRef pixelBuffer = NULL;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         [_pixelBufferLock lock];
-        CVPixelBufferPoolCreatePixelBuffer(kCFAllocatorDefault, _pixelBufferAdaptor.pixelBufferPool, &pixelBuffer);
+        CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _mySurface, NULL, &pixelBuffer);
         NSAssert(pixelBuffer, @"Why isn't the pixel buffer created?!");
         [_pixelBufferLock unlock];
     });
-   
-    uint32_t seed2 = IOSurfaceGetSeed(_mySurface);
-    IOSurfaceLock(_mySurface, kIOSurfaceLockReadOnly, &seed2);
-    void *baseAddress = IOSurfaceGetBaseAddress(_mySurface);
-    NSAssert(baseAddress, @"Unable to get base address from IOSurface.");
-    IOSurfaceUnlock(_mySurface, kIOSurfaceLockReadOnly, &seed2);
     
-    CVPixelBufferLockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
-    void *pixelBufferBaseAddress = CVPixelBufferGetBaseAddress(pixelBuffer);
-    NSAssert(pixelBufferBaseAddress, @"Unable to get base address from pixel buffer.");
-    CVPixelBufferUnlockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
-
-    memmove(pixelBufferBaseAddress, baseAddress, _allocSize);
+    dlclose(CoreVideo);
     
     dispatch_async(_videoQueue, ^{
         while(!_videoWriterInput.readyForMoreMediaData)

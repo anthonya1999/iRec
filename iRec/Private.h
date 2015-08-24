@@ -62,7 +62,7 @@ __END_DECLS
 IOMobileFramebufferConnection _framebufferConnection;
 IOSurfaceRef _screenSurface, _mySurface;
 IOSurfaceAcceleratorRef _accelerator;
-size_t _bytesPerRow, _allocSize;
+size_t _bytesPerRow;
 OSType _pixelFormat;
 AVAssetWriter *_videoWriter;
 CFDictionaryRef _properties;
