@@ -7,7 +7,6 @@
 //
 
 #import <Social/Social.h>
-#import "ScreenRecorder.h"
 #import "CreditTableViewController.h"
 #import "UIAlertView+RSTAdditions.h"
 #import "UpdateViewController.h"
@@ -75,9 +74,7 @@
 
     if (indexPath.section == 4) {
         if (indexPath.row == 0) {
-            
-            ScreenRecorder *screenRecorder = [[ScreenRecorder alloc] init];
-            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [screenRecorder screenWidth], [screenRecorder screenHeight] * 4)];
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
             [blurView setDynamic:YES];
             blurView.tintColor = [UIColor clearColor];
             blurView.blurRadius = 8;

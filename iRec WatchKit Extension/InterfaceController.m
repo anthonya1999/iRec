@@ -7,7 +7,6 @@
 //
 
 #import "InterfaceController.h"
-#import "ScreenRecorder.h"
 #import "NewRecordingViewController.h"
 
 @interface InterfaceController () {

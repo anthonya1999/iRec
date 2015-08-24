@@ -7,7 +7,6 @@
 //
 
 #import "NewRecordingViewController.h"
-#import "ScreenRecorder.h"
 #import <UIKit/UIKit.h>
 
 @interface RecordingsViewController : UITableViewController <NewRecordingViewControllerDelegate, UIDocumentInteractionControllerDelegate, UIActionSheetDelegate, UIAlertViewDelegate> {

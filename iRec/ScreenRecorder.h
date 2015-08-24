@@ -16,16 +16,12 @@
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate;
 
 - (void)openFramebuffer;
-- (IOSurfaceRef)createScreenSurface;
 - (void)setupVideoRecordingObjects;
 - (void)saveFrame:(CMTime)frame;
 - (void)recordingDone;
 
 - (void)startRecording;
 - (void)stopRecording;
-
-- (NSInteger)screenWidth;
-- (NSInteger)screenHeight;
 
 @property (nonatomic) BOOL recording;
 @property (copy, nonatomic) NSString *videoPath;
