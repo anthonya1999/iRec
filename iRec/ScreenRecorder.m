@@ -278,7 +278,8 @@
     NSParameterAssert(CVPixelBufferCreateWithIOSurface);
 
     static CVPixelBufferRef pixelBuffer = NULL;
-    CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &pixelBuffer);
+    CFDictionaryRef bufferAttributes = CFBridgingRetain(@{(id)kCVPixelBufferIOSurfacePropertiesKey : @{}});
+    CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, bufferAttributes, &pixelBuffer);
     NSAssert(pixelBuffer, @"Why isn't the pixel buffer created?!");
     dlclose(CoreVideo);
     
