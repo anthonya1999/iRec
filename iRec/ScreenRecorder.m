@@ -21,7 +21,7 @@
          _bitrate = bitrate;
          _videoQueue = dispatch_queue_create("video_queue", DISPATCH_QUEUE_SERIAL);
          NSAssert(_videoQueue, @"Unable to create video queue.");
-         _pixelBufferLock = [NSLock new];
+         _pixelBufferLock = [[NSLock alloc] init];
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
          
          [self openFramebuffer];
@@ -144,12 +144,8 @@
                                      (__bridge NSString *)*kIOSurfaceCacheMode:        @(kIOMapInhibitCache)
                                      });
     
-    kern_return_t (*IOSurfaceAcceleratorCreate)(CFAllocatorRef allocator, uint32_t type, IOSurfaceAcceleratorRef *outAccelerator) = dlsym(_IOSurface, "IOSurfaceAcceleratorCreate");
-    NSParameterAssert(IOSurfaceAcceleratorCreate);
     IOSurfaceRef (*IOSurfaceCreate)(CFDictionaryRef properties) = dlsym(_IOSurface, "IOSurfaceCreate");
     NSParameterAssert(IOSurfaceCreate);
-    
-    IOSurfaceAcceleratorCreate(kCFAllocatorDefault, 0, &_accelerator);
     return IOSurfaceCreate(_properties);
 }
 
@@ -271,24 +267,10 @@
 #pragma mark - Capture Frame
 
 - (void)saveFrame:(CMTime)frame {
-    if (!_mySurface) {
-        _mySurface = [self createScreenSurface];
-        NSAssert(_mySurface, @"Error creating the IOSurface.");
+    if (!_screenSurface) {
+        _screenSurface = [self createScreenSurface];
+        NSAssert(_screenSurface, @"Error creating the IOSurface.");
     }
-    
-    uint32_t (*IOSurfaceGetSeed)(IOSurfaceRef buffer) = dlsym(_IOSurface, "IOSurfaceGetSeed");
-    NSParameterAssert(IOSurfaceGetSeed);
-    kern_return_t (*IOSurfaceLock)(IOSurfaceRef buffer, IOSurfaceLockOptions lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceLock");
-    NSParameterAssert(IOSurfaceLock);
-    kern_return_t (*IOSurfaceAcceleratorTransferSurface)(IOSurfaceAcceleratorRef accelerator, IOSurfaceRef sourceSurface, IOSurfaceRef destSurface, CFDictionaryRef properties, void *unknown) = dlsym(_IOSurface, "IOSurfaceAcceleratorTransferSurface");
-    NSParameterAssert(IOSurfaceAcceleratorTransferSurface);
-    kern_return_t (*IOSurfaceUnlock)(IOSurfaceRef buffer, IOSurfaceLockOptions lockOptions, uint32_t *seed) = dlsym(_IOSurface, "IOSurfaceUnlock");
-    NSParameterAssert(IOSurfaceUnlock);
-    
-    uint32_t seed = IOSurfaceGetSeed(_screenSurface);
-    IOSurfaceLock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
-    IOSurfaceAcceleratorTransferSurface(_accelerator, _screenSurface, _mySurface, _properties, NULL);
-    IOSurfaceUnlock(_screenSurface, kIOSurfaceLockReadOnly, &seed);
     
     void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
     NSParameterAssert(CoreVideo);
@@ -296,14 +278,8 @@
     NSParameterAssert(CVPixelBufferCreateWithIOSurface);
 
     static CVPixelBufferRef pixelBuffer = NULL;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        [_pixelBufferLock lock];
-        CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _mySurface, NULL, &pixelBuffer);
-        NSAssert(pixelBuffer, @"Why isn't the pixel buffer created?!");
-        [_pixelBufferLock unlock];
-    });
-    
+    CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &pixelBuffer);
+    NSAssert(pixelBuffer, @"Why isn't the pixel buffer created?!");
     dlclose(CoreVideo);
     
     dispatch_async(_videoQueue, ^{

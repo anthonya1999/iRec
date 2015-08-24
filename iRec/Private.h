@@ -11,7 +11,6 @@
 __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
-typedef struct __IOSurfaceAccelerator *IOSurfaceAcceleratorRef;
 typedef void *IOMobileFramebufferConnection;
 
 #pragma mark - IOServiceAuthorize
@@ -60,8 +59,7 @@ enum {
 __END_DECLS
 
 IOMobileFramebufferConnection _framebufferConnection;
-IOSurfaceRef _screenSurface, _mySurface;
-IOSurfaceAcceleratorRef _accelerator;
+IOSurfaceRef _screenSurface;
 size_t _bytesPerRow;
 OSType _pixelFormat;
 AVAssetWriter *_videoWriter;

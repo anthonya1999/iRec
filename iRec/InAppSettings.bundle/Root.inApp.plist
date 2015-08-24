@@ -34,26 +34,26 @@ You also may choose to suspend (fade out) the app after you start recording, ask
 			<key>DefaultValue</key>
 			<true/>
 		</dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Ask to Discard or Save</string>
-            <key>Key</key>
-            <string>discard_switch</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
-        <dict>
-            <key>Type</key>
-            <string>PSToggleSwitchSpecifier</string>
-            <key>Title</key>
-            <string>Video Thumbnails</string>
-            <key>Key</key>
-            <string>thumbnails_switch</string>
-            <key>DefaultValue</key>
-            <true/>
-        </dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Ask to Discard or Save</string>
+			<key>Key</key>
+			<string>discard_switch</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Video Thumbnails</string>
+			<key>Key</key>
+			<string>thumbnails_switch</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
 		<dict>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
@@ -102,14 +102,12 @@ If you are using an old or non-retina device, you must set your FPS to 24.</stri
 				<string>Default (29.97)</string>
 				<string>24</string>
 				<string>30</string>
-                <string>60</string>
 			</array>
 			<key>Values</key>
 			<array>
 				<string>29.97</string>
 				<string>24</string>
 				<string>30</string>
-                <string>60</string>
 			</array>
 		</dict>
 		<dict>
