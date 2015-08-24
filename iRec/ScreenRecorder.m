@@ -220,23 +220,19 @@
 
 - (void)recordingDone {
     [_videoWriterInput markAsFinished];
-    [_videoWriter finishWritingWithCompletionHandler:^{}];
-}
-
-#pragma mark - Release Objects
-
-- (void)dealloc {
-    CFRelease(_screenSurface);
-    _screenSurface = NULL;
-    CFRelease(_framebufferConnection);
-    _framebufferConnection = NULL;
-    CVPixelBufferRelease(_pixelBuffer);
-    _pixelBuffer = NULL;
-    _videoWriter = nil;
-    _videoWriterInput = nil;
-    _pixelBufferAdaptor = nil;
-    _videoQueue = nil;
-    _videoPath = nil;
+    [_videoWriter finishWritingWithCompletionHandler:^{
+        CFRelease(_screenSurface);
+        _screenSurface = NULL;
+        CFRelease(_framebufferConnection);
+        _framebufferConnection = NULL;
+        CVPixelBufferRelease(_pixelBuffer);
+        _pixelBuffer = NULL;
+        _videoWriter = nil;
+        _videoWriterInput = nil;
+        _pixelBufferAdaptor = nil;
+        _videoQueue = nil;
+        _videoPath = nil;
+    }];
 }
 
 @end
