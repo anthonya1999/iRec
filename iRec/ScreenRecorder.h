@@ -16,7 +16,6 @@
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate;
 
 - (void)openFramebuffer;
-- (IOSurfaceRef)getSurfaceWithPixelBuffer:(CVPixelBufferRef)pixelBuffer;
 - (void)setupVideoRecordingObjects;
 - (void)saveFrame:(CMTime)frame;
 - (void)recordingDone;

@@ -25,11 +25,10 @@ IOMobileFramebufferConnection _framebufferConnection;
 IOSurfaceRef _screenSurface;
 CVPixelBufferRef _pixelBuffer;
 AVAssetWriter *_videoWriter;
-AVAssetWriterInput *_videoWriterInput; //*_audioWriterInput;
+AVAssetWriterInput *_videoWriterInput;
 AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
 dispatch_queue_t _videoQueue;
 NSLock *_pixelBufferLock;
-void *_CoreVideo;
 int _framerate, _bitrate;
 
 @end

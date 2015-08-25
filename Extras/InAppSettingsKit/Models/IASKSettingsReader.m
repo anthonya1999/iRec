@@ -260,9 +260,7 @@
 }
 
 - (NSString *)locateSettingsFile: (NSString *)file {
-    static NSString* const kIASKBundleFolder = @"Settings.bundle";
-    static NSString* const kIASKBundleFolderAlt = @"InAppSettings.bundle";
-    
+    static NSString* const kIASKBundleFolderForiRec = @"iRecSettings.bundle";
     static NSString* const kIASKBundleLocaleFolderExtension = @".lproj";
 
     // The file is searched in the following order:
@@ -287,9 +285,9 @@
     // - This implementation uses the device suffixes on iOS 3.x as well.
     // - also check current locale (short only)
     
-    NSArray *settingsBundleNames = @[kIASKBundleFolderAlt, kIASKBundleFolder];
+    NSArray *settingsBundleNames = @[kIASKBundleFolderForiRec];
     
-    NSArray *extensions = @[@".inApp.plist", @".plist"];
+    NSArray *extensions = @[@".inApp.plist"];
     
     NSArray *plattformSuffixes = @[[self platformSuffixForInterfaceIdiom:UI_USER_INTERFACE_IDIOM()],
                                    @""];
