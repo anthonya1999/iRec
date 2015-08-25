@@ -43,21 +43,8 @@
     mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
     NSParameterAssert(IOServiceGetMatchingService);
     
-    mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleCLCD"));
-    if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleH1CLCD"));
-    if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleM2CLCD"));
-    if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleRGBOUT"));
-    if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMX31IPU"));
-    if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("AppleMobileCLCD"));
-    if (!serviceMatching)
-        serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
-    
-    NSAssert(serviceMatching, @"Unable to get IOService matching display types.");
+    mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
+    NSAssert(serviceMatching, @"Unable to get IOService matching IOMobileFramebuffer.");
     
     mach_port_t *mach_task_self_ = dlsym(IOKit, "mach_task_self_");
     NSParameterAssert(*mach_task_self_);
