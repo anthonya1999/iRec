@@ -1,6 +1,6 @@
 ### iRec - iOS 7-8 Screen Recorder  
 
-![ScreenShot](https://pbs.twimg.com/media/CMUz-4dVEAAvss9.jpg)
+![ScreenShot](http://104.131.174.145/iRecPreview.png)
 
 ####NOTE: As of commit 8d256dd, the setup and the steps below are no longer needed! Just open the iRec.xcodeproj file, and deploy as normal!
 

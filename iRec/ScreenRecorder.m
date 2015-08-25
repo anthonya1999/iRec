@@ -200,7 +200,6 @@
     
     CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef surface, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(_CoreVideo, "CVPixelBufferCreateWithIOSurface");
     NSParameterAssert(CVPixelBufferCreateWithIOSurface);
-    
     CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
     NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
     
