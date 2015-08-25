@@ -22,8 +22,6 @@
          NSAssert(_videoQueue, @"Unable to create video queue.");
          _pixelBufferLock = [[NSLock alloc] init];
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
-         
-         [self openFramebuffer];
     }
     return self;
 }
@@ -90,7 +88,6 @@
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     CGFloat screenScale = [[UIScreen mainScreen] scale];
     CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
-    
     NSInteger screenWidth = screenSize.width;
     NSInteger screenHeight = screenSize.height;
     
@@ -171,6 +168,10 @@
 - (void)saveFrame:(CMTime)frame {
     void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
     NSParameterAssert(CoreVideo);
+    
+    if (_screenSurface == NULL) {
+        [self openFramebuffer];
+    }
     
     if (!_screenSurface) {
         IOSurfaceRef (*CVPixelBufferGetIOSurface)(CVPixelBufferRef pixelBuffer) = dlsym(CoreVideo, "CVPixelBufferGetIOSurface");

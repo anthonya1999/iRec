@@ -28,21 +28,6 @@
 		9212774D1B8964790053F0AE /* IASKSettingsStoreFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 921277461B8964790053F0AE /* IASKSettingsStoreFile.m */; };
 		9212774E1B8964790053F0AE /* IASKSettingsStoreUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 921277481B8964790053F0AE /* IASKSettingsStoreUserDefaults.m */; };
 		9212774F1B8964790053F0AE /* IASKSpecifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 9212774A1B8964790053F0AE /* IASKSpecifier.m */; };
-		9212777E1B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277521B8964890053F0AE /* IASKLocalizable.strings */; };
-		9212777F1B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277551B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277801B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277581B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277811B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9212775B1B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277821B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9212775E1B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277831B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277611B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277841B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277641B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277851B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277671B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277861B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9212776A1B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277871B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9212776D1B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277881B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277701B8964890053F0AE /* IASKLocalizable.strings */; };
-		921277891B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277731B8964890053F0AE /* IASKLocalizable.strings */; };
-		9212778A1B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277761B8964890053F0AE /* IASKLocalizable.strings */; };
-		9212778B1B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 921277791B8964890053F0AE /* IASKLocalizable.strings */; };
-		9212778C1B8964890053F0AE /* IASKLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9212777C1B8964890053F0AE /* IASKLocalizable.strings */; };
 		921277971B8964980053F0AE /* IASKPSSliderSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9212778E1B8964980053F0AE /* IASKPSSliderSpecifierViewCell.m */; };
 		921277981B8964980053F0AE /* IASKPSTextFieldSpecifierViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 921277901B8964980053F0AE /* IASKPSTextFieldSpecifierViewCell.m */; };
 		921277991B8964980053F0AE /* IASKSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 921277921B8964980053F0AE /* IASKSlider.m */; };
@@ -72,12 +57,12 @@
 		921ABD191B824F3F00C6A0F1 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921ABD151B824F3F00C6A0F1 /* Crashlytics.framework */; };
 		921ABD1A1B824F3F00C6A0F1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921ABD161B824F3F00C6A0F1 /* Fabric.framework */; };
 		921ABD1B1B824F3F00C6A0F1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921ABD171B824F3F00C6A0F1 /* Parse.framework */; };
-		9255475B1B7D8E2700F075B6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255475D1B7D8E2700F075B6 /* LaunchScreen.storyboard */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
 		9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9270E50E1B8C111B006BED61 /* iRecSettings.bundle */; settings = {ASSET_TAGS = (); }; };
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
+		92B0293F1B8CBDD100A4F46A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255475D1B7D8E2700F075B6 /* LaunchScreen.storyboard */; };
 		92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E557011B3F1C7E0013CC7D /* Assets.xcassets */; };
 		92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
 		92E5570F1B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5570E1B3F1C7E0013CC7D /* Assets.xcassets */; };
@@ -972,25 +957,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				921277871B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277861B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277801B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				9212777F1B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				9212778C1B8964890053F0AE /* IASKLocalizable.strings in Resources */,
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
-				921277831B8964890053F0AE /* IASKLocalizable.strings in Resources */,
+				92B0293F1B8CBDD100A4F46A /* LaunchScreen.storyboard in Resources */,
 				92F122DB1B141286001E1061 /* Settings-Watch.bundle in Resources */,
-				921277821B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277881B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				9212777E1B8964890053F0AE /* IASKLocalizable.strings in Resources */,
 				9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */,
-				9212778B1B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277811B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277851B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277841B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				9255475B1B7D8E2700F075B6 /* LaunchScreen.storyboard in Resources */,
-				9212778A1B8964890053F0AE /* IASKLocalizable.strings in Resources */,
-				921277891B8964890053F0AE /* IASKLocalizable.strings in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
