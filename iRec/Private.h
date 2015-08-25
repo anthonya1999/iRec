@@ -29,6 +29,7 @@ AVAssetWriterInput *_videoWriterInput; //*_audioWriterInput;
 AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
 dispatch_queue_t _videoQueue;
 NSLock *_pixelBufferLock;
+void *_CoreVideo;
 int _framerate, _bitrate;
 
 @end

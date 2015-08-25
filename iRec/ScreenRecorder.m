@@ -24,6 +24,9 @@
          NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
          
          [self openFramebuffer];
+         
+         _CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
+         NSParameterAssert(_CoreVideo);
     }
     return self;
 }
@@ -87,6 +90,14 @@
     
     dlclose(IOKit);
     dlclose(IOMobileFramebuffer);
+}
+
+#pragma mark - Get Surface
+
+- (IOSurfaceRef)getSurfaceWithPixelBuffer:(CVPixelBufferRef)pixelBuffer {
+    IOSurfaceRef (*CVPixelBufferGetIOSurface)(CVPixelBufferRef pixelBuffer) = dlsym(_CoreVideo, "CVPixelBufferGetIOSurface");
+    NSParameterAssert(CVPixelBufferGetIOSurface);
+    return CVPixelBufferGetIOSurface(pixelBuffer);
 }
 
 #pragma mark - Initialize Recorder
@@ -182,17 +193,12 @@
 #pragma mark - Capture Frame
 
 - (void)saveFrame:(CMTime)frame {
-    void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
-    NSParameterAssert(CoreVideo);
-    IOSurfaceRef (*CVPixelBufferGetIOSurface)(CVPixelBufferRef pixelBuffer) = dlsym(CoreVideo, "CVPixelBufferGetIOSurface");
-    NSParameterAssert(CVPixelBufferGetIOSurface);
-    
     if (!_screenSurface) {
-        _screenSurface = CVPixelBufferGetIOSurface(_pixelBuffer);
+        _screenSurface = [self getSurfaceWithPixelBuffer:_pixelBuffer];
         NSAssert(_screenSurface, @"Error creating the IOSurface.");
     }
     
-    CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef surface, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
+    CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef surface, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(_CoreVideo, "CVPixelBufferCreateWithIOSurface");
     NSParameterAssert(CVPixelBufferCreateWithIOSurface);
     
     CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
@@ -205,8 +211,6 @@
             [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
             [_pixelBufferLock unlock];
     });
-    
-    dlclose(CoreVideo);
 }
 
 #pragma mark - Stop & Finalize Recorder
@@ -219,19 +223,26 @@
 - (void)recordingDone {
     [_videoWriterInput markAsFinished];
     [_videoWriter finishWritingWithCompletionHandler:^{
-        CFRelease(_screenSurface);
-        _screenSurface = NULL;
-        CFRelease(_framebufferConnection);
-        _framebufferConnection = NULL;
-        CVPixelBufferRelease(_pixelBuffer);
-        _pixelBuffer = NULL;
-        _videoWriter = nil;
-        _videoWriterInput = nil;
-        _pixelBufferAdaptor = nil;
-        _pixelBufferLock = nil;
-        _videoQueue = nil;
-        _videoPath = nil;
+        [self releaseObjects];
     }];
+}
+
+#pragma mark - Release Objects
+
+- (void)releaseObjects {
+    dlclose(_CoreVideo);
+    CFRelease(_screenSurface);
+    _screenSurface = NULL;
+    CFRelease(_framebufferConnection);
+    _framebufferConnection = NULL;
+    CVPixelBufferRelease(_pixelBuffer);
+    _pixelBuffer = NULL;
+    _videoWriter = nil;
+    _videoWriterInput = nil;
+    _pixelBufferAdaptor = nil;
+    _pixelBufferLock = nil;
+    _videoQueue = nil;
+    _videoPath = nil;
 }
 
 @end
