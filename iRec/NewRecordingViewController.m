@@ -361,8 +361,32 @@ fail:
         if ([prefs objectForKey:@"channels_number"])
             channels = [[prefs objectForKey:@"channels_number"] doubleValue];
         
-        if ([prefs boolForKey:@"suspend_switch"])
-            [[UIApplication sharedApplication] performSelector:@selector(suspend)];
+        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedBlackScreenAlert"]) {
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+            [blurView setDynamic:YES];
+            blurView.tintColor = [UIColor clearColor];
+            blurView.blurRadius = 8;
+            
+            [self.view addSubview:blurView];
+            
+            UIAlertView *blackScreenAlert = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"In order to record OpenGL content (almost all games), you must enable AssistiveTouch in the default Settings application." delegate:self cancelButtonTitle:@"Don't Show Again" otherButtonTitles:@"OK", nil];
+            [blackScreenAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                if (buttonIndex == 0) {
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"showedBlackScreenAlert"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [blurView removeFromSuperview];
+                }
+                if (buttonIndex == 1) {
+                    [blurView removeFromSuperview];
+                }
+                if ([prefs boolForKey:@"suspend_switch"])
+                    [[UIApplication sharedApplication] performSelector:@selector(suspend)];
+            }];
+        }
+        else {
+            if ([prefs boolForKey:@"suspend_switch"])
+                [[UIApplication sharedApplication] performSelector:@selector(suspend)];
+        }
         
         self.isRecording = YES;
         isAudioRec = YES;
