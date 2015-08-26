@@ -29,48 +29,20 @@
 #pragma mark - Open Framebuffer
 
 - (void)openFramebuffer {
-    void *IOKit = dlopen("/System/Library/Frameworks/IOKit.framework/Versions/A/IOKit", RTLD_LAZY);
-    NSParameterAssert(IOKit);
     void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_LAZY);
     NSParameterAssert(IOMobileFramebuffer);
     
-    mach_port_t *kIOMasterPortDefault = dlsym(IOKit, "kIOMasterPortDefault");
-    NSParameterAssert(kIOMasterPortDefault);
-    CFMutableDictionaryRef (*IOServiceMatching)(const char *name) = dlsym(IOKit, "IOServiceMatching");
-    NSParameterAssert(IOServiceMatching);
-    mach_port_t (*IOServiceGetMatchingService)(mach_port_t masterPort, CFDictionaryRef matching) = dlsym(IOKit, "IOServiceGetMatchingService");
-    NSParameterAssert(IOServiceGetMatchingService);
-    
-    mach_port_t serviceMatching = IOServiceGetMatchingService(*kIOMasterPortDefault, IOServiceMatching("IOMobileFramebuffer"));
-    NSAssert(serviceMatching, @"Unable to get IOService matching IOMobileFramebuffer.");
-    
-    mach_port_t *mach_task_self_ = dlsym(IOKit, "mach_task_self_");
-    NSParameterAssert(*mach_task_self_);
-    kern_return_t (*IOMobileFramebufferOpen)(mach_port_t service, mach_port_t owningTask, unsigned int type, IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferOpen");
-    NSParameterAssert(IOMobileFramebufferOpen);
     kern_return_t (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
     kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
-    kern_return_t (*IOServiceClose)(mach_port_t service) = dlsym(IOKit, "IOServiceClose");
-    NSParameterAssert(IOServiceClose);
-    kern_return_t (*IOConnectRelease)(IOMobileFramebufferConnection connection) = dlsym(IOKit, "IOConnectRelease");
+    kern_return_t (*IOConnectRelease)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOConnectRelease");
     NSParameterAssert(IOConnectRelease);
-    kern_return_t (*IOServiceAuthorize)(mach_port_t service, uint32_t options) = dlsym(IOKit, "IOServiceAuthorize");
     
-    if (IOServiceAuthorize) {
-        NSParameterAssert(IOServiceAuthorize);
-        IOServiceAuthorize(serviceMatching, kIOServiceInteractionAllowed);
-    }
-    
-    IOMobileFramebufferOpen(serviceMatching, *mach_task_self_, 0, &_framebufferConnection);
     IOMobileFramebufferGetMainDisplay(&_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
-    
-    IOServiceClose(serviceMatching);
     IOConnectRelease(_framebufferConnection);
     
-    dlclose(IOKit);
     dlclose(IOMobileFramebuffer);
 }
 
@@ -80,7 +52,7 @@
     NSAssert(_videoWriter, @"There is no video writer...WHAT?!");
     [_videoWriter setMovieTimeScale:_framerate];
     
-    NSMutableDictionary * compressionProperties = [NSMutableDictionary dictionary];
+    NSMutableDictionary *compressionProperties = [NSMutableDictionary dictionary];
     [compressionProperties setObject: [NSNumber numberWithInt:_bitrate * 1000] forKey: AVVideoAverageBitRateKey];
     [compressionProperties setObject: [NSNumber numberWithInt:_framerate] forKey: AVVideoMaxKeyFrameIntervalKey];
     [compressionProperties setObject: AVVideoProfileLevelH264HighAutoLevel forKey: AVVideoProfileLevelKey];
