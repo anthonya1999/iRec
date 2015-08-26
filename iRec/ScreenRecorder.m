@@ -171,6 +171,7 @@
     
     if (_screenSurface == NULL) {
         [self openFramebuffer];
+        NSAssert(_screenSurface != NULL, @"It seems as if the framebuffer was not opened!");
     }
     
     if (!_screenSurface) {
