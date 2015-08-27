@@ -11,13 +11,8 @@
 __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
+typedef kern_return_t IOMobileFramebufferReturn;
 typedef void *IOMobileFramebufferConnection;
-
-#pragma mark - IOServiceAuthorize
-
-enum {
-    kIOServiceInteractionAllowed = 0x00000001
-};
 
 __END_DECLS
 

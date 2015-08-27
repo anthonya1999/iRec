@@ -31,10 +31,9 @@
 - (void)openFramebuffer {
     void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_LAZY);
     NSParameterAssert(IOMobileFramebuffer);
-    
-    kern_return_t (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
+    IOMobileFramebufferReturn (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
-    kern_return_t (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
+    IOMobileFramebufferReturn (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
     kern_return_t (*IOConnectRelease)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOConnectRelease");
     NSParameterAssert(IOConnectRelease);
@@ -42,7 +41,7 @@
     IOMobileFramebufferGetMainDisplay(&_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
     IOConnectRelease(_framebufferConnection);
-    
+   
     dlclose(IOMobileFramebuffer);
 }
 
@@ -115,12 +114,12 @@
         struct timeval currentTime, lastSnapshot;
         lastSnapshot.tv_sec = lastSnapshot.tv_usec = 0;
         unsigned int frame = 0;
-        int msBeforeNextCapture = 1000 / _framerate;
+        int msBeforeNextCapture = 500 / _framerate;
         
         while (_recording) {
             gettimeofday(&currentTime, NULL);
-            currentTime.tv_usec /= 1000;
-            unsigned long long delta = ((1000 * currentTime.tv_sec + currentTime.tv_usec) - (1000 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
+            currentTime.tv_usec /= 500;
+            unsigned long long delta = ((500 * currentTime.tv_sec + currentTime.tv_usec) - (500 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
             
             if (delta >= msBeforeNextCapture) {
                 CMTime presentTime = CMTimeMake(frame, _framerate);
@@ -166,7 +165,7 @@
     dispatch_async(_videoQueue, ^{
         if (_pixelBuffer != NULL) {
             while(!_videoWriterInput.readyForMoreMediaData)
-                usleep(1000);
+                usleep(500);
                 [_pixelBufferLock lock];
                 [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
                 [_pixelBufferLock unlock];
