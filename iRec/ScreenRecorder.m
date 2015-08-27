@@ -35,12 +35,9 @@
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
     IOMobileFramebufferReturn (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
-    kern_return_t (*IOConnectRelease)(IOMobileFramebufferConnection connection) = dlsym(IOMobileFramebuffer, "IOConnectRelease");
-    NSParameterAssert(IOConnectRelease);
     
     IOMobileFramebufferGetMainDisplay(&_framebufferConnection);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
-    IOConnectRelease(_framebufferConnection);
    
     dlclose(IOMobileFramebuffer);
 }
@@ -76,18 +73,7 @@
     NSAssert([_videoWriter canAddInput:_videoWriterInput], @"Strange error: AVVideoWriter doesn't want our input.");
     [_videoWriter addInput:_videoWriterInput];
     
-    size_t bytesPerRow = CVPixelBufferGetBytesPerRow(_pixelBuffer);
-    OSType pixelFormat = CVPixelBufferGetPixelFormatType(_pixelBuffer);
-    
-    NSDictionary *bufferAttributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                      [NSNumber numberWithInt:pixelFormat], kCVPixelBufferPixelFormatTypeKey,
-                                      [NSNumber numberWithUnsignedLong:screenWidth], kCVPixelBufferWidthKey,
-                                      [NSNumber numberWithUnsignedLong:screenHeight], kCVPixelBufferHeightKey,
-                                      [NSNumber numberWithUnsignedLong:bytesPerRow], kCVPixelBufferBytesPerRowAlignmentKey,
-                                      kCFAllocatorDefault, kCVPixelBufferMemoryAllocatorKey,
-                                      nil];
-    
-    _pixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc]initWithAssetWriterInput:_videoWriterInput sourcePixelBufferAttributes:bufferAttributes];
+    _pixelBufferAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc] initWithAssetWriterInput:_videoWriterInput sourcePixelBufferAttributes:nil];
     [_videoWriterInput setExpectsMediaDataInRealTime:YES];
     
     [_videoWriter addInput:_videoWriterInput];
