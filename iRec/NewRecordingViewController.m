@@ -165,7 +165,7 @@ fail:
                 if (_recorder) {
                     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
                     [self startStopRecording];
-                    [self setMergingText];
+                    [self showMergingAlert];
                     if ([[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
                         [self mergeAudio];
                     }
@@ -186,12 +186,17 @@ deselect:
     [_startStopButton setTitleShadowColor:[UIColor redColor] forState:UIControlStateNormal];
 }
 
-- (void)setMergingText {
-    [_startStopButton setTitle:@"Saving...Please wait..." forState:UIControlStateNormal];
-    _startStopButton.userInteractionEnabled = YES;
-    self.tableView.userInteractionEnabled = NO;
-    self.tabBarController.tabBar.userInteractionEnabled = NO;
-    _nameField.userInteractionEnabled = NO;
+- (void)showMergingAlert {
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+    [blurView setDynamic:YES];
+    blurView.tintColor = [UIColor clearColor];
+    blurView.blurRadius = 8;
+    
+    [self.view addSubview:blurView];
+    
+    UIAlertView *mergingAlert = [[UIAlertView alloc] initWithTitle:@"Merging Audio..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    [mergingAlert show];
+    [mergingAlert performSelector:@selector(dismissWithClickedButtonIndex:animated:) withObject:nil afterDelay:3.0];
 }
 
 - (void)setButtonTextToNormal {
