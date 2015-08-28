@@ -100,12 +100,12 @@
         struct timeval currentTime, lastSnapshot;
         lastSnapshot.tv_sec = lastSnapshot.tv_usec = 0;
         unsigned int frame = 0;
-        int msBeforeNextCapture = 500 / _framerate;
+        int msBeforeNextCapture = 1000 / _framerate;
         
         while (_recording) {
             gettimeofday(&currentTime, NULL);
-            currentTime.tv_usec /= 500;
-            unsigned long long delta = ((500 * currentTime.tv_sec + currentTime.tv_usec) - (500 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
+            currentTime.tv_usec /= 1000;
+            unsigned long long delta = ((1000 * currentTime.tv_sec + currentTime.tv_usec) - (1000 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
             
             if (delta >= msBeforeNextCapture) {
                 CMTime presentTime = CMTimeMake(frame, _framerate);
@@ -151,7 +151,7 @@
     dispatch_async(_videoQueue, ^{
         if (_pixelBuffer != NULL) {
             while(!_videoWriterInput.readyForMoreMediaData)
-                usleep(500);
+                usleep(1000);
                 [_pixelBufferLock lock];
                 [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
                 [_pixelBufferLock unlock];

@@ -197,6 +197,9 @@ deselect:
     UIAlertView *mergingAlert = [[UIAlertView alloc] initWithTitle:@"Saving – Please wait..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
     [mergingAlert show];
     [mergingAlert performSelector:@selector(dismissWithClickedButtonIndex:animated:) withObject:nil afterDelay:3.0];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"discard_switch"]) {
+        [blurView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:3.0];
+    }
 }
 
 - (void)setButtonTextToNormal {
