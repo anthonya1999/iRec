@@ -69,6 +69,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
                                 [NSNumber numberWithBool:YES], @"suspend_switch",
                                 [NSNumber numberWithBool:YES], @"thumbnail_switch",
                                 [NSNumber numberWithBool:YES], @"discard_switch",
+                                [NSNumber numberWithBool:NO], @"reset_switch",
                                 nil];
     [defs registerDefaults:dictionary];
     [defs synchronize];
@@ -292,6 +293,22 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     [PFPush handlePush:userInfo];
 }
 
+- (void)resetApplication {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary *dictionary = [defaults dictionaryRepresentation];
+    for (id key in dictionary) {
+        [defaults removeObjectForKey:key];
+    }
+    [defaults synchronize];
+    NSFileManager *fileMgr = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error];
+    for (NSString *path in directoryContents) {
+        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
+        [fileMgr removeItemAtPath:fullPath error:&error];
+    }
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
@@ -301,6 +318,9 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"Application entered background.");
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"reset_switch"]) {
+        [self resetApplication];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {

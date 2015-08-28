@@ -194,7 +194,7 @@ deselect:
     
     [self.view addSubview:blurView];
     
-    UIAlertView *mergingAlert = [[UIAlertView alloc] initWithTitle:@"Merging Audio..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    UIAlertView *mergingAlert = [[UIAlertView alloc] initWithTitle:@"Saving – Please wait..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
     [mergingAlert show];
     [mergingAlert performSelector:@selector(dismissWithClickedButtonIndex:animated:) withObject:nil afterDelay:3.0];
 }
@@ -217,13 +217,6 @@ deselect:
 
 - (void)showDiscardOrSaveAlert {
     UIAlertView *discardSaveAlert = [[UIAlertView alloc] initWithTitle:@"Discard or Save?" message:[NSString stringWithFormat:@"Would you like to discard or save the recording named \"%@\"?", _nameField.text] delegate:self cancelButtonTitle:@"Discard" otherButtonTitles:@"Save", nil];
-    
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
-    [blurView setDynamic:YES];
-    blurView.tintColor = [UIColor clearColor];
-    blurView.blurRadius = 8;
-    
-    [self.view addSubview:blurView];
     
     [discardSaveAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
         if (buttonIndex == 0) {

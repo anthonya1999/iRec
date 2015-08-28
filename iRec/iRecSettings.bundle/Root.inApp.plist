@@ -196,6 +196,24 @@ The number of channels also may be changed from mono (one) to stereo (two).</str
 				<string>2</string>
 			</array>
 		</dict>
+        <dict>
+            <key>Type</key>
+            <string>PSGroupSpecifier</string>
+            <key>Title</key>
+            <string>Reset</string>
+            <key>FooterText</key>
+            <string>Please use with caution! Only use this option if you would like to reset settings to default and erase all of your recordings. This cannot be undone.</string>
+        </dict>
+        <dict>
+            <key>Type</key>
+            <string>PSToggleSwitchSpecifier</string>
+            <key>Title</key>
+            <string>Reset Application</string>
+            <key>Key</key>
+            <string>reset_switch</string>
+            <key>DefaultValue</key>
+            <false/>
+        </dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>
