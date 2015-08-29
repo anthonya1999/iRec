@@ -107,7 +107,7 @@ If you are using an old or non-retina device, you must set your FPS to 24.</stri
 			<array>
 				<string>29.97</string>
 				<string>24</string>
-				<string>30</string>
+                <string>30</string>
 			</array>
 		</dict>
 		<dict>

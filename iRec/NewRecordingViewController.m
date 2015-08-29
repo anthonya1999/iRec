@@ -166,9 +166,7 @@ fail:
                     [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
                     [self startStopRecording];
                     [self showMergingAlert];
-                    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
-                        [self mergeAudio];
-                    }
+                    [self mergeAudio];
                     [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
                     [self removeOldVideoFallback];
                 }
@@ -450,7 +448,7 @@ fail:
             assetVideoTrack = assetArray[0];
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath] && [[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
         if ([assetArray count] > 0)
             assetAudioTrack = assetArray[0];
@@ -484,22 +482,18 @@ fail:
                 NSError *error = nil;
                 [[NSFileManager defaultManager] removeItemAtPath:videoPath error:&error];
                 [[NSFileManager defaultManager] removeItemAtPath:audioPath error:&error];
-                [self removeOldVideoFallback];
                 break;
             }
                 
             case AVAssetExportSessionStatusFailed:
                 NSLog(@"Failed: %@", exportSession.error);
-                [self removeOldVideoFallback];
                 break;
                 
             case AVAssetExportSessionStatusCancelled:
                 NSLog(@"Canceled: %@", exportSession.error);
-                [self removeOldVideoFallback];
                 break;
                 
             default:
-                [self removeOldVideoFallback];
                 break;
         }
     }];
