@@ -31,6 +31,7 @@
 - (void)openFramebuffer {
     void *IOMobileFramebuffer = dlopen("/System/Library/PrivateFrameworks/IOMobileFramebuffer.framework/IOMobileFramebuffer", RTLD_LAZY);
     NSParameterAssert(IOMobileFramebuffer);
+    
     IOMobileFramebufferReturn (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
     IOMobileFramebufferReturn (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
@@ -48,23 +49,19 @@
     NSAssert(_videoWriter, @"There is no video writer...WHAT?!");
     [_videoWriter setMovieTimeScale:_framerate];
     
-    NSMutableDictionary *compressionProperties = [NSMutableDictionary dictionary];
-    [compressionProperties setObject: [NSNumber numberWithInt:_bitrate * 1000] forKey: AVVideoAverageBitRateKey];
-    [compressionProperties setObject: [NSNumber numberWithInt:_framerate] forKey: AVVideoMaxKeyFrameIntervalKey];
-    [compressionProperties setObject: AVVideoProfileLevelH264HighAutoLevel forKey: AVVideoProfileLevelKey];
+    NSDictionary *compressionProperties = @{AVVideoAverageBitRateKey:      @(_bitrate * 1000),
+                                            AVVideoMaxKeyFrameIntervalKey: @(_framerate),
+                                            };
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     CGFloat screenScale = [[UIScreen mainScreen] scale];
     CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
-    NSInteger screenWidth = screenSize.width;
-    NSInteger screenHeight = screenSize.height;
     
-    NSMutableDictionary *outputSettings = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                           AVVideoCodecH264, AVVideoCodecKey,
-                                           [NSNumber numberWithUnsignedLong:screenWidth], AVVideoWidthKey,
-                                           [NSNumber numberWithUnsignedLong:screenHeight], AVVideoHeightKey,
-                                           compressionProperties, AVVideoCompressionPropertiesKey,
-                                           nil];
+    NSDictionary *outputSettings = @{AVVideoCompressionPropertiesKey: compressionProperties,
+                                     AVVideoCodecKey:                 AVVideoCodecH264,
+                                     AVVideoWidthKey:                 @(screenSize.width),
+                                     AVVideoHeightKey:                @(screenSize.height)
+                                     };
     
     NSAssert([_videoWriter canApplyOutputSettings:outputSettings forMediaType:AVMediaTypeVideo], @"Strange error: AVVideoWriter isn't accepting our output settings.");
     
