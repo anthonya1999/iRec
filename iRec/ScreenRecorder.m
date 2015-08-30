@@ -50,7 +50,7 @@
     [_videoWriter setMovieTimeScale:_framerate];
     
     NSDictionary *compressionProperties = @{AVVideoAverageBitRateKey:      @(_bitrate * 1000),
-                                            AVVideoMaxKeyFrameIntervalKey: @(_framerate),
+                                            AVVideoMaxKeyFrameIntervalKey: @(_framerate)
                                             };
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
