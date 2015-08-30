@@ -56,11 +56,22 @@
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     CGFloat screenScale = [[UIScreen mainScreen] scale];
     CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
+    CGFloat screenWidth = 0;
+    CGFloat screenHeight = 0;
+    
+    if (screenSize.width > screenSize.height) {
+        screenWidth = screenSize.height;
+        screenHeight = screenSize.width;
+    }
+    else {
+        screenWidth = screenSize.width;
+        screenHeight = screenSize.height;
+    }
     
     NSDictionary *outputSettings = @{AVVideoCompressionPropertiesKey: compressionProperties,
                                      AVVideoCodecKey:                 AVVideoCodecH264,
-                                     AVVideoWidthKey:                 @(screenSize.width),
-                                     AVVideoHeightKey:                @(screenSize.height)
+                                     AVVideoWidthKey:                 @(screenWidth),
+                                     AVVideoHeightKey:                @(screenHeight)
                                      };
     
     NSAssert([_videoWriter canApplyOutputSettings:outputSettings forMediaType:AVMediaTypeVideo], @"Strange error: AVVideoWriter isn't accepting our output settings.");
