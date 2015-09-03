@@ -11,8 +11,8 @@
 __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
+typedef struct __IOMobileFramebuffer *IOMobileFramebufferConnection;
 typedef kern_return_t IOMobileFramebufferReturn;
-typedef void *IOMobileFramebufferConnection;
 
 __END_DECLS
 
