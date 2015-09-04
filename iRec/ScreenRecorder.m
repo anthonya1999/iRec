@@ -20,8 +20,6 @@
          _bitrate = bitrate;
          _videoQueue = dispatch_queue_create("video_queue", DISPATCH_QUEUE_SERIAL);
          NSAssert(_videoQueue, @"Unable to create video queue.");
-         _pixelBufferLock = [[NSLock alloc] init];
-         NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
     }
     return self;
 }
@@ -68,6 +66,9 @@
         screenHeight = screenSize.height;
     }
     
+    NSAssert(screenWidth != 0, @"The screen width cannot equal zero!");
+    NSAssert(screenHeight != 0, @"The screen height cannot equal zero!");
+    
     NSDictionary *outputSettings = @{AVVideoCompressionPropertiesKey: compressionProperties,
                                      AVVideoCodecKey:                 AVVideoCodecH264,
                                      AVVideoWidthKey:                 @(screenWidth),
@@ -108,14 +109,14 @@
         struct timeval currentTime, lastSnapshot;
         lastSnapshot.tv_sec = lastSnapshot.tv_usec = 0;
         unsigned int frame = 0;
-        int msBeforeNextCapture = 1000 / _framerate;
+        int msBeforeNextCapture = 250 / _framerate;
         
         while (_recording) {
             gettimeofday(&currentTime, NULL);
-            currentTime.tv_usec /= 1000;
-            unsigned long long delta = ((1000 * currentTime.tv_sec + currentTime.tv_usec) - (1000 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
+            currentTime.tv_usec /= 250;
+            unsigned long long delta = ((250 * currentTime.tv_sec + currentTime.tv_usec) - (250 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
             
-            if (delta >= msBeforeNextCapture) {
+            if (delta >= 250 / msBeforeNextCapture) {
                 CMTime presentTime = CMTimeMake(frame, _framerate);
                 [self saveFrame:presentTime];
                 frame++;
@@ -155,17 +156,10 @@
     
     dlclose(CoreVideo);
     
-    CVPixelBufferRetain(_pixelBuffer);
     dispatch_async(_videoQueue, ^{
-        if (_pixelBuffer != NULL) {
-            while(!_videoWriterInput.readyForMoreMediaData)
-                usleep(1000);
-                [_pixelBufferLock lock];
-                [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-                [_pixelBufferLock unlock];
-                CVPixelBufferRelease(_pixelBuffer);
-                _pixelBuffer = NULL;
-        }
+        while (!_videoWriterInput.readyForMoreMediaData)
+            usleep(250);
+            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
     });
 }
 
@@ -193,7 +187,6 @@
     _videoWriter = nil;
     _videoWriterInput = nil;
     _pixelBufferAdaptor = nil;
-    _pixelBufferLock = nil;
     _videoQueue = nil;
     _videoPath = nil;
 }
