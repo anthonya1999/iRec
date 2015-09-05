@@ -103,6 +103,10 @@
     [self setupVideoRecordingObjects];
     _recording = YES;
     
+    UIAlertView *backgroundAlert = [[UIAlertView alloc] initWithTitle:nil message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
+    [backgroundAlert show];
+    [backgroundAlert dismissWithClickedButtonIndex:0 animated:YES];
+
     NSLog(@"Recorder started.");
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
