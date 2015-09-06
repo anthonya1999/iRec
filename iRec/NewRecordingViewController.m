@@ -407,7 +407,7 @@ fail:
     {
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1 * 60 * 60 * 24];
         [_delegate newRecordingViewController:self didAddNewRecording:_nameField.text];
-        [_recorder stopRecording];
+        [_recorder setRecording:NO];
         _recorder = nil;
         [recorder stop];
         recorder = nil;

@@ -18,16 +18,13 @@
     IBOutlet UITextField *_nameField;
     IBOutlet UIButton *_startStopButton;
     AVAudioRecorder *recorder;
-    AVAudioSession *session;
-    NSTimer *spaceTimer;
     BOOL isRecording;
     IBOutlet UINavigationItem *navigationTextbar;
-    AVCaptureSession *sessionTwo;
 }
 
 @property (nonatomic) BOOL isRecording;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *shareButtonOutlet;
-@property (weak, nonatomic) id<NewRecordingViewControllerDelegate> delegate;
+@property (weak, nonatomic) id <NewRecordingViewControllerDelegate> delegate;
 
 @end
 

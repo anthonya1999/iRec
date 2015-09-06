@@ -18,11 +18,7 @@
 - (void)openFramebuffer;
 - (void)setupVideoRecordingObjects;
 - (void)saveFrame:(CMTime)frame;
-- (void)recordingDone;
-
 - (void)startRecording;
-- (void)stopRecording;
-- (void)releaseObjects;
 
 @property (nonatomic) BOOL recording;
 @property (copy, nonatomic) NSString *videoPath;

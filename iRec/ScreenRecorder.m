@@ -102,21 +102,19 @@
     
     [self setupVideoRecordingObjects];
     _recording = YES;
-
-    NSLog(@"Recorder started.");
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         struct timeval currentTime, lastSnapshot;
         lastSnapshot.tv_sec = lastSnapshot.tv_usec = 0;
         unsigned int frame = 0;
-        int msBeforeNextCapture = 250 / _framerate;
+        int msBeforeNextCapture = 1000 / _framerate;
         
         while (_recording) {
             gettimeofday(&currentTime, NULL);
-            currentTime.tv_usec /= 250;
-            unsigned long long delta = ((250 * currentTime.tv_sec + currentTime.tv_usec) - (250 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
+            currentTime.tv_usec /= 1000;
+            unsigned long long delta = ((1000 * currentTime.tv_sec + currentTime.tv_usec) - (1000 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
             
-            if (delta >= 250 / msBeforeNextCapture) {
+            if (delta >= msBeforeNextCapture) {
                 CMTime presentTime = CMTimeMake(frame, _framerate);
                 [self saveFrame:presentTime];
                 frame++;
@@ -124,7 +122,8 @@
             }
         }
         dispatch_async(_videoQueue, ^{
-            [self recordingDone];
+            [_videoWriterInput markAsFinished];
+            [_videoWriter finishWritingWithCompletionHandler:^{}];
         });
     });
 }
@@ -158,37 +157,9 @@
     
     dispatch_async(_videoQueue, ^{
         while (!_videoWriterInput.readyForMoreMediaData)
-            usleep(250);
+            usleep(1000);
             [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
     });
-}
-
-#pragma mark - Stop & Finalize Recorder
-
-- (void)stopRecording {
-    NSLog(@"Recorder stopped.");
-    [self setRecording:NO];
-}
-
-- (void)recordingDone {
-    [_videoWriterInput markAsFinished];
-    [_videoWriter finishWritingWithCompletionHandler:^{
-        [self releaseObjects];
-    }];
-}
-
-#pragma mark - Release Objects
-
-- (void)releaseObjects {
-    CFRelease(_screenSurface);
-    _screenSurface = NULL;
-    CFRelease(_framebufferConnection);
-    _framebufferConnection = NULL;
-    _videoWriter = nil;
-    _videoWriterInput = nil;
-    _pixelBufferAdaptor = nil;
-    _videoQueue = nil;
-    _videoPath = nil;
 }
 
 @end
