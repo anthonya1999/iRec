@@ -62,15 +62,16 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     
     
     NSLog(@"Registering default values from Settings bundle");
-    NSUserDefaults * defs = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
     
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithBool:YES], @"dark_theme_switch",
                                 [NSNumber numberWithBool:YES], @"suspend_switch",
                                 [NSNumber numberWithBool:YES], @"thumbnail_switch",
                                 [NSNumber numberWithBool:YES], @"discard_switch",
                                 [NSNumber numberWithBool:NO], @"reset_switch",
+                                [NSString stringWithFormat:@"darkTheme"], @"theme_value",
                                 nil];
+    
     [defs registerDefaults:dictionary];
     [defs synchronize];
     
@@ -107,7 +108,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         }
     }
     
-    if ([defs boolForKey:@"dark_theme_switch"]) {
+    if ([[defs objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
         [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
         [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
         [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
@@ -115,7 +116,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     }
-    else {
+    else if ([[defs objectForKey:@"theme_value"] isEqualToString:@"lightTheme"]) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     }
     

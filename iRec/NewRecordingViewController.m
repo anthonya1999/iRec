@@ -127,7 +127,7 @@ fail:
     
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([[prefs objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
         _shareButtonOutlet.tintColor = [UIColor whiteColor];
     }
     
@@ -139,7 +139,7 @@ fail:
     isAudioRec = NO;
     
     
-    if ([prefs boolForKey:@"dark_theme_switch"]) {
+    if ([[prefs objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
         _nameField.keyboardAppearance = UIKeyboardAppearanceDark;
     }
     else {

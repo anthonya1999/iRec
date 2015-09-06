@@ -10,19 +10,29 @@
 			<key>Title</key>
 			<string>Customization</string>
 			<key>FooterText</key>
-			<string>Turn on or off the dark theme. The dark theme has white text and black colors, and the light theme has black text and white colors.
+			<string>Choose your preferred color scheme. The dark theme has white text and black colors, and the light theme has black text and white colors.
 				
 You also may choose to suspend (fade out) the app after you start recording, ask to discard/keep a finished recording, or show video thumbnails.</string>
 		</dict>
 		<dict>
 			<key>Type</key>
-			<string>PSToggleSwitchSpecifier</string>
+			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
-			<string>Dark Theme</string>
+			<string>Color Scheme</string>
 			<key>Key</key>
-			<string>dark_theme_switch</string>
+			<string>theme_value</string>
 			<key>DefaultValue</key>
-			<true/>
+			<string>darkTheme</string>
+			<key>Titles</key>
+			<array>
+				<string>Dark</string>
+				<string>Light</string>
+			</array>
+			<key>Values</key>
+			<array>
+				<string>darkTheme</string>
+				<string>lightTheme</string>
+			</array>
 		</dict>
 		<dict>
 			<key>Type</key>

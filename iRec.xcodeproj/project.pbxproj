@@ -63,6 +63,7 @@
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
 		92B0293F1B8CBDD100A4F46A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255475D1B7D8E2700F075B6 /* LaunchScreen.storyboard */; };
 		92B97F501B8D8B090061C95C /* ScreenRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */; settings = {ASSET_TAGS = (); }; };
+		92D069671B9B929A00169D8B /* LegalText.txt in Resources */ = {isa = PBXBuildFile; fileRef = 92D069661B9B929A00169D8B /* LegalText.txt */; settings = {ASSET_TAGS = (); }; };
 		92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E557011B3F1C7E0013CC7D /* Assets.xcassets */; };
 		92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
 		92E5570F1B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5570E1B3F1C7E0013CC7D /* Assets.xcassets */; };
@@ -245,6 +246,7 @@
 		92B4AA701B7A843300EBAA6B /* iRec.ipa */ = {isa = PBXFileReference; lastKnownFileType = file; path = iRec.ipa; sourceTree = "<group>"; };
 		92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenRecorder.m; sourceTree = "<group>"; };
 		92BF90BC1B69B4BA00BA0E4E /* Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
+		92D069661B9B929A00169D8B /* LegalText.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LegalText.txt; sourceTree = "<group>"; };
 		92D8AC501B1AB3DA0090CBA5 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Prefix.pch; sourceTree = "<group>"; };
 		92E556F71B3F1C7E0013CC7D /* iRec WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "iRec WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		92E556FA1B3F1C7E0013CC7D /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 				920CCFFD1A94DEC4004BD668 /* Extras */,
 				92D8AC501B1AB3DA0090CBA5 /* Prefix.pch */,
 				921C214C1B0E95E900CAB36B /* iRec Beta.cer */,
+				92D069661B9B929A00169D8B /* LegalText.txt */,
 				920CCFBE1A94DAD1004BD668 /* Info.plist */,
 				920CCFBF1A94DAD1004BD668 /* main.m */,
 			);
@@ -962,6 +965,7 @@
 				92F122DB1B141286001E1061 /* Settings-Watch.bundle in Resources */,
 				9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
+				92D069671B9B929A00169D8B /* LegalText.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

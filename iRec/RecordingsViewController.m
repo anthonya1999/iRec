@@ -32,7 +32,7 @@
     }
     else {
         [super viewDidLoad];
-        if ([self.defaults boolForKey:@"dark_theme_switch"]) {
+        if ([[self.defaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
             [_deleteAllButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_deleteAllButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
