@@ -20,6 +20,8 @@
          _bitrate = bitrate;
          _videoQueue = dispatch_queue_create("video_queue", DISPATCH_QUEUE_SERIAL);
          NSAssert(_videoQueue, @"Unable to create video queue.");
+         _pixelBufferLock = [[NSLock alloc] init];
+         NSAssert(_pixelBufferLock, @"Why isn't there a pixel buffer lock?!");
     }
     return self;
 }
@@ -155,10 +157,17 @@
     
     dlclose(CoreVideo);
     
+    CVPixelBufferRetain(_pixelBuffer);
     dispatch_async(_videoQueue, ^{
-        while (!_videoWriterInput.readyForMoreMediaData)
-            usleep(1000);
-            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+        if (_pixelBuffer != NULL) {
+            while(!_videoWriterInput.readyForMoreMediaData)
+                usleep(1000);
+                [_pixelBufferLock lock];
+                [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+                [_pixelBufferLock unlock];
+                CVPixelBufferRelease(_pixelBuffer);
+                _pixelBuffer = NULL;
+        }
     });
 }
 
