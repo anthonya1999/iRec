@@ -343,12 +343,11 @@ fail:
         [_recorder setVideoPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]]];
         [_recorder startRecording];
         
-        NSError *sessionError = nil;
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&sessionError];
+        NSError *error = nil;
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&error];
         
-        NSError *speakerError = nil;
-        [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&speakerError];
-        [[AVAudioSession sharedInstance] setActive:YES error:&sessionError];
+        [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+        [[AVAudioSession sharedInstance] setActive:YES error:&error];
         
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         
@@ -424,8 +423,14 @@ fail:
 - (void)mergeAudio {
     double degrees = 0.0;
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs objectForKey:@"video_orientation"])
-        degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
+    if ([prefs objectForKey:@"video_orientation"]) {
+        if (_screenSize.width > _screenSize.height) {
+            degrees = [[prefs objectForKey:@"video_orientation"] doubleValue] + 270;
+        }
+        else {
+            degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
+        }
+    }
     
     NSString *videoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
     NSString *audioPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.caf", _nameField.text]];
@@ -463,12 +468,7 @@ fail:
         [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
         if (assetAudioTrack != nil) {
             [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
-            if (_screenSize.width > _screenSize.height) {
-                [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees + 270))];
-            }
-            else {
-                [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
-            }
+            [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
         }
     }
     
@@ -484,9 +484,7 @@ fail:
     [exportSession setOutputFileType:AVFileTypeMPEG4];
     [exportSession setOutputURL:exportURL];
     [exportSession setShouldOptimizeForNetworkUse:NO];
-    
-    _screenSize.width = 0;
-    _screenSize.height = 0;
+    _screenSize = CGSizeMake(0, 0);
     
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void){
         switch (exportSession.status) {
