@@ -463,9 +463,11 @@ fail:
         [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
         if (assetAudioTrack != nil) {
             [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
-            [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
             if (_screenSize.width > _screenSize.height) {
                 [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees + 270))];
+            }
+            else {
+                [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
             }
         }
     }
