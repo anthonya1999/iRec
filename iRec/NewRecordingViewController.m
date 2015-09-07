@@ -339,7 +339,7 @@ fail:
         [self setTitleAndColorForButton];
         
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1];
-        _recorder = [[ScreenRecorder alloc]initWithFramerate:self.framerate bitrate:self.bitrate];
+        _recorder = [[ScreenRecorder alloc] initWithFramerate:self.framerate bitrate:self.bitrate];
         [_recorder setVideoPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]]];
         [_recorder startRecording];
         
@@ -444,14 +444,16 @@ fail:
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:videoPath]) {
         NSArray *assetArray = [videoAsset tracksWithMediaType:AVMediaTypeVideo];
-        if ([assetArray count] > 0)
+        if ([assetArray count] > 0) {
             assetVideoTrack = assetArray[0];
+        }
     }
     
     if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath] && [[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
-        if ([assetArray count] > 0)
+        if ([assetArray count] > 0) {
             assetAudioTrack = assetArray[0];
+        }
     }
     
     AVMutableComposition *mixComposition = [AVMutableComposition composition];
@@ -459,8 +461,13 @@ fail:
     if (assetVideoTrack != nil) {
         AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
         [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
-        if (assetAudioTrack != nil) [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
-        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
+        if (assetAudioTrack != nil) {
+            [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
+            [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
+            if (_screenSize.width > _screenSize.height) {
+                [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees + 270))];
+            }
+        }
     }
     
     if (assetAudioTrack != nil) {
@@ -475,6 +482,9 @@ fail:
     [exportSession setOutputFileType:AVFileTypeMPEG4];
     [exportSession setOutputURL:exportURL];
     [exportSession setShouldOptimizeForNetworkUse:NO];
+    
+    _screenSize.width = 0;
+    _screenSize.height = 0;
     
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void){
         switch (exportSession.status) {

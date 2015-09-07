@@ -34,12 +34,15 @@
     
     IOMobileFramebufferReturn (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
+    IOMobileFramebufferReturn (*IOMobileFramebufferGetDisplaySize)(IOMobileFramebufferConnection connection, CGSize *size) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetDisplaySize");
+    NSParameterAssert(IOMobileFramebufferGetDisplaySize);
     IOMobileFramebufferReturn (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
     
     IOMobileFramebufferGetMainDisplay(&_framebufferConnection);
+    IOMobileFramebufferGetDisplaySize(_framebufferConnection, &_screenSize);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
-   
+    
     dlclose(IOMobileFramebuffer);
 }
 
@@ -50,32 +53,13 @@
     [_videoWriter setMovieTimeScale:_framerate];
     
     NSDictionary *compressionProperties = @{AVVideoAverageBitRateKey:      @(_bitrate * 1000),
-                                            AVVideoMaxKeyFrameIntervalKey: @(_framerate)
-                                            };
-    
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    CGFloat screenScale = [[UIScreen mainScreen] scale];
-    CGSize screenSize = CGSizeMake((screenBounds.size.width * screenScale), (screenBounds.size.height * screenScale));
-    CGFloat screenWidth = 0;
-    CGFloat screenHeight = 0;
-    
-    if (screenSize.width > screenSize.height) {
-        screenWidth = screenSize.height;
-        screenHeight = screenSize.width;
-    }
-    else {
-        screenWidth = screenSize.width;
-        screenHeight = screenSize.height;
-    }
-    
-    NSAssert(screenWidth != 0, @"The screen width cannot equal zero!");
-    NSAssert(screenHeight != 0, @"The screen height cannot equal zero!");
+                                            AVVideoMaxKeyFrameIntervalKey: @(_framerate),
+                                            AVVideoProfileLevelKey:        AVVideoProfileLevelH264HighAutoLevel};
     
     NSDictionary *outputSettings = @{AVVideoCompressionPropertiesKey: compressionProperties,
                                      AVVideoCodecKey:                 AVVideoCodecH264,
-                                     AVVideoWidthKey:                 @(screenWidth),
-                                     AVVideoHeightKey:                @(screenHeight)
-                                     };
+                                     AVVideoWidthKey:                 @(_screenSize.width),
+                                     AVVideoHeightKey:                @(_screenSize.height)};
     
     NSAssert([_videoWriter canApplyOutputSettings:outputSettings forMediaType:AVMediaTypeVideo], @"Strange error: AVVideoWriter isn't accepting our output settings.");
     
@@ -102,7 +86,10 @@
     NSAssert(_videoPath, @"You're telling me to record but not where to put the result. How am I supposed to know where to put this frickin' video? :(");
     NSAssert(!_recording, @"Trying to start recording, but we're already recording?!!?!");
     
+    [self openFramebuffer];
     [self setupVideoRecordingObjects];
+    
+    NSAssert(_screenSurface != NULL, @"It seems as if the framebuffer was not opened!");
     _recording = YES;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -125,7 +112,9 @@
         }
         dispatch_async(_videoQueue, ^{
             [_videoWriterInput markAsFinished];
-            [_videoWriter finishWritingWithCompletionHandler:^{}];
+            [_videoWriter finishWritingWithCompletionHandler:^{
+                [self cleanupAndReset];
+            }];
         });
     });
 }
@@ -135,11 +124,6 @@
 - (void)saveFrame:(CMTime)frame {
     void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
     NSParameterAssert(CoreVideo);
-    
-    if (_screenSurface == NULL) {
-        [self openFramebuffer];
-        NSAssert(_screenSurface != NULL, @"It seems as if the framebuffer was not opened!");
-    }
     
     if (!_screenSurface) {
         IOSurfaceRef (*CVPixelBufferGetIOSurface)(CVPixelBufferRef pixelBuffer) = dlsym(CoreVideo, "CVPixelBufferGetIOSurface");
@@ -169,6 +153,20 @@
                 _pixelBuffer = NULL;
         }
     });
+}
+
+#pragma mark - Cleanup & Reset
+
+- (void)cleanupAndReset {
+    CFRelease(_screenSurface);
+    _screenSurface = NULL;
+    CFRelease(_framebufferConnection);
+    _framebufferConnection = NULL;
+    _videoWriter = nil;
+    _videoWriterInput = nil;
+    _pixelBufferAdaptor = nil;
+    _videoQueue = nil;
+    _videoPath = nil;
 }
 
 @end
