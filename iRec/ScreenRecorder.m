@@ -92,7 +92,7 @@
     [self setupVideoRecordingObjects];
     _recording = YES;
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         struct timeval currentTime, lastSnapshot;
         lastSnapshot.tv_sec = lastSnapshot.tv_usec = 0;
         unsigned int frame = 0;
@@ -135,24 +135,22 @@
     if (!_pixelBuffer) {
         CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
         NSParameterAssert(CVPixelBufferCreateWithIOSurface);
+        [_pixelBufferLock lock];
         CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
+        [_pixelBufferLock unlock];
         NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
+        CVPixelBufferRetain(_pixelBuffer);
     }
     
     dlclose(CoreVideo);
     
-    CVPixelBufferRetain(_pixelBuffer);
     dispatch_async(_videoQueue, ^{
-        if (_pixelBuffer != NULL) {
-            while(_videoWriterInput.readyForMoreMediaData == NO) {
-                usleep(1000);
-            }
-            [_pixelBufferLock lock];
-            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-            [_pixelBufferLock unlock];
-            CVPixelBufferRelease(_pixelBuffer);
-            _pixelBuffer = NULL;
+        while(!_videoWriterInput.readyForMoreMediaData) {
+            usleep(1000);
         }
+        [_pixelBufferLock lock];
+        [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+        [_pixelBufferLock unlock];
     });
 }
 
@@ -163,6 +161,8 @@
     _screenSurface = NULL;
     CFRelease(_framebufferConnection);
     _framebufferConnection = NULL;
+    CVPixelBufferRelease(_pixelBuffer);
+    _pixelBuffer = NULL;
     _videoWriter = nil;
     _videoWriterInput = nil;
     _pixelBufferAdaptor = nil;
