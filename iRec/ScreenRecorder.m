@@ -87,9 +87,9 @@
     NSAssert(!_recording, @"Trying to start recording, but we're already recording?!!?!");
     
     [self openFramebuffer];
-    [self setupVideoRecordingObjects];
-    
     NSAssert(_screenSurface != NULL, @"It seems as if the framebuffer was not opened!");
+    
+    [self setupVideoRecordingObjects];
     _recording = YES;
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -144,13 +144,14 @@
     CVPixelBufferRetain(_pixelBuffer);
     dispatch_async(_videoQueue, ^{
         if (_pixelBuffer != NULL) {
-            while(!_videoWriterInput.readyForMoreMediaData)
+            while(_videoWriterInput.readyForMoreMediaData == NO) {
                 usleep(1000);
-                [_pixelBufferLock lock];
-                [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-                [_pixelBufferLock unlock];
-                CVPixelBufferRelease(_pixelBuffer);
-                _pixelBuffer = NULL;
+            }
+            [_pixelBufferLock lock];
+            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+            [_pixelBufferLock unlock];
+            CVPixelBufferRelease(_pixelBuffer);
+            _pixelBuffer = NULL;
         }
     });
 }

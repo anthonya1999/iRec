@@ -430,6 +430,7 @@ fail:
         else {
             degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
         }
+        _screenSize = CGSizeMake(0, 0);
     }
     
     NSString *videoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
@@ -468,8 +469,8 @@ fail:
         [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:assetVideoTrack atTime:kCMTimeZero error:&error];
         if (assetAudioTrack != nil) {
             [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
-            [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
         }
+        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
     }
     
     if (assetAudioTrack != nil) {
@@ -484,7 +485,6 @@ fail:
     [exportSession setOutputFileType:AVFileTypeMPEG4];
     [exportSession setOutputURL:exportURL];
     [exportSession setShouldOptimizeForNetworkUse:NO];
-    _screenSize = CGSizeMake(0, 0);
     
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void){
         switch (exportSession.status) {
