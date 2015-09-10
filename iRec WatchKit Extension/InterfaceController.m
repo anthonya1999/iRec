@@ -7,7 +7,6 @@
 //
 
 #import "InterfaceController.h"
-#import "NewRecordingViewController.h"
 
 @interface InterfaceController () {
     NSString *buttonText;

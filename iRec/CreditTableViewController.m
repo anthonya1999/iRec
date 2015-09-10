@@ -74,7 +74,7 @@
 
     if (indexPath.section == 4) {
         if (indexPath.row == 0) {
-            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
             [blurView setDynamic:YES];
             blurView.tintColor = [UIColor clearColor];
             blurView.blurRadius = 8;

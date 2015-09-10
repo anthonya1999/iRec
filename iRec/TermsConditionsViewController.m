@@ -39,7 +39,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:self action:nil];
-    UIBarButtonItem *disagreeButton = [[UIBarButtonItem alloc] initWithTitle:@"Disagree" style:UIBarButtonItemStyleBordered target:self action:@selector(disagreeToTerms)];
+    UIBarButtonItem *disagreeButton = [[UIBarButtonItem alloc] initWithTitle:@"Disagree" style:UIBarButtonItemStylePlain target:self action:@selector(disagreeToTerms)];
     UIBarButtonItem *agreeButton = [[UIBarButtonItem alloc] initWithTitle:@"Agree" style:UIBarButtonItemStyleDone target:self action:@selector(dismissTermsConditions)];
     NSArray *items = [NSArray arrayWithObjects:disagreeButton, flexibleSpace, agreeButton, nil];
     self.toolbarItems = items;
@@ -62,7 +62,7 @@
 
 - (void)dismissTermsConditions {
     UIAlertView *dismissTermsAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"I agree to the iRec & Emu4iOS terms and conditions." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Agree", nil];
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
@@ -85,7 +85,7 @@
 
 - (void)disagreeToTerms {
     UIAlertView *disagreeAlert = [[UIAlertView alloc] initWithTitle:@"Terms and Conditions" message:@"You must agree to the iRec & Emu4iOS terms and conditions to use the application." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
     [blurView setDynamic:YES];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];

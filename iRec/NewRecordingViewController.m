@@ -64,7 +64,7 @@
 }
 
 - (BOOL)otherMediaIsPlaying {
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
@@ -185,7 +185,7 @@ deselect:
 }
 
 - (void)showMergingAlert {
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
@@ -252,7 +252,7 @@ deselect:
 }
 
 - (BOOL)hasValidName {
-    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+    FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
     [blurView setDynamic:YES];
     blurView.tintColor = [UIColor clearColor];
     blurView.blurRadius = 8;
@@ -360,7 +360,7 @@ fail:
             channels = [[prefs objectForKey:@"channels_number"] doubleValue];
         
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedBlackScreenAlert"]) {
-            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] applicationFrame].size.width, [[UIScreen mainScreen] applicationFrame].size.height * 4)];
+            FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
             [blurView setDynamic:YES];
             blurView.tintColor = [UIColor clearColor];
             blurView.blurRadius = 8;
@@ -388,13 +388,12 @@ fail:
         
         self.isRecording = YES;
         isAudioRec = YES;
-        NSDictionary *recordSettings =
-        [[NSDictionary alloc] initWithObjectsAndKeys:
-         [NSNumber numberWithFloat:samplerate], AVSampleRateKey,
-         [NSNumber numberWithInt:kAudioFormatAppleIMA4], AVFormatIDKey,
-         [NSNumber numberWithInt:channels], AVNumberOfChannelsKey,
-         [NSNumber numberWithInt:AVAudioQualityMax], AVEncoderAudioQualityKey,
-         nil];
+        
+        NSDictionary *recordSettings = @{AVSampleRateKey:          @(samplerate),
+                                         AVFormatIDKey:            @(kAudioFormatAppleIMA4),
+                                         AVNumberOfChannelsKey:    @(channels),
+                                         AVEncoderAudioQualityKey: @(AVAudioQualityMax)};
+        
         NSError *recorderError = nil;
         recorder = [[AVAudioRecorder alloc] initWithURL:fileURL settings:recordSettings error:&recorderError];
         [recorder setDelegate:self];

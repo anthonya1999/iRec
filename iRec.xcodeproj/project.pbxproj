@@ -56,18 +56,18 @@
 		921ABD191B824F3F00C6A0F1 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921ABD151B824F3F00C6A0F1 /* Crashlytics.framework */; };
 		921ABD1A1B824F3F00C6A0F1 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921ABD161B824F3F00C6A0F1 /* Fabric.framework */; };
 		921ABD1B1B824F3F00C6A0F1 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921ABD171B824F3F00C6A0F1 /* Parse.framework */; };
+		9241CD9C1BA114AC003544A4 /* iRec WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 92E556F71B3F1C7E0013CC7D /* iRec WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		9241CD9F1BA114AC003544A4 /* iRec WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
-		9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9270E50E1B8C111B006BED61 /* iRecSettings.bundle */; settings = {ASSET_TAGS = (); }; };
+		9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9270E50E1B8C111B006BED61 /* iRecSettings.bundle */; };
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
 		92B0293F1B8CBDD100A4F46A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255475D1B7D8E2700F075B6 /* LaunchScreen.storyboard */; };
-		92B97F501B8D8B090061C95C /* ScreenRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */; settings = {ASSET_TAGS = (); }; };
-		92D069671B9B929A00169D8B /* LegalText.txt in Resources */ = {isa = PBXBuildFile; fileRef = 92D069661B9B929A00169D8B /* LegalText.txt */; settings = {ASSET_TAGS = (); }; };
+		92B97F501B8D8B090061C95C /* ScreenRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */; };
+		92D069671B9B929A00169D8B /* LegalText.txt in Resources */ = {isa = PBXBuildFile; fileRef = 92D069661B9B929A00169D8B /* LegalText.txt */; };
 		92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E557011B3F1C7E0013CC7D /* Assets.xcassets */; };
-		92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */ = {isa = PBXBuildFile; fileRef = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */; };
 		92E5570F1B3F1C7E0013CC7D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 92E5570E1B3F1C7E0013CC7D /* Assets.xcassets */; };
-		92E557131B3F1C7E0013CC7D /* iRec WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 92E556F71B3F1C7E0013CC7D /* iRec WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		92E5571D1B3F1E690013CC7D /* iRec WatchKit Extension.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 92E5571C1B3F1E690013CC7D /* iRec WatchKit Extension.entitlements */; };
 		92E557221B3F1E9D0013CC7D /* InterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E557211B3F1E9D0013CC7D /* InterfaceController.m */; };
 		92E557251B3F1EA60013CC7D /* AboutInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92E557241B3F1EA60013CC7D /* AboutInterfaceController.m */; };
@@ -77,32 +77,43 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		92E557081B3F1C7E0013CC7D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 920CCFB01A94DAC2004BD668 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 92E557051B3F1C7E0013CC7D;
-			remoteInfo = "iRec WatchKit 1 App";
-		};
-		92E557111B3F1C7E0013CC7D /* PBXContainerItemProxy */ = {
+		9241CD9A1BA114AC003544A4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 920CCFB01A94DAC2004BD668 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 92E556F61B3F1C7E0013CC7D;
-			remoteInfo = "iRec WatchKit 1 Extension";
+			remoteInfo = "iRec WatchKit Extension";
+		};
+		9241CD9D1BA114AC003544A4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 920CCFB01A94DAC2004BD668 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 92E557051B3F1C7E0013CC7D;
+			remoteInfo = "iRec WatchKit App";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		927ADA3C1B13ACF200B4887C /* Embed App Extensions */ = {
+		9241CDA01BA114AC003544A4 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				92E557131B3F1C7E0013CC7D /* iRec WatchKit Extension.appex in Embed App Extensions */,
+				9241CD9C1BA114AC003544A4 /* iRec WatchKit Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9241CDA11BA114AC003544A4 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				9241CD9F1BA114AC003544A4 /* iRec WatchKit App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		92D945F01B2CC7DB00FF16EE /* Embed Watch Content */ = {
@@ -161,20 +172,7 @@
 		921277491B8964790053F0AE /* IASKSpecifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IASKSpecifier.h; path = Extras/InAppSettingsKit/Models/IASKSpecifier.h; sourceTree = SOURCE_ROOT; };
 		9212774A1B8964790053F0AE /* IASKSpecifier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IASKSpecifier.m; path = Extras/InAppSettingsKit/Models/IASKSpecifier.m; sourceTree = SOURCE_ROOT; };
 		921277531B8964890053F0AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277561B8964890053F0AE /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277591B8964890053F0AE /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = IASKLocalizable.strings; sourceTree = "<group>"; };
 		9212775C1B8964890053F0AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		9212775F1B8964890053F0AE /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277621B8964890053F0AE /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277651B8964890053F0AE /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277681B8964890053F0AE /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		9212776B1B8964890053F0AE /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		9212776E1B8964890053F0AE /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277711B8964890053F0AE /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277741B8964890053F0AE /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		921277771B8964890053F0AE /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		9212777A1B8964890053F0AE /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = IASKLocalizable.strings; sourceTree = "<group>"; };
-		9212777D1B8964890053F0AE /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = IASKLocalizable.strings; sourceTree = "<group>"; };
 		9212778D1B8964980053F0AE /* IASKPSSliderSpecifierViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IASKPSSliderSpecifierViewCell.h; path = Extras/InAppSettingsKit/Views/IASKPSSliderSpecifierViewCell.h; sourceTree = SOURCE_ROOT; };
 		9212778E1B8964980053F0AE /* IASKPSSliderSpecifierViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = IASKPSSliderSpecifierViewCell.m; path = Extras/InAppSettingsKit/Views/IASKPSSliderSpecifierViewCell.m; sourceTree = SOURCE_ROOT; };
 		9212778F1B8964980053F0AE /* IASKPSTextFieldSpecifierViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IASKPSTextFieldSpecifierViewCell.h; path = Extras/InAppSettingsKit/Views/IASKPSTextFieldSpecifierViewCell.h; sourceTree = SOURCE_ROOT; };
@@ -460,20 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				921277511B8964890053F0AE /* Base.lproj */,
-				921277541B8964890053F0AE /* de.lproj */,
-				921277571B8964890053F0AE /* el.lproj */,
 				9212775A1B8964890053F0AE /* en.lproj */,
-				9212775D1B8964890053F0AE /* es.lproj */,
-				921277601B8964890053F0AE /* fr.lproj */,
-				921277631B8964890053F0AE /* it.lproj */,
-				921277661B8964890053F0AE /* ja.lproj */,
-				921277691B8964890053F0AE /* nl.lproj */,
-				9212776C1B8964890053F0AE /* pt-PT.lproj */,
-				9212776F1B8964890053F0AE /* pt.lproj */,
-				921277721B8964890053F0AE /* ru.lproj */,
-				921277751B8964890053F0AE /* sv.lproj */,
-				921277781B8964890053F0AE /* th.lproj */,
-				9212777B1B8964890053F0AE /* tr.lproj */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -487,24 +472,6 @@
 			path = Extras/InAppSettingsKit/Resources/Base.lproj;
 			sourceTree = SOURCE_ROOT;
 		};
-		921277541B8964890053F0AE /* de.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277551B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = de.lproj;
-			path = Extras/InAppSettingsKit/Resources/de.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277571B8964890053F0AE /* el.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277581B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = el.lproj;
-			path = Extras/InAppSettingsKit/Resources/el.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
 		9212775A1B8964890053F0AE /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
@@ -512,105 +479,6 @@
 			);
 			name = en.lproj;
 			path = Extras/InAppSettingsKit/Resources/en.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		9212775D1B8964890053F0AE /* es.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				9212775E1B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = es.lproj;
-			path = Extras/InAppSettingsKit/Resources/es.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277601B8964890053F0AE /* fr.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277611B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = fr.lproj;
-			path = Extras/InAppSettingsKit/Resources/fr.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277631B8964890053F0AE /* it.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277641B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = it.lproj;
-			path = Extras/InAppSettingsKit/Resources/it.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277661B8964890053F0AE /* ja.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277671B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = ja.lproj;
-			path = Extras/InAppSettingsKit/Resources/ja.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277691B8964890053F0AE /* nl.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				9212776A1B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = nl.lproj;
-			path = Extras/InAppSettingsKit/Resources/nl.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		9212776C1B8964890053F0AE /* pt-PT.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				9212776D1B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = "pt-PT.lproj";
-			path = "Extras/InAppSettingsKit/Resources/pt-PT.lproj";
-			sourceTree = SOURCE_ROOT;
-		};
-		9212776F1B8964890053F0AE /* pt.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277701B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = pt.lproj;
-			path = Extras/InAppSettingsKit/Resources/pt.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277721B8964890053F0AE /* ru.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277731B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = ru.lproj;
-			path = Extras/InAppSettingsKit/Resources/ru.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277751B8964890053F0AE /* sv.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277761B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = sv.lproj;
-			path = Extras/InAppSettingsKit/Resources/sv.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		921277781B8964890053F0AE /* th.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				921277791B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = th.lproj;
-			path = Extras/InAppSettingsKit/Resources/th.lproj;
-			sourceTree = SOURCE_ROOT;
-		};
-		9212777B1B8964890053F0AE /* tr.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				9212777C1B8964890053F0AE /* IASKLocalizable.strings */,
-			);
-			name = tr.lproj;
-			path = Extras/InAppSettingsKit/Resources/tr.lproj;
 			sourceTree = SOURCE_ROOT;
 		};
 		921ABC601B824ABB00C6A0F1 /* AFNetworking */ = {
@@ -826,13 +694,13 @@
 				920CCFB71A94DAD1004BD668 /* Frameworks */,
 				920CCFB81A94DAD1004BD668 /* Resources */,
 				920CD0501A94E771004BD668 /* ShellScript */,
-				927ADA3C1B13ACF200B4887C /* Embed App Extensions */,
 				92D945F01B2CC7DB00FF16EE /* Embed Watch Content */,
+				9241CDA11BA114AC003544A4 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				92E557121B3F1C7E0013CC7D /* PBXTargetDependency */,
+				9241CD9E1BA114AC003544A4 /* PBXTargetDependency */,
 			);
 			name = iRec;
 			productName = iRec;
@@ -850,27 +718,28 @@
 			buildRules = (
 			);
 			dependencies = (
-				92E557091B3F1C7E0013CC7D /* PBXTargetDependency */,
 			);
 			name = "iRec WatchKit Extension";
 			productName = "iRec WatchKit 1 Extension";
 			productReference = 92E556F71B3F1C7E0013CC7D /* iRec WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit-extension";
+			productType = "com.apple.product-type.watchkit2-extension";
 		};
 		92E557051B3F1C7E0013CC7D /* iRec WatchKit App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92E557141B3F1C7E0013CC7D /* Build configuration list for PBXNativeTarget "iRec WatchKit App" */;
 			buildPhases = (
 				92E557041B3F1C7E0013CC7D /* Resources */,
+				9241CDA01BA114AC003544A4 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9241CD9B1BA114AC003544A4 /* PBXTargetDependency */,
 			);
 			name = "iRec WatchKit App";
 			productName = "iRec WatchKit 1 App";
 			productReference = 92E557061B3F1C7E0013CC7D /* iRec WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp";
+			productType = "com.apple.product-type.application.watchapp2";
 		};
 /* End PBXNativeTarget section */
 
@@ -878,7 +747,7 @@
 		920CCFB01A94DAC2004BD668 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "ADA Tech, LLC";
 				TargetAttributes = {
 					920CCFB91A94DAD1004BD668 = {
@@ -929,19 +798,6 @@
 			knownRegions = (
 				en,
 				Base,
-				de,
-				el,
-				es,
-				fr,
-				it,
-				ja,
-				nl,
-				"pt-PT",
-				pt,
-				ru,
-				sv,
-				th,
-				tr,
 			);
 			mainGroup = 920CCFAF1A94DAC2004BD668;
 			productRefGroup = 920CCFBB1A94DAD1004BD668 /* Products */;
@@ -973,7 +829,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92E557071B3F1C7E0013CC7D /* iRec WatchKit App.app in Resources */,
 				92E557021B3F1C7E0013CC7D /* Assets.xcassets in Resources */,
 				92E5571D1B3F1E690013CC7D /* iRec WatchKit Extension.entitlements in Resources */,
 			);
@@ -1075,15 +930,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		92E557091B3F1C7E0013CC7D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 92E557051B3F1C7E0013CC7D /* iRec WatchKit App */;
-			targetProxy = 92E557081B3F1C7E0013CC7D /* PBXContainerItemProxy */;
-		};
-		92E557121B3F1C7E0013CC7D /* PBXTargetDependency */ = {
+		9241CD9B1BA114AC003544A4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 92E556F61B3F1C7E0013CC7D /* iRec WatchKit Extension */;
-			targetProxy = 92E557111B3F1C7E0013CC7D /* PBXContainerItemProxy */;
+			targetProxy = 9241CD9A1BA114AC003544A4 /* PBXContainerItemProxy */;
+		};
+		9241CD9E1BA114AC003544A4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 92E557051B3F1C7E0013CC7D /* iRec WatchKit App */;
+			targetProxy = 9241CD9D1BA114AC003544A4 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1104,114 +959,10 @@
 			name = IASKLocalizable.strings;
 			sourceTree = "<group>";
 		};
-		921277551B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277561B8964890053F0AE /* de */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277581B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277591B8964890053F0AE /* el */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
 		9212775B1B8964890053F0AE /* IASKLocalizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
 				9212775C1B8964890053F0AE /* en */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		9212775E1B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9212775F1B8964890053F0AE /* es */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277611B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277621B8964890053F0AE /* fr */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277641B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277651B8964890053F0AE /* it */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277671B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277681B8964890053F0AE /* ja */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		9212776A1B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9212776B1B8964890053F0AE /* nl */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		9212776D1B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9212776E1B8964890053F0AE /* pt-PT */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277701B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277711B8964890053F0AE /* pt */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277731B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277741B8964890053F0AE /* ru */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277761B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				921277771B8964890053F0AE /* sv */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		921277791B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9212777A1B8964890053F0AE /* th */,
-			);
-			name = IASKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		9212777C1B8964890053F0AE /* IASKLocalizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9212777D1B8964890053F0AE /* tr */,
 			);
 			name = IASKLocalizable.strings;
 			sourceTree = "<group>";
@@ -1383,15 +1134,14 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = iRec_WatchKit_1_Extension;
 				INFOPLIST_FILE = "iRec WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "895f7b88-b42c-46e2-814f-c1063cd76e69";
-				SDKROOT = iphoneos;
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1428,16 +1178,15 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IBSC_MODULE = iRec_WatchKit_1_Extension;
 				INFOPLIST_FILE = "iRec WatchKit App/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "de1faeed-3e2e-4805-9cd0-05e168a8348c";
-				SDKROOT = iphoneos;
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
-				"TARGETED_DEVICE_FAMILY[sdk=iphonesimulator*]" = "1,4";
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
@@ -1483,8 +1232,10 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "d3628d27-dd78-45c4-81c4-c0a868489311";
-				SDKROOT = iphoneos;
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Debug;
 		};
@@ -1525,9 +1276,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				PROVISIONING_PROFILE = "f6d49025-944a-4ae7-9689-97c9e19bfbc4";
-				SDKROOT = iphoneos;
+				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
 			name = Release;
 		};
