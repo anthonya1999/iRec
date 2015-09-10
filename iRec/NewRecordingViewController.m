@@ -344,6 +344,7 @@ fail:
         [_recorder startRecording];
         
         NSError *error = nil;
+        
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&error];
         
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
@@ -394,8 +395,7 @@ fail:
                                          AVNumberOfChannelsKey:    @(channels),
                                          AVEncoderAudioQualityKey: @(AVAudioQualityMax)};
         
-        NSError *recorderError = nil;
-        recorder = [[AVAudioRecorder alloc] initWithURL:fileURL settings:recordSettings error:&recorderError];
+        recorder = [[AVAudioRecorder alloc] initWithURL:fileURL settings:recordSettings error:&error];
         [recorder setDelegate:self];
         [recorder prepareToRecord];
         [recorder record];
@@ -469,7 +469,7 @@ fail:
         if (assetAudioTrack != nil) {
             [compositionVideoTrack scaleTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) toDuration:audioAsset.duration];
         }
-        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(DEGREES_TO_RADIANS(degrees))];
+        [compositionVideoTrack setPreferredTransform:CGAffineTransformMakeRotation(degreesToRadians(degrees))];
     }
     
     if (assetAudioTrack != nil) {

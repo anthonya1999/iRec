@@ -163,10 +163,11 @@
     _framebufferConnection = NULL;
     CVPixelBufferRelease(_pixelBuffer);
     _pixelBuffer = NULL;
+    _videoQueue = NULL;
     _videoWriter = nil;
     _videoWriterInput = nil;
+    _pixelBufferLock = nil;
     _pixelBufferAdaptor = nil;
-    _videoQueue = nil;
     _videoPath = nil;
 }
 
