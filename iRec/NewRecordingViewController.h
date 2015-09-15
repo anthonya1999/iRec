@@ -19,7 +19,6 @@
     IBOutlet UIButton *_startStopButton;
     AVAudioRecorder *recorder;
     BOOL isRecording;
-    IBOutlet UINavigationItem *navigationTextbar;
 }
 
 @property (nonatomic) BOOL isRecording;
@@ -29,6 +28,7 @@
 @end
 
 @protocol NewRecordingViewControllerDelegate <NSObject>
+
 - (void)newRecordingViewController:(NewRecordingViewController *)viewController didAddNewRecording:(NSString *)recordingName;
 
 @end

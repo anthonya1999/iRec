@@ -353,12 +353,14 @@ fail:
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         
         float samplerate;
-        if ([prefs objectForKey:@"samplerate_value"])
+        if ([prefs objectForKey:@"samplerate_value"]) {
             samplerate = [[prefs objectForKey:@"samplerate_value"] floatValue];
+        }
         
         int channels;
-        if ([prefs objectForKey:@"channels_number"])
+        if ([prefs objectForKey:@"channels_number"]) {
             channels = [[prefs objectForKey:@"channels_number"] doubleValue];
+        }
         
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedBlackScreenAlert"]) {
             FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
