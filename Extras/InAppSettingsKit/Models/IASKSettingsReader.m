@@ -261,6 +261,7 @@
 
 - (NSString *)locateSettingsFile: (NSString *)file {
     static NSString* const kIASKBundleFolderForiRec = @"iRecSettings.bundle";
+    
     static NSString* const kIASKBundleLocaleFolderExtension = @".lproj";
 
     // The file is searched in the following order:

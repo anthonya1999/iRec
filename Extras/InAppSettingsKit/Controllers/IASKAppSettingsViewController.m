@@ -342,6 +342,12 @@ CGRect IASKCGRectSwap(CGRect rect);
     }
 }
 
+- (void)setNeverShowPrivacySettings:(BOOL)neverShowPrivacySettings {
+	_neverShowPrivacySettings = neverShowPrivacySettings;
+	self.settingsReader = nil;
+	[self reload];
+}
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -445,8 +451,8 @@ CGRect IASKCGRectSwap(CGRect rect);
 
 - (CGFloat)tableView:(UITableView*)tableView heightForHeaderInSection:(NSInteger)section {
 	if ([self tableView:tableView viewForHeaderInSection:section] && [self.delegate respondsToSelector:@selector(settingsViewController:tableView:heightForHeaderForSection:)]) {
-		CGFloat result;
-		if ((result = [self.delegate settingsViewController:self tableView:tableView heightForHeaderForSection:section])) {
+		CGFloat result = [self.delegate settingsViewController:self tableView:tableView heightForHeaderForSection:section];
+		if (result > 0) {
 			return result;
 		}
 		
@@ -458,11 +464,11 @@ CGRect IASKCGRectSwap(CGRect rect);
 {
 	NSString *footerText = [self.settingsReader footerTextForSection:section];
 	if (section == [self.settingsReader numberOfSections]-1) {
+		// show credits since this is the last section
 		if ((footerText == nil) || ([footerText length] == 0)) {
-			// show nothing if no FooterText
 			return @"";
 		} else {
-			// show the app's FooterText
+			// show the credits below the app's FooterText
 			return [NSString stringWithFormat:@"%@", footerText];
 		}
 	} else {
@@ -737,11 +743,14 @@ CGRect IASKCGRectSwap(CGRect rect);
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
         if ([self.delegate respondsToSelector:@selector(settingsViewController:buttonTappedForSpecifier:)]) {
             [self.delegate settingsViewController:self buttonTappedForSpecifier:specifier];
-        }/* else if ([self.delegate respondsToSelector:@selector(settingsViewController:buttonTappedForKey:)]) {
+        } else if ([self.delegate respondsToSelector:@selector(settingsViewController:buttonTappedForKey:)]) {
             // deprecated, provided for backward compatibility
             NSLog(@"InAppSettingsKit Warning: -settingsViewController:buttonTappedForKey: is deprecated. Please use -settingsViewController:buttonTappedForSpecifier:");
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
             [self.delegate settingsViewController:self buttonTappedForKey:[specifier key]];
-        }*/ else {
+#pragma clang diagnostic pop
+        } else {
             // legacy code, provided for backward compatibility
             // the delegate mechanism above is much cleaner and doesn't leak
             Class buttonClass = [specifier buttonClass];
