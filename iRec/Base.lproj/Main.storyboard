@@ -954,7 +954,7 @@
         <!--Settings-->
         <scene sceneID="8DC-5q-VTG">
             <objects>
-                <tableViewController id="fR4-Ha-5js" customClass="IASKAppSettingsViewController" sceneMemberID="viewController">
+                <tableViewController id="fR4-Ha-5js" customClass="SettingsViewController" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" id="tob-0s-4Bd">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

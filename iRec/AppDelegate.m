@@ -75,7 +75,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     [defs registerDefaults:dictionary];
     [defs synchronize];
     
-    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"iRecSettings" ofType:@"bundle"];
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];
     
     if(!settingsBundle)
     {

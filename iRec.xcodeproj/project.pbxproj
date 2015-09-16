@@ -61,8 +61,9 @@
 		9259B58A1A9FEC0A0072AD4F /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9259B5891A9FEC0A0072AD4F /* WelcomeViewController.m */; };
 		92657C561AC0A67E009112E4 /* LegalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92657C551AC0A67E009112E4 /* LegalViewController.m */; };
 		9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */; };
-		9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 9270E50E1B8C111B006BED61 /* iRecSettings.bundle */; };
 		927ADA431B13B2E400B4887C /* WatchSupportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 927ADA421B13B2E400B4887C /* WatchSupportViewController.m */; };
+		92964A5A1BA8EFA100DB8849 /* InAppSettings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 92964A591BA8EFA100DB8849 /* InAppSettings.bundle */; };
+		92964A621BA8F0EF00DB8849 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 92964A611BA8F0EF00DB8849 /* SettingsViewController.m */; };
 		92B0293F1B8CBDD100A4F46A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9255475D1B7D8E2700F075B6 /* LaunchScreen.storyboard */; };
 		92B97F501B8D8B090061C95C /* ScreenRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */; };
 		92D069671B9B929A00169D8B /* LegalText.txt in Resources */ = {isa = PBXBuildFile; fileRef = 92D069661B9B929A00169D8B /* LegalText.txt */; };
@@ -238,9 +239,11 @@
 		92657C551AC0A67E009112E4 /* LegalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LegalViewController.m; sourceTree = "<group>"; };
 		9270221D1AF9964100A78EE9 /* TermsConditionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TermsConditionsViewController.h; sourceTree = "<group>"; };
 		9270221E1AF9964100A78EE9 /* TermsConditionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TermsConditionsViewController.m; sourceTree = "<group>"; };
-		9270E50E1B8C111B006BED61 /* iRecSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iRecSettings.bundle; sourceTree = "<group>"; };
 		927ADA411B13B2E400B4887C /* WatchSupportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchSupportViewController.h; sourceTree = "<group>"; };
 		927ADA421B13B2E400B4887C /* WatchSupportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchSupportViewController.m; sourceTree = "<group>"; };
+		92964A591BA8EFA100DB8849 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
+		92964A601BA8F0EF00DB8849 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		92964A611BA8F0EF00DB8849 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		92B4AA701B7A843300EBAA6B /* iRec.ipa */ = {isa = PBXFileReference; lastKnownFileType = file; path = iRec.ipa; sourceTree = "<group>"; };
 		92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenRecorder.m; sourceTree = "<group>"; };
 		92BF90BC1B69B4BA00BA0E4E /* Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
@@ -319,7 +322,7 @@
 				920CCFF11A94DC6A004BD668 /* Tab Bar */,
 				920CCFCD1A94DAD1004BD668 /* Images.xcassets */,
 				920CD0531A94E7B9004BD668 /* iRec.entitlements */,
-				9270E50E1B8C111B006BED61 /* iRecSettings.bundle */,
+				92964A591BA8EFA100DB8849 /* InAppSettings.bundle */,
 				92F122DA1B141286001E1061 /* Settings-Watch.bundle */,
 				920CCFBD1A94DAD1004BD668 /* Supporting Files */,
 			);
@@ -365,6 +368,7 @@
 			children = (
 				920CCFF51A94DC7D004BD668 /* New Recording */,
 				920CCFF91A94DDFB004BD668 /* Recordings */,
+				92964A5F1BA8F0E100DB8849 /* Settings */,
 				920CD0011A94DEF3004BD668 /* Info */,
 			);
 			name = "Tab Bar";
@@ -640,6 +644,15 @@
 			name = "Watch Support";
 			sourceTree = "<group>";
 		};
+		92964A5F1BA8F0E100DB8849 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				92964A601BA8F0EF00DB8849 /* SettingsViewController.h */,
+				92964A611BA8F0EF00DB8849 /* SettingsViewController.m */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 		92B4AA6F1B7A842400EBAA6B /* IPAs */ = {
 			isa = PBXGroup;
 			children = (
@@ -819,7 +832,7 @@
 				920CCFCC1A94DAD1004BD668 /* Main.storyboard in Resources */,
 				92B0293F1B8CBDD100A4F46A /* LaunchScreen.storyboard in Resources */,
 				92F122DB1B141286001E1061 /* Settings-Watch.bundle in Resources */,
-				9270E50F1B8C111B006BED61 /* iRecSettings.bundle in Resources */,
+				92964A5A1BA8EFA100DB8849 /* InAppSettings.bundle in Resources */,
 				920CCFCE1A94DAD1004BD668 /* Images.xcassets in Resources */,
 				92D069671B9B929A00169D8B /* LegalText.txt in Resources */,
 			);
@@ -900,6 +913,7 @@
 				920CD04D1A94E05D004BD668 /* BetaTestersViewController.m in Sources */,
 				9270221F1AF9964100A78EE9 /* TermsConditionsViewController.m in Sources */,
 				921277B01B8964A90053F0AE /* AFHTTPRequestOperationManager.m in Sources */,
+				92964A621BA8F0EF00DB8849 /* SettingsViewController.m in Sources */,
 				9212779B1B8964980053F0AE /* IASKTextField.m in Sources */,
 				921277D71B8965200053F0AE /* UIAlertView+RSTAdditions.m in Sources */,
 				921277B41B8964A90053F0AE /* AFURLConnectionOperation.m in Sources */,
