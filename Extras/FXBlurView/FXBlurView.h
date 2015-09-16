@@ -1,7 +1,7 @@
 //
 //  FXBlurView.h
 //
-//  Version 1.6.3
+//  Version 1.6.4
 //
 //  Created by Nick Lockwood on 25/08/2013.
 //  Copyright (c) 2013 Charcoal Design
@@ -71,6 +71,8 @@
 @property (nonatomic, weak_ref) IBOutlet UIView *underlyingView;
 
 - (void)updateAsynchronously:(BOOL)async completion:(void (^)())completion;
+
+- (void)clearImage;
 
 @end
 
