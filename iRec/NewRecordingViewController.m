@@ -340,7 +340,7 @@ fail:
         
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1];
         _recorder = [[ScreenRecorder alloc] initWithFramerate:self.framerate bitrate:self.bitrate];
-        [_recorder setVideoPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]]];
+        _videoPath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-1.mp4", _nameField.text]];
         [_recorder startRecording];
         
         NSError *error = nil;

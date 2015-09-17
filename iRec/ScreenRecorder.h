@@ -22,7 +22,4 @@
 - (void)stopRecording;
 - (void)cleanupAndReset;
 
-@property (nonatomic) BOOL recording;
-@property (copy, nonatomic) NSString *videoPath;
-
 @end

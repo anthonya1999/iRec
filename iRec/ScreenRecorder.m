@@ -123,9 +123,9 @@
         IOSurfaceRef (*CVPixelBufferGetIOSurface)(CVPixelBufferRef pixelBuffer) = dlsym(CoreVideo, "CVPixelBufferGetIOSurface");
         NSParameterAssert(CVPixelBufferGetIOSurface);
         _screenSurface = CVPixelBufferGetIOSurface(_pixelBuffer);
-        NSAssert(_screenSurface, @"Error creating the IOSurface.");
+        NSAssert(_screenSurface, @"Error getting the IOSurface.");
     }
-    
+
     if (!_pixelBuffer) {
         CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
         NSParameterAssert(CVPixelBufferCreateWithIOSurface);
@@ -151,7 +151,7 @@
 #pragma mark - Stop Recording
 
 - (void)stopRecording {
-    [self setRecording:NO];
+    _recording = NO;
     dispatch_async(_videoQueue, ^{
         [_videoWriterInput markAsFinished];
         [_videoWriter finishWritingWithCompletionHandler:^{
