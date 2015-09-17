@@ -3,3 +3,4 @@
 /Pods
 /Podfile.lock
 .DS_Store
+*.ipa
