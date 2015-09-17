@@ -19,6 +19,7 @@
 - (void)setupVideoRecordingObjects;
 - (void)saveFrame:(CMTime)frame;
 - (void)startRecording;
+- (void)stopRecording;
 - (void)cleanupAndReset;
 
 @property (nonatomic) BOOL recording;

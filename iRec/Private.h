@@ -12,8 +12,7 @@ __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
 typedef struct __IOMobileFramebuffer *IOMobileFramebufferConnection;
-typedef	kern_return_t IOReturn;
-typedef IOReturn IOMobileFramebufferReturn;
+typedef	kern_return_t IOMobileFramebufferReturn;
 
 #define kIOMobileFramebufferError 0xE0000000
 

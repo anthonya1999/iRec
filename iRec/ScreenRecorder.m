@@ -110,12 +110,6 @@
                 lastSnapshot = currentTime;
             }
         }
-        dispatch_async(_videoQueue, ^{
-            [_videoWriterInput markAsFinished];
-            [_videoWriter finishWritingWithCompletionHandler:^{
-                [self cleanupAndReset];
-            }];
-        });
     });
 }
 
@@ -151,6 +145,18 @@
         [_pixelBufferLock lock];
         [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
         [_pixelBufferLock unlock];
+    });
+}
+
+#pragma mark - Stop Recording
+
+- (void)stopRecording {
+    [self setRecording:NO];
+    dispatch_async(_videoQueue, ^{
+        [_videoWriterInput markAsFinished];
+        [_videoWriter finishWritingWithCompletionHandler:^{
+            [self cleanupAndReset];
+        }];
     });
 }
 
