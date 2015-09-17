@@ -21,18 +21,13 @@
 
 @implementation RecordingsViewController
 
-- (NSUserDefaults *)defaults {
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    return prefs;
-}
-
 - (void)viewDidLoad {
     if (_recorder) {
         //do nothing
     }
     else {
         [super viewDidLoad];
-        if ([[self.defaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
+        if ([[userDefaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
             [_deleteAllButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [_deleteAllButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
         }
@@ -77,7 +72,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self.defaults boolForKey:@"thumbnails_switch"]) {
+    if ([userDefaults boolForKey:@"thumbnails_switch"]) {
         return 120;
     }
     else {
@@ -104,7 +99,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RecordingNameCell" forIndexPath:indexPath];
     
-    if ([self.defaults boolForKey:@"thumbnails_switch"]) {
+    if ([userDefaults boolForKey:@"thumbnails_switch"]) {
         UIImageView *thumbnailImageView = [[UIImageView alloc] initWithImage:[self thumbnailFromVideoAtURL:[NSURL fileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _recordingNames[indexPath.row]]]]]];
         cell.textLabel.font = [cell.textLabel.font fontWithSize:18];
         

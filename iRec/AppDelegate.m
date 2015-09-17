@@ -62,8 +62,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     
     
     NSLog(@"Registering default values from Settings bundle");
-    NSUserDefaults *defs = [NSUserDefaults standardUserDefaults];
-    
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithBool:YES], @"suspend_switch",
                                 [NSNumber numberWithBool:YES], @"thumbnail_switch",
@@ -72,8 +70,8 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
                                 [NSString stringWithFormat:@"darkTheme"], @"theme_value",
                                 nil];
     
-    [defs registerDefaults:dictionary];
-    [defs synchronize];
+    [userDefaults registerDefaults:dictionary];
+    [userDefaults synchronize];
     
     NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"InAppSettings" ofType:@"bundle"];
     
@@ -92,7 +90,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         if (key)
         {
             // check if value readable in userDefaults
-            id currentObject = [defs objectForKey:key];
+            id currentObject = [userDefaults objectForKey:key];
             if (currentObject == nil)
             {
                 // not readable: set value from Settings.bundle
@@ -108,7 +106,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         }
     }
     
-    if ([[defs objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
+    if ([[userDefaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
         [[UITabBar appearance] setBarTintColor:[UIColor blackColor]];
         [[UITabBar appearance] setTintColor:[UIColor whiteColor]];
         [[UINavigationBar appearance] setBarTintColor:[UIColor blackColor]];
@@ -116,12 +114,12 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:NO];
     }
-    else if ([[defs objectForKey:@"theme_value"] isEqualToString:@"lightTheme"]) {
+    else if ([[userDefaults objectForKey:@"theme_value"] isEqualToString:@"lightTheme"]) {
         [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:NO];
     }
     
-    [defs registerDefaults:defaultsToRegister];
-    [defs synchronize];
+    [userDefaults registerDefaults:defaultsToRegister];
+    [userDefaults synchronize];
     
     [self preparePushNotifications];
     
@@ -295,12 +293,11 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 }
 
 - (void)resetApplication {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *dictionary = [defaults dictionaryRepresentation];
+    NSDictionary *dictionary = [userDefaults dictionaryRepresentation];
     for (id key in dictionary) {
-        [defaults removeObjectForKey:key];
+        [userDefaults removeObjectForKey:key];
     }
-    [defaults synchronize];
+    [userDefaults synchronize];
     NSFileManager *fileMgr = [NSFileManager defaultManager];
     NSError *error = nil;
     NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error];

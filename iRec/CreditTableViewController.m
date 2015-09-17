@@ -21,11 +21,6 @@
 
 @implementation CreditTableViewController
 
-- (NSUserDefaults *)defaults {
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    return prefs;
-}
-
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];

@@ -16,11 +16,6 @@
 
 @implementation InterfaceController
 
-- (NSUserDefaults *)defaults {
-    NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:@"group.com.adhoc.iRec"];
-    return prefs;
-}
-
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
     
@@ -29,8 +24,8 @@
                                [NSNumber numberWithBool:YES], @"show_timer_switch",
                                [NSNumber numberWithBool:YES], @"show_status_label",
                                nil];
-    [self.defaults registerDefaults:dictionary];
-    [self.defaults synchronize];
+    [watchUserDefaults registerDefaults:dictionary];
+    [watchUserDefaults synchronize];
   
     [_statusLabel setText:[NSString stringWithFormat:@"Status: Not Recording"]];
     [_statusLabel setTextColor:[UIColor redColor]];
@@ -47,7 +42,7 @@
     // This method is called when watch view controller is about to be visible to user
     [super willActivate];
     
-    BOOL enabled = [self.defaults boolForKey:@"show_status_label"];
+    BOOL enabled = [watchUserDefaults boolForKey:@"show_status_label"];
     if (enabled) {
         [_statusLabel setHidden:NO];
     }
@@ -104,7 +99,7 @@
             [_statusLabel setText:[NSString stringWithFormat:@"Status: Recording"]];
             [_statusLabel setTextColor:[UIColor greenColor]];
             
-            BOOL enabled = [self.defaults boolForKey:@"show_timer_switch"];
+            BOOL enabled = [watchUserDefaults boolForKey:@"show_timer_switch"];
             
             if (enabled) {
                 [_recordTimer setHidden:NO];
@@ -138,7 +133,7 @@
         [self addMenuItems];
         [self addFixedMenuItems];
         
-        BOOL enabled = [self.defaults boolForKey:@"show_done_message"];
+        BOOL enabled = [watchUserDefaults boolForKey:@"show_done_message"];
         if (enabled) {
             [self presentControllerWithName:@"finishedInterfaceController" context:nil];
         }

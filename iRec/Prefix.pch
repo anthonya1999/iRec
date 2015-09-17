@@ -22,6 +22,8 @@
 #define degreesToRadians(degrees)                   ((degrees) / 180.0 * M_PI)
 #define AssertSuccess(call, descriptionString) do {\kern_return_t kernreturn = call; \NSAssert(kernreturn==KERN_SUCCESS, @"%@ failed: %s", descriptionString, mach_error_string(kernreturn)); \} while(0)
 #define documentsDirectory [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0]
+#define userDefaults [NSUserDefaults standardUserDefaults]
+#define watchUserDefaults [[NSUserDefaults alloc] initWithSuiteName:@"group.com.adhoc.iRec"]
 
 #endif
 

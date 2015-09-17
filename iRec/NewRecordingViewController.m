@@ -125,9 +125,7 @@ fail:
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
-    if ([[prefs objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
+    if ([[userDefaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
         _shareButtonOutlet.tintColor = [UIColor whiteColor];
     }
     
@@ -139,7 +137,7 @@ fail:
     isAudioRec = NO;
     
     
-    if ([[prefs objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
+    if ([[userDefaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
         _nameField.keyboardAppearance = UIKeyboardAppearanceDark;
     }
     else {
@@ -292,20 +290,20 @@ fail:
 
 - (int)framerate {
     //int requestedFramerate = [_framerateField.text intValue];
-    int fps;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs objectForKey:@"multi_fps"])
-        fps = [[prefs objectForKey:@"multi_fps"] doubleValue];
+    int fps = 0;
+    if ([userDefaults objectForKey:@"multi_fps"]) {
+        fps = [[userDefaults objectForKey:@"multi_fps"] doubleValue];
+    }
     return fps; //> 0 ? fps : 29.97);
 }
 
 
 - (int)bitrate {
     //int requestedBitrate = [text_bitrate intValue];
-    int bitrate;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs objectForKey:@"multi_bitrate"])
-        bitrate = [[prefs objectForKey:@"multi_bitrate"] doubleValue];
+    int bitrate = 0;
+    if ([userDefaults objectForKey:@"multi_bitrate"]) {
+        bitrate = [[userDefaults objectForKey:@"multi_bitrate"] doubleValue];
+    }
     return bitrate; //> 0 ? bitrate : 3500);
 }
 
@@ -350,16 +348,14 @@ fail:
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         
-        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-        
         float samplerate;
-        if ([prefs objectForKey:@"samplerate_value"]) {
-            samplerate = [[prefs objectForKey:@"samplerate_value"] floatValue];
+        if ([userDefaults objectForKey:@"samplerate_value"]) {
+            samplerate = [[userDefaults objectForKey:@"samplerate_value"] floatValue];
         }
         
         int channels;
-        if ([prefs objectForKey:@"channels_number"]) {
-            channels = [[prefs objectForKey:@"channels_number"] doubleValue];
+        if ([userDefaults objectForKey:@"channels_number"]) {
+            channels = [[userDefaults objectForKey:@"channels_number"] doubleValue];
         }
         
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedBlackScreenAlert"]) {
@@ -380,12 +376,12 @@ fail:
                 if (buttonIndex == 1) {
                     [blurView removeFromSuperview];
                 }
-                if ([prefs boolForKey:@"suspend_switch"])
+                if ([userDefaults boolForKey:@"suspend_switch"])
                     [[UIApplication sharedApplication] performSelector:@selector(suspend)];
             }];
         }
         else {
-            if ([prefs boolForKey:@"suspend_switch"])
+            if ([userDefaults boolForKey:@"suspend_switch"])
                 [[UIApplication sharedApplication] performSelector:@selector(suspend)];
         }
         
@@ -407,7 +403,7 @@ fail:
     {
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1 * 60 * 60 * 24];
         [_delegate newRecordingViewController:self didAddNewRecording:_nameField.text];
-        [_recorder stopRecording];
+        _recording = NO;
         _recorder = nil;
         [recorder stop];
         recorder = nil;
@@ -423,13 +419,12 @@ fail:
 
 - (void)mergeAudio {
     double degrees = 0.0;
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    if ([prefs objectForKey:@"video_orientation"]) {
+    if ([userDefaults objectForKey:@"video_orientation"]) {
         if (_screenSize.width > _screenSize.height) {
-            degrees = [[prefs objectForKey:@"video_orientation"] doubleValue] + 270;
+            degrees = [[userDefaults objectForKey:@"video_orientation"] doubleValue] + 270;
         }
         else {
-            degrees = [[prefs objectForKey:@"video_orientation"] doubleValue];
+            degrees = [[userDefaults objectForKey:@"video_orientation"] doubleValue];
         }
         _screenSize = CGSizeMake(0, 0);
     }

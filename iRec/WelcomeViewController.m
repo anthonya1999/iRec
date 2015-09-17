@@ -15,11 +15,6 @@
 
 @implementation WelcomeViewController
 
-- (NSUserDefaults *)defaults {
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    return prefs;
-}
-
 - (instancetype)init
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
