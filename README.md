@@ -2,7 +2,7 @@
 
 ![ScreenShot](http://104.131.174.145/iRecPreview.png)
 
-####NOTE: As of commit 8d256dd, the setup and the steps below are no longer needed! Just open the iRec.xcodeproj file, and deploy as normal!
+####NOTE: As of commit 8d256dd, the setup and the steps below are no longer needed! Just open the iRec.xcodeproj file, and deploy as normal! Also, please be aware that the IPA in the project is extremely outdated, so don’t try to use it for deployment.
 
 To install and deploy iRec to your device through Xcode, you must find and setup the PrivateFramework headers for IOKit, IOSurface, CoreSurface, and IOMobileFramebuffer (64-bit-safe version), and place them in the framework. I cannot provide these files in the project, due to legal reasons. However, you may grab the first two here:  
 https://github.com/rpetrich/iphoneheaders (download the entire repository).
