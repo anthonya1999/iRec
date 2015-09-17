@@ -244,7 +244,6 @@
 		92964A591BA8EFA100DB8849 /* InAppSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = InAppSettings.bundle; sourceTree = "<group>"; };
 		92964A601BA8F0EF00DB8849 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		92964A611BA8F0EF00DB8849 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
-		92B4AA701B7A843300EBAA6B /* iRec.ipa */ = {isa = PBXFileReference; lastKnownFileType = file; path = iRec.ipa; sourceTree = "<group>"; };
 		92B97F4F1B8D8B090061C95C /* ScreenRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScreenRecorder.m; sourceTree = "<group>"; };
 		92BF90BC1B69B4BA00BA0E4E /* Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Private.h; sourceTree = "<group>"; };
 		92D069661B9B929A00169D8B /* LegalText.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LegalText.txt; sourceTree = "<group>"; };
@@ -297,7 +296,6 @@
 				92E5570A1B3F1C7E0013CC7D /* iRec WatchKit App */,
 				920CCFE71A94DB79004BD668 /* Frameworks */,
 				920CCFBB1A94DAD1004BD668 /* Products */,
-				92B4AA6F1B7A842400EBAA6B /* IPAs */,
 			);
 			sourceTree = "<group>";
 		};
@@ -651,14 +649,6 @@
 				92964A611BA8F0EF00DB8849 /* SettingsViewController.m */,
 			);
 			name = Settings;
-			sourceTree = "<group>";
-		};
-		92B4AA6F1B7A842400EBAA6B /* IPAs */ = {
-			isa = PBXGroup;
-			children = (
-				92B4AA701B7A843300EBAA6B /* iRec.ipa */,
-			);
-			name = IPAs;
 			sourceTree = "<group>";
 		};
 		92E556F81B3F1C7E0013CC7D /* iRec WatchKit Extension */ = {
