@@ -18,8 +18,4 @@
 
 - (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL;
 
-//@property (nonatomic, strong) UIDocumentInteractionController *controller;
-//@property (nonatomic, strong) CLLocationManager *locationManager;
-//@property (nonatomic, strong) NSMutableArray *locations;
-
 @end

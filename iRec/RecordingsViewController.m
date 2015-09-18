@@ -14,6 +14,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
+#import "Private.h"
 
 @interface RecordingsViewController ()
 
@@ -22,21 +23,11 @@
 @implementation RecordingsViewController
 
 - (void)viewDidLoad {
-    if (_recorder) {
-        //do nothing
-    }
-    else {
-        [super viewDidLoad];
-        if ([[userDefaults objectForKey:@"theme_value"] isEqualToString:@"darkTheme"]) {
-            [_deleteAllButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [_deleteAllButton setTitleShadowColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        }
-        else {
-            //do nothing different...
-        }
+    [super viewDidLoad];
+    if (!_recording) {
         [self populateNamesArray];
-        [self.tableView reloadData];
     }
+    [self.tableView reloadData];
     if (_recordingNames.count == 0) {
         [_deleteAllButton setHidden:YES];
     }
@@ -47,10 +38,12 @@
 
 //Populate the array with the files from the documents folder
 - (void)populateNamesArray {
-    if (_recordingNames == nil)
+    if (_recordingNames == nil) {
         _recordingNames = [[NSMutableArray alloc] init];
-    else
+    }
+    else {
         [_recordingNames removeAllObjects];
+    }
     for (NSString *file in [[[NSFileManager alloc] init] enumeratorAtPath:documentsDirectory]) {
         if ([file hasSuffix:@".mp4"])
             [_recordingNames addObject:[file stringByDeletingPathExtension]];
@@ -81,18 +74,17 @@
 }
 
 - (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL {
-    UIImage *theImage = nil;
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:contentURL options:nil];
-    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    AVURLAsset *videoAsset = [[AVURLAsset alloc] initWithURL:contentURL options:nil];
+    AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:videoAsset];
     generator.appliesPreferredTrackTransform = YES;
     NSError *error = nil;
-    CMTime time = CMTimeMake([asset duration].timescale, [asset duration].timescale / 2);
+    CMTime time = CMTimeMake([videoAsset duration].timescale, [videoAsset duration].timescale / 2);
     CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:nil error:&error];
     
-    theImage = [[UIImage alloc] initWithCGImage:imgRef];
+    UIImage *thumbnailImage = [[UIImage alloc] initWithCGImage:imgRef];
     CGImageRelease(imgRef);
     
-    return theImage;
+    return thumbnailImage;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -160,25 +152,27 @@
     else {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Delete All" message:@"Are you sure you want to delete all your recordings?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
         [alert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
-            if (buttonIndex == 1)
-            {
-                NSString *savePath = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@""]];
-                NSFileManager *fileMgr = [[NSFileManager alloc] init];
-                NSError *error = nil;
-                NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:savePath error:&error];
-                if (error == nil) {
+            if (buttonIndex == 1) {
+                if (_recording) {
+                    UIAlertView *failAlert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"You must stop recording before you delete all of your current recordings." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                    [failAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
+                        [blurView removeFromSuperview];
+                    }];
+                }
+                else {
+                    NSFileManager *fileMgr = [NSFileManager defaultManager];
+                    NSError *error = nil;
+                    NSArray *directoryContents = [fileMgr contentsOfDirectoryAtPath:documentsDirectory error:&error];
                     for (NSString *path in directoryContents) {
-                        NSString *fullPath = [savePath stringByAppendingPathComponent:path];
-                        BOOL removeSuccess = [fileMgr removeItemAtPath:fullPath error:&error];
-                        if (!removeSuccess) {}}}
-                else {}
-                [self viewWillAppear:YES];
+                        NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
+                        [fileMgr removeItemAtPath:fullPath error:&error];
+                    }
+                }
+            }
+            else {
                 [blurView removeFromSuperview];
             }
-            else  {
-                [blurView removeFromSuperview];
-                [self viewWillAppear:YES];
-            }
+            [self viewWillAppear:YES];
         }];
     }
 }
@@ -195,10 +189,9 @@
      NSArray *excludedActivities = @[UIActivityTypePostToWeibo,UIActivityTypePrint, UIActivityTypeCopyToPasteboard,UIActivityTypeAssignToContact,UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
      activityViewController.excludedActivityTypes = excludedActivities;
  
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         activityViewController.popoverPresentationController.sourceView = self.view;
     }
-    
      [self presentViewController:activityViewController animated:YES completion:nil];
 }
 
@@ -219,7 +212,6 @@
         playerViewController.player = [AVPlayer playerWithPlayerItem:item];
         [self presentViewController:playerViewController animated:NO completion:nil];
     }
-    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
@@ -229,7 +221,6 @@
         [self dismissMoviePlayerViewControllerAnimated];
     }
 }
-
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
@@ -241,17 +232,6 @@
         [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
         [self.tableView reloadData];
         [self viewWillAppear:YES];
-    }
-}
-
-
-#pragma mark - New Recording
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.destinationViewController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController *destinationNavController = (UINavigationController *)segue.destinationViewController;
-        if (destinationNavController.viewControllers.count)
-            [(NewRecordingViewController *)destinationNavController.viewControllers[0] setDelegate:self];
     }
 }
 
