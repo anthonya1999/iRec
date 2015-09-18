@@ -128,26 +128,28 @@
     void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
     NSParameterAssert(CoreVideo);
     
-    if (!_pixelBuffer) {
-        CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
-        NSParameterAssert(CVPixelBufferCreateWithIOSurface);
-        [_pixelBufferLock lock];
-        CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
-        [_pixelBufferLock unlock];
-        NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
-        CVPixelBufferRetain(_pixelBuffer);
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if (!_pixelBuffer) {
+            CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
+            NSParameterAssert(CVPixelBufferCreateWithIOSurface);
+            [_pixelBufferLock lock];
+            CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
+            [_pixelBufferLock unlock];
+            NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
+            CVPixelBufferRetain(_pixelBuffer);
+        }
+        
+        dispatch_async(_videoQueue, ^{
+            while(!_videoWriterInput.readyForMoreMediaData) {
+                usleep(1000);
+            }
+            [_pixelBufferLock lock];
+            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+            [_pixelBufferLock unlock];
+        });
+    });
     
     dlclose(CoreVideo);
-    
-    dispatch_async(_videoQueue, ^{
-        while(!_videoWriterInput.readyForMoreMediaData) {
-            usleep(1000);
-        }
-        [_pixelBufferLock lock];
-        [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-        [_pixelBufferLock unlock];
-    });
 }
 
 #pragma mark - Cleanup & Reset
