@@ -168,6 +168,7 @@
                         [fileMgr removeItemAtPath:fullPath error:&error];
                     }
                 }
+                [blurView removeFromSuperview];
             }
             else {
                 [blurView removeFromSuperview];

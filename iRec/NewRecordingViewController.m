@@ -289,22 +289,36 @@ fail:
 }
 
 - (int)framerate {
-    //int requestedFramerate = [_framerateField.text intValue];
     int fps = 0;
     if ([userDefaults objectForKey:@"multi_fps"]) {
         fps = [[userDefaults objectForKey:@"multi_fps"] doubleValue];
     }
-    return fps; //> 0 ? fps : 29.97);
+    return fps;
 }
 
 
 - (int)bitrate {
-    //int requestedBitrate = [text_bitrate intValue];
     int bitrate = 0;
     if ([userDefaults objectForKey:@"multi_bitrate"]) {
         bitrate = [[userDefaults objectForKey:@"multi_bitrate"] doubleValue];
     }
-    return bitrate; //> 0 ? bitrate : 3500);
+    return bitrate;
+}
+
+- (float)samplerate {
+    float samplerate = 0;
+    if ([userDefaults objectForKey:@"samplerate_value"]) {
+        samplerate = [[userDefaults objectForKey:@"samplerate_value"] floatValue];
+    }
+    return samplerate;
+}
+
+- (int)channels {
+    int channels = 0;
+    if ([userDefaults objectForKey:@"channels_number"]) {
+        channels = [[userDefaults objectForKey:@"channels_number"] doubleValue];
+    }
+    return channels;
 }
 
 #pragma mark - IBActions
@@ -348,16 +362,6 @@ fail:
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         
-        float samplerate;
-        if ([userDefaults objectForKey:@"samplerate_value"]) {
-            samplerate = [[userDefaults objectForKey:@"samplerate_value"] floatValue];
-        }
-        
-        int channels;
-        if ([userDefaults objectForKey:@"channels_number"]) {
-            channels = [[userDefaults objectForKey:@"channels_number"] doubleValue];
-        }
-        
         if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedBlackScreenAlert"]) {
             FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
             [blurView setDynamic:YES];
@@ -388,9 +392,9 @@ fail:
         self.isRecording = YES;
         isAudioRec = YES;
         
-        NSDictionary *recordSettings = @{AVSampleRateKey:          @(samplerate),
+        NSDictionary *recordSettings = @{AVSampleRateKey:          @(self.samplerate),
                                          AVFormatIDKey:            @(kAudioFormatAppleIMA4),
-                                         AVNumberOfChannelsKey:    @(channels),
+                                         AVNumberOfChannelsKey:    @(self.channels),
                                          AVEncoderAudioQualityKey: @(AVAudioQualityMax)};
         
         recorder = [[AVAudioRecorder alloc] initWithURL:fileURL settings:recordSettings error:&error];

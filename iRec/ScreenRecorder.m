@@ -43,6 +43,9 @@
     IOMobileFramebufferGetDisplaySize(_framebufferConnection, &_screenSize);
     IOMobileFramebufferGetLayerDefaultSurface(_framebufferConnection, 0, &_screenSurface);
     
+    CFRetain(_framebufferConnection);
+    CFRetain(_screenSurface);
+    
     dlclose(IOMobileFramebuffer);
 }
 
@@ -125,13 +128,6 @@
     void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
     NSParameterAssert(CoreVideo);
     
-    if (!_screenSurface) {
-        IOSurfaceRef (*CVPixelBufferGetIOSurface)(CVPixelBufferRef pixelBuffer) = dlsym(CoreVideo, "CVPixelBufferGetIOSurface");
-        NSParameterAssert(CVPixelBufferGetIOSurface);
-        _screenSurface = CVPixelBufferGetIOSurface(_pixelBuffer);
-        NSAssert(_screenSurface, @"Error getting the IOSurface.");
-    }
-
     if (!_pixelBuffer) {
         CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
         NSParameterAssert(CVPixelBufferCreateWithIOSurface);
