@@ -18,7 +18,6 @@
     IBOutlet UITextField *_nameField;
     IBOutlet UIButton *_startStopButton;
     AVAudioRecorder *recorder;
-    BOOL isRecording;
 }
 
 @property (nonatomic) BOOL isRecording;

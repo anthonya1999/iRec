@@ -135,20 +135,21 @@
             [_pixelBufferLock lock];
             CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
             [_pixelBufferLock unlock];
-            NSAssert(_pixelBuffer, @"Why isn't the pixel buffer created?!");
             CVPixelBufferRetain(_pixelBuffer);
         }
         
         dispatch_async(_videoQueue, ^{
-            while(!_videoWriterInput.readyForMoreMediaData) {
-                usleep(1000);
+            if (_pixelBuffer != NULL) {
+                while(!_videoWriterInput.readyForMoreMediaData) {
+                    usleep(1000);
+                }
+                NSAssert(_pixelBuffer, @"We can't append the pixel buffer if there isn't one!");
+                [_pixelBufferLock lock];
+                [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+                [_pixelBufferLock unlock];
             }
-            [_pixelBufferLock lock];
-            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-            [_pixelBufferLock unlock];
         });
     });
-    
     dlclose(CoreVideo);
 }
 

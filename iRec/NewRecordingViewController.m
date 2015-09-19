@@ -18,8 +18,6 @@
     NSString* copyString;
 }
 
-@synthesize isRecording = _isRecording;
-
 - (id) init
 {
     self = [super init];
