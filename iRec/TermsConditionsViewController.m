@@ -69,8 +69,8 @@
             [self dismissViewControllerAnimated:YES completion:nil];
             [blurView removeFromSuperview];
             
-            [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"showedWarningAlert"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+            [userDefaults setObject:[NSDate date] forKey:@"showedWarningAlert"];
+            [userDefaults synchronize];
         }
         if (buttonIndex == 0) {
             [blurView removeFromSuperview];

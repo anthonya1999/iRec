@@ -191,7 +191,7 @@ deselect:
     UIAlertView *mergingAlert = [[UIAlertView alloc] initWithTitle:@"Saving – Please wait..." message:nil delegate:self cancelButtonTitle:nil otherButtonTitles:nil];
     [mergingAlert show];
     [mergingAlert performSelector:@selector(dismissWithClickedButtonIndex:animated:) withObject:nil afterDelay:3.0];
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"discard_switch"]) {
+    if (![userDefaults boolForKey:@"discard_switch"]) {
         [blurView performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:3.0];
     }
 }
@@ -204,7 +204,7 @@ deselect:
     _nameField.userInteractionEnabled = YES;
     self.tabBarController.tabBar.userInteractionEnabled = YES;
     self.tableView.userInteractionEnabled = YES;
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"discard_switch"]) {
+    if ([userDefaults boolForKey:@"discard_switch"]) {
         [self showDiscardOrSaveAlert];
     }
     else {
@@ -354,13 +354,11 @@ fail:
         [_recorder startRecording];
         
         NSError *error = nil;
-        
         [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&error];
-        
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         
-        if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedBlackScreenAlert"]) {
+        if (![userDefaults objectForKey:@"showedBlackScreenAlert"]) {
             FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
             [blurView setDynamic:YES];
             blurView.tintColor = [UIColor clearColor];
@@ -371,8 +369,8 @@ fail:
             UIAlertView *blackScreenAlert = [[UIAlertView alloc] initWithTitle:@"Attention" message:@"In order to record OpenGL content (almost all games), you must enable AssistiveTouch in the default Settings application." delegate:self cancelButtonTitle:@"Don't Show Again" otherButtonTitles:@"OK", nil];
             [blackScreenAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == 0) {
-                    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:@"showedBlackScreenAlert"];
-                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    [userDefaults setObject:[NSDate date] forKey:@"showedBlackScreenAlert"];
+                    [userDefaults synchronize];
                     [blurView removeFromSuperview];
                 }
                 if (buttonIndex == 1) {
@@ -453,7 +451,7 @@ fail:
         }
     }
     
-    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath] && [[NSUserDefaults standardUserDefaults] boolForKey:@"switch_audio"]) {
+    if ([[NSFileManager defaultManager] fileExistsAtPath:audioPath] && [userDefaults boolForKey:@"switch_audio"]) {
         NSArray *assetArray = [audioAsset tracksWithMediaType:AVMediaTypeAudio];
         if ([assetArray count] > 0) {
             assetAudioTrack = assetArray[0];

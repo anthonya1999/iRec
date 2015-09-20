@@ -50,7 +50,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         //do nothing...
     }
     
-    if (![[NSUserDefaults standardUserDefaults] objectForKey:@"showedWarningAlert"])
+    if (![userDefaults objectForKey:@"showedWarningAlert"])
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             WelcomeViewController *welcomeViewController = [[WelcomeViewController alloc] init];
@@ -151,7 +151,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
             return;
         }
         
-        NSString *cachedSoftwareUpdateVersion = [[NSUserDefaults standardUserDefaults] objectForKey:CachedSoftwareUpdateKey];
+        NSString *cachedSoftwareUpdateVersion = [userDefaults objectForKey:CachedSoftwareUpdateKey];
         
         __block UIBackgroundFetchResult backgroundFetchResult = UIBackgroundFetchResultNoData;
         
@@ -162,7 +162,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
                 softwareUpdateCompletionBlock(softwareUpdate);
             }
             
-            [[NSUserDefaults standardUserDefaults] setObject:softwareUpdate.version forKey:CachedSoftwareUpdateKey];
+            [userDefaults setObject:softwareUpdate.version forKey:CachedSoftwareUpdateKey];
             
             backgroundFetchResult = UIBackgroundFetchResultNewData;
         }
@@ -176,9 +176,9 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 - (void)preparePushNotifications
 {
     // Uncomment to removed cached events and update information
-    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:CachedSoftwareUpdateKey];
-    //[[NSUserDefaults standardUserDefaults] removeObjectForKey:CachedEventDistributionsKey];
-    //[[NSUserDefaults standardUserDefaults] synchronize];
+    //[userDefaults removeObjectForKey:CachedSoftwareUpdateKey];
+    //[userDefaults removeObjectForKey:CachedEventDistributionsKey];
+    //[userDefaults synchronize];
     
     [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1 * 60 * 60 * 24]; // Check approximately once a day
     
@@ -190,18 +190,18 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     
     // Delay until after app boots up
     dispatch_async(dispatch_get_main_queue(), ^{
-        NSString *previousAppVersion = [[NSUserDefaults standardUserDefaults] objectForKey:AppVersionKey];
+        NSString *previousAppVersion = [userDefaults objectForKey:AppVersionKey];
         NSString *currentAppVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
         
         // No previous version, or current app version is newer than previous
         if (!previousAppVersion || [previousAppVersion compare:currentAppVersion options:NSNumericSearch] == NSOrderedAscending)
         {
-            [[NSUserDefaults standardUserDefaults] setObject:currentAppVersion forKey:AppVersionKey];
+            [userDefaults setObject:currentAppVersion forKey:AppVersionKey];
             [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
         }
         
         // Manually check for updates
-        NSDate *lastManualFetch = [[NSUserDefaults standardUserDefaults] objectForKey:LastCheckForUpdatesKey];
+        NSDate *lastManualFetch = [userDefaults objectForKey:LastCheckForUpdatesKey];
         NSInteger daysPassed = [[NSDate date] daysSinceDate:lastManualFetch];
         
         if (!lastManualFetch || daysPassed > 0)
@@ -261,7 +261,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         
     }  backgroundFetchCompletionHandler:nil];
     
-    [[NSUserDefaults standardUserDefaults] setObject:[NSDate date] forKey:LastCheckForUpdatesKey];
+    [userDefaults setObject:[NSDate date] forKey:LastCheckForUpdatesKey];
 }
 
 
@@ -316,7 +316,7 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     NSLog(@"Application entered background.");
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"reset_switch"]) {
+    if ([userDefaults boolForKey:@"reset_switch"]) {
         [self resetApplication];
     }
 }
