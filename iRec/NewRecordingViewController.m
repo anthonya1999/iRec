@@ -165,6 +165,8 @@ fail:
                     [self mergeAudio];
                     [self performSelector:@selector(setButtonTextToNormal) withObject:nil afterDelay:3.0];
                     [self removeOldVideoFallback];
+                    [_recorder cleanupAndReset];
+                    _recorder = nil;
                 }
             }
         }
@@ -404,7 +406,6 @@ fail:
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1 * 60 * 60 * 24];
         [_delegate newRecordingViewController:self didAddNewRecording:_nameField.text];
         _recording = NO;
-        _recorder = nil;
         [recorder stop];
         recorder = nil;
         self.isRecording = NO;

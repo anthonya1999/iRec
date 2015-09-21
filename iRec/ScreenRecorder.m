@@ -52,6 +52,9 @@
 #pragma mark - Initialize Recorder
 
 - (void)setupVideoRecordingObjects {
+    NSError *error = nil;
+    _videoWriter = [[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:_videoPath] fileType:AVFileTypeMPEG4 error:&error];
+    
     NSAssert(_videoWriter, @"There is no video writer...WHAT?!");
     [_videoWriter setMovieTimeScale:_framerate];
     
@@ -67,6 +70,7 @@
     NSAssert([_videoWriter canApplyOutputSettings:outputSettings forMediaType:AVMediaTypeVideo], @"Strange error: AVVideoWriter isn't accepting our output settings.");
     
     _videoWriterInput = [AVAssetWriterInput assetWriterInputWithMediaType:AVMediaTypeVideo outputSettings:outputSettings];
+    NSAssert(_videoWriterInput, @"Please make sure the video writer has an input!");
     [_videoWriterInput setMediaTimeScale:_framerate];
     NSAssert([_videoWriter canAddInput:_videoWriterInput], @"Strange error: AVVideoWriter doesn't want our input.");
     [_videoWriter addInput:_videoWriterInput];
@@ -82,10 +86,6 @@
 #pragma mark - Start Recording
 
 - (void)startRecording {
-    NSError *error = nil;
-    _videoWriter = [[AVAssetWriter alloc] initWithURL:[NSURL fileURLWithPath:_videoPath] fileType:AVFileTypeMPEG4 error:&error];
-    
-    //Better safe than sorry
     NSAssert(_videoPath, @"You're telling me to record but not where to put the result. How am I supposed to know where to put this frickin' video? :(");
     NSAssert(!_recording, @"Trying to start recording, but we're already recording?!!?!");
     
@@ -115,9 +115,7 @@
         }
         dispatch_async(_videoQueue, ^{
             [_videoWriterInput markAsFinished];
-            [_videoWriter finishWritingWithCompletionHandler:^{
-                [self cleanupAndReset];
-            }];
+            [_videoWriter finishWritingWithCompletionHandler:^{}];
         });
     });
 }
@@ -135,19 +133,17 @@
             [_pixelBufferLock lock];
             CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
             [_pixelBufferLock unlock];
+            NSAssert(_pixelBuffer != NULL, @"We can't append the pixel buffer if there isn't one!");
             CVPixelBufferRetain(_pixelBuffer);
         }
         
         dispatch_async(_videoQueue, ^{
-            if (_pixelBuffer != NULL) {
-                while(!_videoWriterInput.readyForMoreMediaData) {
-                    usleep(1000);
-                }
-                NSAssert(_pixelBuffer, @"We can't append the pixel buffer if there isn't one!");
-                [_pixelBufferLock lock];
-                [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
-                [_pixelBufferLock unlock];
+            while(!_videoWriterInput.readyForMoreMediaData) {
+                usleep(1000);
             }
+            [_pixelBufferLock lock];
+            [_pixelBufferAdaptor appendPixelBuffer:_pixelBuffer withPresentationTime:frame];
+            [_pixelBufferLock unlock];
         });
     });
     dlclose(CoreVideo);
