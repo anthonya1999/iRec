@@ -13,6 +13,10 @@
 
 @interface ScreenRecorder : NSObject
 
+@end
+
+@interface ScreenRecorder (Private)
+
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate;
 
 - (void)openFramebuffer;

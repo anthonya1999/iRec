@@ -12,6 +12,10 @@
 
 @implementation ScreenRecorder
 
+@end
+
+@implementation ScreenRecorder (Private)
+
 #pragma mark - Initialization
 
 - (instancetype)initWithFramerate:(CGFloat)framerate bitrate:(CGFloat)bitrate {
