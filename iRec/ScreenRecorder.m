@@ -137,7 +137,6 @@
             [_pixelBufferLock lock];
             CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
             [_pixelBufferLock unlock];
-            NSAssert(_pixelBuffer != NULL, @"We can't append the pixel buffer if there isn't one!");
             CVPixelBufferRetain(_pixelBuffer);
         }
         
