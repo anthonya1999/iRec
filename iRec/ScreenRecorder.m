@@ -108,7 +108,7 @@
         while (_recording) {
             gettimeofday(&currentTime, NULL);
             currentTime.tv_usec /= 1000;
-            unsigned long long delta = ((1000 * currentTime.tv_sec + currentTime.tv_usec) - (1000 * lastSnapshot.tv_sec + lastSnapshot.tv_usec));
+            unsigned long long delta = (((1000 * currentTime.tv_sec) + (currentTime.tv_usec)) - ((1000 * lastSnapshot.tv_sec) + (lastSnapshot.tv_usec)));
             
             if (delta >= msBeforeNextCapture) {
                 CMTime presentTime = CMTimeMake(frame, _framerate);
@@ -119,7 +119,9 @@
         }
         dispatch_async(_videoQueue, ^{
             [_videoWriterInput markAsFinished];
-            [_videoWriter finishWritingWithCompletionHandler:^{}];
+            [_videoWriter finishWritingWithCompletionHandler:^{
+                [self performSelector:@selector(cleanupAndReset) withObject:nil afterDelay:3.0];
+            }];
         });
     });
 }
@@ -137,6 +139,7 @@
             [_pixelBufferLock lock];
             CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
             [_pixelBufferLock unlock];
+            NSAssert(_pixelBuffer != NULL, @"We can't record if there's no pixel buffer!");
             CVPixelBufferRetain(_pixelBuffer);
         }
         
