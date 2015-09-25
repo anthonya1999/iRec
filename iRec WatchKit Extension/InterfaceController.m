@@ -19,11 +19,10 @@
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
     
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                               [NSNumber numberWithBool:YES], @"show_done_message",
-                               [NSNumber numberWithBool:YES], @"show_timer_switch",
-                               [NSNumber numberWithBool:YES], @"show_status_label",
-                               nil];
+    NSDictionary *dictionary = @{@"show_done_message": [NSNumber numberWithBool:YES],
+                                 @"show_timer_switch": [NSNumber numberWithBool:YES],
+                                 @"show_status_label": [NSNumber numberWithBool:YES]};
+    
     [watchUserDefaults registerDefaults:dictionary];
     [watchUserDefaults synchronize];
   

@@ -62,13 +62,12 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     
     
     NSLog(@"Registering default values from Settings bundle");
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithBool:YES], @"suspend_switch",
-                                [NSNumber numberWithBool:YES], @"thumbnail_switch",
-                                [NSNumber numberWithBool:YES], @"discard_switch",
-                                [NSNumber numberWithBool:NO], @"reset_switch",
-                                [NSString stringWithFormat:@"darkTheme"], @"theme_value",
-                                nil];
+    
+    NSDictionary *dictionary = @{@"thumbnail_switch": [NSNumber numberWithBool:YES],
+                                 @"suspend_switch":   [NSNumber numberWithBool:YES],
+                                 @"discard_switch":   [NSNumber numberWithBool:YES],
+                                 @"reset_switch":     [NSNumber numberWithBool:NO],
+                                 @"theme_value":      @"darkTheme"};
     
     [userDefaults registerDefaults:dictionary];
     [userDefaults synchronize];
