@@ -8,20 +8,14 @@
 
 #import "InterfaceController.h"
 
-@interface InterfaceController () {
-    NSString *buttonText;
-}
-
-@end
-
 @implementation InterfaceController
 
 - (void)awakeWithContext:(id)context {
     [super awakeWithContext:context];
     
-    NSDictionary *dictionary = @{@"show_done_message": [NSNumber numberWithBool:YES],
-                                 @"show_timer_switch": [NSNumber numberWithBool:YES],
-                                 @"show_status_label": [NSNumber numberWithBool:YES]};
+    NSDictionary *dictionary = @{@"show_done_message": @YES,
+                                 @"show_timer_switch": @YES,
+                                 @"show_status_label": @YES};
     
     [watchUserDefaults registerDefaults:dictionary];
     [watchUserDefaults synchronize];

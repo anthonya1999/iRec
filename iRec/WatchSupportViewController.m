@@ -8,10 +8,6 @@
 
 #import "WatchSupportViewController.h"
 
-@interface WatchSupportViewController ()
-
-@end
-
 @implementation WatchSupportViewController
 
 - (instancetype)init

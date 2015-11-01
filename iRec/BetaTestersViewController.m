@@ -8,10 +8,6 @@
 
 #import "BetaTestersViewController.h"
 
-@interface BetaTestersViewController ()
-
-@end
-
 @implementation BetaTestersViewController
 
 - (instancetype)init

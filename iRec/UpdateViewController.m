@@ -13,23 +13,7 @@
 
 #define SOFTWARE_UPDATE_ROOT_ADDRESS @"http://104.131.174.145/"
 
-@interface UpdateViewController ()
-
-@property (strong, nonatomic) SoftwareUpdate *softwareUpdate;
-
-@property (copy, nonatomic) NSDictionary *updateDictionary;
-
-@property (strong, nonatomic) UILabel *statusLabel;
-@property (strong, nonatomic) UIActivityIndicatorView *statusActivityIndicatorView;
-@property (strong, nonatomic) NSLayoutConstraint *statusLabelHorizontalLayoutConstraint;
-
-@property (weak, nonatomic) IBOutlet UILabel *softwareUpdateNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *softwareUpdateDeveloperLabel;
-@property (weak, nonatomic) IBOutlet UILabel *softwareUpdateSizeLabel;
-@property (weak, nonatomic) IBOutlet UITextView *softwareUpdateDescriptionTextView;
-@property (weak, nonatomic) IBOutlet UIImageView *updateImageView;
-
-@end
+@import ObjectiveC;
 
 @implementation UpdateViewController
 
@@ -254,7 +238,10 @@
             if (buttonIndex == 1)
             {
                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.updateDictionary[@"url"]]];
-               [[UIApplication sharedApplication] performSelector:@selector(suspend)];
+                SEL suspend = sel_getUid("suspend");
+                void *(*objc_msgSendTyped)(id self, SEL _cmd) = (void *)objc_msgSend;
+                UIApplication *application = [UIApplication sharedApplication];
+                objc_msgSendTyped(application, suspend);
             }
             
         }];

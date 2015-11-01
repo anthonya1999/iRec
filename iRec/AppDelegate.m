@@ -21,10 +21,6 @@ static NSString * const CachedSoftwareUpdateKey = @"cachedSoftwareUpdate";
 static NSString * const AppVersionKey = @"appVersion";
 static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
 
-@interface AppDelegate ()
-
-@end
-
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -63,10 +59,10 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     
     NSLog(@"Registering default values from Settings bundle");
     
-    NSDictionary *dictionary = @{@"thumbnail_switch": [NSNumber numberWithBool:YES],
-                                 @"suspend_switch":   [NSNumber numberWithBool:YES],
-                                 @"discard_switch":   [NSNumber numberWithBool:YES],
-                                 @"reset_switch":     [NSNumber numberWithBool:NO],
+    NSDictionary *dictionary = @{@"thumbnail_switch": @YES,
+                                 @"suspend_switch":   @YES,
+                                 @"discard_switch":   @YES,
+                                 @"reset_switch":     @NO,
                                  @"theme_value":      @"darkTheme"};
     
     [userDefaults registerDefaults:dictionary];

@@ -9,10 +9,6 @@
 #import "WelcomeViewController.h"
 #import "TermsConditionsViewController.h"
 
-@interface WelcomeViewController ()
-
-@end
-
 @implementation WelcomeViewController
 
 - (instancetype)init

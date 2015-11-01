@@ -15,10 +15,6 @@
 #import "WatchSupportViewController.h"
 #import "FXBlurView.h"
 
-@interface CreditTableViewController ()
-
-@end
-
 @implementation CreditTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style

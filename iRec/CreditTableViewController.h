@@ -13,6 +13,4 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 
-- (void)openTwitterAccountWithUsername:(NSString *)username;
-
 @end

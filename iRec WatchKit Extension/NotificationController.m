@@ -8,12 +8,6 @@
 
 #import "NotificationController.h"
 
-
-@interface NotificationController()
-
-@end
-
-
 @implementation NotificationController
 
 - (instancetype)init {

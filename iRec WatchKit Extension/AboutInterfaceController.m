@@ -8,10 +8,6 @@
 
 #import "AboutInterfaceController.h"
 
-@interface AboutInterfaceController ()
-
-@end
-
 @implementation AboutInterfaceController
 
 - (void)awakeWithContext:(id)context {

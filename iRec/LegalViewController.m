@@ -8,10 +8,6 @@
 
 #import "LegalViewController.h"
 
-@interface LegalViewController ()
-
-@end
-
 @implementation LegalViewController
 
 - (instancetype)init

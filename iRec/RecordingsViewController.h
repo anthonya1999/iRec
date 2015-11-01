@@ -16,6 +16,4 @@
     ScreenRecorder *_recorder;
 }
 
-- (UIImage *)thumbnailFromVideoAtURL:(NSURL *)contentURL;
-
 @end

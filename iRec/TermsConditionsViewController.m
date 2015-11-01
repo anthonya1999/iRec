@@ -10,10 +10,6 @@
 #import "UIAlertView+RSTAdditions.h"
 #import "FXBlurView.h"
 
-@interface TermsConditionsViewController ()
-
-@end
-
 @implementation TermsConditionsViewController
 
 - (instancetype)init

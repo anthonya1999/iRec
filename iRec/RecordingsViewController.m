@@ -16,10 +16,6 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import "Private.h"
 
-@interface RecordingsViewController ()
-
-@end
-
 @implementation RecordingsViewController
 
 - (void)viewDidLoad {

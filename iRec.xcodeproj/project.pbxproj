@@ -781,6 +781,9 @@
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
 						};
 					};
 					92E557051B3F1C7E0013CC7D = {
@@ -1045,7 +1048,7 @@
 				OTHER_LDFLAGS = "-lsqlite3";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "2d679968-0615-42a9-b577-efeafc03dc35";
+				PROVISIONING_PROFILE = "84789be0-c79c-49f7-913f-93798fda3f04";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "";
@@ -1093,7 +1096,7 @@
 				OTHER_LDFLAGS = "-lsqlite3";
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "67d0ec5f-9992-4bdc-b4b4-e4906c5e1027";
+				PROVISIONING_PROFILE = "097609b0-74c5-4ba8-9789-f45a9cd5cae5";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WARNING_CFLAGS = "";
@@ -1141,7 +1144,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "f611d77a-6661-4e58-95d4-f4b2053230a9";
+				PROVISIONING_PROFILE = "87bf9c95-e775-4fac-8a5c-5282ac8e2d64";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1185,7 +1188,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "de1faeed-3e2e-4805-9cd0-05e168a8348c";
+				PROVISIONING_PROFILE = "0834f224-07ee-4b26-a133-0dfcbf5bc65b";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1213,6 +1216,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "iRec WatchKit Extension/iRec WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer: Anthony Agatiello (J9M2GPP36A)";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer: Anthony Agatiello (J9M2GPP36A)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1236,7 +1240,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "346518a4-7f6d-4a8f-93da-eb1bda68f230";
+				PROVISIONING_PROFILE = "242fff3e-6b41-458e-949a-0fdc4162555f";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;
@@ -1263,6 +1267,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_ENTITLEMENTS = "iRec WatchKit Extension/iRec WatchKit Extension.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution: ADA Tech, LLC";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Distribution: ADA Tech, LLC";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1281,7 +1286,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.adhoc.iRec.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
-				PROVISIONING_PROFILE = "f6d49025-944a-4ae7-9689-97c9e19bfbc4";
+				PROVISIONING_PROFILE = "e36bf75e-bcf7-49b0-9687-0e5feab4252e";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = 4;

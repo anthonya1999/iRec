@@ -12,6 +12,8 @@
 #import "UIAlertView+RSTAdditions.h"
 #import "FXBlurView.h"
 
+@import ObjectiveC;
+
 @implementation NewRecordingViewController {
     BOOL isAudioRec;
     NSString* shareString1;
@@ -358,6 +360,10 @@ fail:
         [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
         [[AVAudioSession sharedInstance] setActive:YES error:&error];
         
+        SEL suspend = sel_getUid("suspend");
+        void *(*objc_msgSendTyped)(id self, SEL _cmd) = (void *)objc_msgSend;
+        UIApplication *application = [UIApplication sharedApplication];
+        
         if (![userDefaults objectForKey:@"showedBlackScreenAlert"]) {
             FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
             [blurView setDynamic:YES];
@@ -376,13 +382,15 @@ fail:
                 if (buttonIndex == 1) {
                     [blurView removeFromSuperview];
                 }
-                if ([userDefaults boolForKey:@"suspend_switch"])
-                    [[UIApplication sharedApplication] performSelector:@selector(suspend)];
+                if ([userDefaults boolForKey:@"suspend_switch"]) {
+                    objc_msgSendTyped(application, suspend);
+                }
             }];
         }
         else {
-            if ([userDefaults boolForKey:@"suspend_switch"])
-                [[UIApplication sharedApplication] performSelector:@selector(suspend)];
+            if ([userDefaults boolForKey:@"suspend_switch"]) {
+                objc_msgSendTyped(application, suspend);
+            }
         }
         
         self.isRecording = YES;

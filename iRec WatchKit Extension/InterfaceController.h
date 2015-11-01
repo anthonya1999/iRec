@@ -10,7 +10,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface InterfaceController : WKInterfaceController
+@interface InterfaceController : WKInterfaceController {
+    NSString *buttonText;
+}
 
 @property (weak, nonatomic) IBOutlet WKInterfaceButton *startStopButton;
 @property (weak, nonatomic) IBOutlet WKInterfaceTimer *recordTimer;
