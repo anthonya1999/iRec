@@ -122,21 +122,27 @@
     });
 }
 
+#pragma mark - Create Pixel Buffer
+
+- (void)createPixelBuffer {
+    void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
+    NSParameterAssert(CoreVideo);
+    CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
+    NSParameterAssert(CVPixelBufferCreateWithIOSurface);
+    [_pixelBufferLock lock];
+    CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
+    [_pixelBufferLock unlock];
+    NSAssert(_pixelBuffer != NULL, @"We can't record if there's no pixel buffer!");
+    CVPixelBufferRetain(_pixelBuffer);
+    dlclose(CoreVideo);
+}
+
 #pragma mark - Capture Frame
 
 - (void)saveFrame:(CMTime)frame {
-    void *CoreVideo = dlopen("/System/Library/Frameworks/CoreVideo.framework/CoreVideo", RTLD_LAZY);
-    NSParameterAssert(CoreVideo);
-    
     dispatch_async(dispatch_get_main_queue(), ^{
         if (!_pixelBuffer) {
-            CVReturn (*CVPixelBufferCreateWithIOSurface)(CFAllocatorRef allocator, IOSurfaceRef buffer, CFDictionaryRef pixelBufferAttributes, CVPixelBufferRef *pixelBufferOut) = dlsym(CoreVideo, "CVPixelBufferCreateWithIOSurface");
-            NSParameterAssert(CVPixelBufferCreateWithIOSurface);
-            [_pixelBufferLock lock];
-            CVPixelBufferCreateWithIOSurface(kCFAllocatorDefault, _screenSurface, NULL, &_pixelBuffer);
-            [_pixelBufferLock unlock];
-            NSAssert(_pixelBuffer != NULL, @"We can't record if there's no pixel buffer!");
-            CVPixelBufferRetain(_pixelBuffer);
+            [self createPixelBuffer];
         }
         
         dispatch_async(_videoQueue, ^{
@@ -148,7 +154,6 @@
             [_pixelBufferLock unlock];
         });
     });
-    dlclose(CoreVideo);
 }
 
 #pragma mark - Cleanup & Reset
