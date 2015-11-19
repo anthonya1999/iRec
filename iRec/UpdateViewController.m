@@ -237,11 +237,8 @@
             
             if (buttonIndex == 1)
             {
-               [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.updateDictionary[@"url"]]];
-                SEL suspend = sel_getUid("suspend");
-                void *(*objc_msgSendTyped)(id self, SEL _cmd) = (void *)objc_msgSend;
-                UIApplication *application = [UIApplication sharedApplication];
-                objc_msgSendTyped(application, suspend);
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.updateDictionary[@"url"]]];
+                [AppDelegate suspendApp];
             }
             
         }];

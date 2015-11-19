@@ -6,13 +6,12 @@
 //
 //
 
+#import "AppDelegate.h"
 #import "NewRecordingViewController.h"
 #import "ScreenRecorder.h"
 #import "WelcomeViewController.h"
 #import "UIAlertView+RSTAdditions.h"
 #import "FXBlurView.h"
-
-@import ObjectiveC;
 
 @implementation NewRecordingViewController {
     BOOL isAudioRec;
@@ -87,9 +86,10 @@ fail:
             [musicAlert showWithSelectionHandler:^(UIAlertView *alertView, NSInteger buttonIndex) {
                 if (buttonIndex == 0) {
                     NSError *error = nil;
-                    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
-                    [[AVAudioSession sharedInstance] setActive:YES error:&error];
-                    [[AVAudioSession sharedInstance] setActive:NO error:&error];
+                    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+                    [audioSession setCategory:AVAudioSessionCategorySoloAmbient error:&error];
+                    [audioSession setActive:YES error:&error];
+                    [audioSession setActive:NO error:&error];
                     [blurView removeFromSuperview];
                     [self startStopRecording];
                     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
@@ -109,9 +109,10 @@ fail:
                 }
                 if (buttonIndex == 1) {
                     NSError *error = nil;
-                    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategorySoloAmbient error:&error];
-                    [[AVAudioSession sharedInstance] setActive:YES error:&error];
-                    [[AVAudioSession sharedInstance] setActive:NO error:&error];
+                    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+                    [audioSession setCategory:AVAudioSessionCategorySoloAmbient error:&error];
+                    [audioSession setActive:YES error:&error];
+                    [audioSession setActive:NO error:&error];
                     [blurView removeFromSuperview];
                     [self startStopRecording];
                     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:1];
@@ -356,13 +357,10 @@ fail:
         [_recorder startRecording];
         
         NSError *error = nil;
-        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&error];
-        [[AVAudioSession sharedInstance] overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
-        [[AVAudioSession sharedInstance] setActive:YES error:&error];
-        
-        SEL suspend = sel_getUid("suspend");
-        void *(*objc_msgSendTyped)(id self, SEL _cmd) = (void *)objc_msgSend;
-        UIApplication *application = [UIApplication sharedApplication];
+        AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+        [audioSession setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&error];
+        [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error];
+        [audioSession setActive:YES error:&error];
         
         if (![userDefaults objectForKey:@"showedBlackScreenAlert"]) {
             FXBlurView *blurView = [[FXBlurView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height * 4)];
@@ -383,13 +381,13 @@ fail:
                     [blurView removeFromSuperview];
                 }
                 if ([userDefaults boolForKey:@"suspend_switch"]) {
-                    objc_msgSendTyped(application, suspend);
+                    [AppDelegate suspendApp];
                 }
             }];
         }
         else {
             if ([userDefaults boolForKey:@"suspend_switch"]) {
-                objc_msgSendTyped(application, suspend);
+                [AppDelegate suspendApp];
             }
         }
         

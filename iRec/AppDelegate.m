@@ -16,6 +16,7 @@
 #import <Parse/Parse.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#include <dlfcn.h>
 
 static NSString * const CachedSoftwareUpdateKey = @"cachedSoftwareUpdate";
 static NSString * const AppVersionKey = @"appVersion";
@@ -300,6 +301,18 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         NSString *fullPath = [documentsDirectory stringByAppendingPathComponent:path];
         [fileMgr removeItemAtPath:fullPath error:&error];
     }
+}
+
++ (void)suspendApp {
+    void *SpringBoardServices = dlopen("/System/Library/PrivateFrameworks/SpringBoardServices.framework/SpringBoardServices", RTLD_LAZY);
+    NSParameterAssert(SpringBoardServices);
+    mach_port_t (*SBSSpringBoardServerPort)() = dlsym(SpringBoardServices, "SBSSpringBoardServerPort");
+    NSParameterAssert(SBSSpringBoardServerPort);
+    SpringBoardServicesReturn (*SBSuspend)(mach_port_t port) = dlsym(SpringBoardServices, "SBSuspend");
+    NSParameterAssert(SBSuspend);
+    mach_port_t sbsMachPort = SBSSpringBoardServerPort();
+    SBSuspend(sbsMachPort);
+    dlclose(SpringBoardServices);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

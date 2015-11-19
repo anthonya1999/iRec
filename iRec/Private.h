@@ -12,7 +12,7 @@ __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
 typedef struct __IOMobileFramebuffer *IOMobileFramebufferConnection;
-typedef	kern_return_t IOMobileFramebufferReturn;
+typedef	kern_return_t IOMobileFramebufferReturn, SpringBoardServicesReturn;
 
 #define kIOMobileFramebufferError 0xE0000000
 
