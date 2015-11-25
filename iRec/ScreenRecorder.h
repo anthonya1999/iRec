@@ -19,5 +19,6 @@
 - (void)saveFrame:(CMTime)frame;
 - (void)startRecording;
 - (void)cleanupAndReset;
++ (void)suspendApp;
 
 @end

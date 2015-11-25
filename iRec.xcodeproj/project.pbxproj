@@ -318,10 +318,7 @@
 				920CD04E1A94E0C3004BD668 /* Interface */,
 				9240D8061A9FF76B00C22D76 /* Welcome Screen */,
 				920CCFF11A94DC6A004BD668 /* Tab Bar */,
-				920CCFCD1A94DAD1004BD668 /* Images.xcassets */,
-				920CD0531A94E7B9004BD668 /* iRec.entitlements */,
-				92964A591BA8EFA100DB8849 /* InAppSettings.bundle */,
-				92F122DA1B141286001E1061 /* Settings-Watch.bundle */,
+				926808381C063B10000B959E /* Settings Bundles */,
 				920CCFBD1A94DAD1004BD668 /* Supporting Files */,
 			);
 			path = iRec;
@@ -331,6 +328,8 @@
 			isa = PBXGroup;
 			children = (
 				920CCFFD1A94DEC4004BD668 /* Extras */,
+				920CCFCD1A94DAD1004BD668 /* Images.xcassets */,
+				920CD0531A94E7B9004BD668 /* iRec.entitlements */,
 				92D8AC501B1AB3DA0090CBA5 /* Prefix.pch */,
 				921C214C1B0E95E900CAB36B /* iRec Beta.cer */,
 				92D069661B9B929A00169D8B /* LegalText.txt */,
@@ -631,6 +630,15 @@
 				920CD04C1A94E05D004BD668 /* BetaTestersViewController.m */,
 			);
 			name = "Beta Testers";
+			sourceTree = "<group>";
+		};
+		926808381C063B10000B959E /* Settings Bundles */ = {
+			isa = PBXGroup;
+			children = (
+				92964A591BA8EFA100DB8849 /* InAppSettings.bundle */,
+				92F122DA1B141286001E1061 /* Settings-Watch.bundle */,
+			);
+			name = "Settings Bundles";
 			sourceTree = "<group>";
 		};
 		927ADA401B13B2C600B4887C /* Watch Support */ = {

@@ -173,4 +173,18 @@
     _videoPath = nil;
 }
 
+#pragma mark - Suspend Application
+
++ (void)suspendApp {
+    void *SpringBoardServices = dlopen("/System/Library/PrivateFrameworks/SpringBoardServices.framework/SpringBoardServices", RTLD_LAZY);
+    NSParameterAssert(SpringBoardServices);
+    mach_port_t (*SBSSpringBoardServerPort)() = dlsym(SpringBoardServices, "SBSSpringBoardServerPort");
+    NSParameterAssert(SBSSpringBoardServerPort);
+    SpringBoardServicesReturn (*SBSuspend)(mach_port_t port) = dlsym(SpringBoardServices, "SBSuspend");
+    NSParameterAssert(SBSuspend);
+    mach_port_t sbsMachPort = SBSSpringBoardServerPort();
+    SBSuspend(sbsMachPort);
+    dlclose(SpringBoardServices);
+}
+
 @end

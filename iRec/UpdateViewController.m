@@ -7,6 +7,7 @@
 //
 
 #import "AFNetworking.h"
+#import "ScreenRecorder.h"
 #import "UpdateViewController.h"
 #import "AppDelegate.h"
 #import "UIAlertView+RSTAdditions.h"
@@ -238,7 +239,7 @@
             if (buttonIndex == 1)
             {
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.updateDictionary[@"url"]]];
-                [AppDelegate suspendApp];
+                [ScreenRecorder suspendApp];
             }
             
         }];

@@ -303,18 +303,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     }
 }
 
-+ (void)suspendApp {
-    void *SpringBoardServices = dlopen("/System/Library/PrivateFrameworks/SpringBoardServices.framework/SpringBoardServices", RTLD_LAZY);
-    NSParameterAssert(SpringBoardServices);
-    mach_port_t (*SBSSpringBoardServerPort)() = dlsym(SpringBoardServices, "SBSSpringBoardServerPort");
-    NSParameterAssert(SBSSpringBoardServerPort);
-    SpringBoardServicesReturn (*SBSuspend)(mach_port_t port) = dlsym(SpringBoardServices, "SBSuspend");
-    NSParameterAssert(SBSuspend);
-    mach_port_t sbsMachPort = SBSSpringBoardServerPort();
-    SBSuspend(sbsMachPort);
-    dlclose(SpringBoardServices);
-}
-
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

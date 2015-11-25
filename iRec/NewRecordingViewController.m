@@ -297,7 +297,6 @@ fail:
     return fps;
 }
 
-
 - (int)bitrate {
     int bitrate = 0;
     if ([userDefaults objectForKey:@"multi_bitrate"]) {
@@ -324,8 +323,8 @@ fail:
 
 #pragma mark - IBActions
 
-- (IBAction)textFieldDidEndEditing:(UITextField *)sender {
-    [sender resignFirstResponder];
+- (IBAction)textFieldDidEndEditing {
+    [_nameField resignFirstResponder];
 }
 
 - (IBAction)shareApplication:(UIBarButtonItem *)activityType {
@@ -349,6 +348,7 @@ fail:
     //If the app is not recording, we want to start recording
     if(!self.isRecording)
     {
+        [self textFieldDidEndEditing];
         [self setTitleAndColorForButton];
         
         [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:1];
@@ -381,13 +381,13 @@ fail:
                     [blurView removeFromSuperview];
                 }
                 if ([userDefaults boolForKey:@"suspend_switch"]) {
-                    [AppDelegate suspendApp];
+                    [ScreenRecorder suspendApp];
                 }
             }];
         }
         else {
             if ([userDefaults boolForKey:@"suspend_switch"]) {
-                [AppDelegate suspendApp];
+                [ScreenRecorder suspendApp];
             }
         }
         
