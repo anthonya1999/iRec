@@ -34,7 +34,7 @@
     
     IOMobileFramebufferReturn (*IOMobileFramebufferGetMainDisplay)(IOMobileFramebufferConnection *connection) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetMainDisplay");
     NSParameterAssert(IOMobileFramebufferGetMainDisplay);
-    IOMobileFramebufferReturn (*IOMobileFramebufferGetDisplaySize)(IOMobileFramebufferConnection connection, CGSize *size) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetDisplaySize");
+    IOMobileFramebufferReturn (*IOMobileFramebufferGetDisplaySize)(IOMobileFramebufferConnection connection, IOMobileFramebufferDisplaySize *size) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetDisplaySize");
     NSParameterAssert(IOMobileFramebufferGetDisplaySize);
     IOMobileFramebufferReturn (*IOMobileFramebufferGetLayerDefaultSurface)(IOMobileFramebufferConnection connection, int surface, IOSurfaceRef *buffer) = dlsym(IOMobileFramebuffer, "IOMobileFramebufferGetLayerDefaultSurface");
     NSParameterAssert(IOMobileFramebufferGetLayerDefaultSurface);
