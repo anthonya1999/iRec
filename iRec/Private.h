@@ -12,9 +12,8 @@ __BEGIN_DECLS
 
 typedef struct __IOSurface *IOSurfaceRef;
 typedef struct __IOMobileFramebuffer *IOMobileFramebufferConnection;
+typedef CGSize IOMobileFramebufferDisplaySize;
 typedef	kern_return_t IOMobileFramebufferReturn, SpringBoardServicesReturn;
-
-#define kIOMobileFramebufferError 0xE0000000
 
 __END_DECLS
 
@@ -27,7 +26,7 @@ AVAssetWriterInputPixelBufferAdaptor *_pixelBufferAdaptor;
 dispatch_queue_t _videoQueue;
 NSLock *_pixelBufferLock;
 NSString *_videoPath;
-CGSize _screenSize;
+IOMobileFramebufferDisplaySize _screenSize;
 int _framerate, _bitrate;
 BOOL _recording;
 
