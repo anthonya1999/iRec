@@ -96,9 +96,6 @@
                     [self presentViewController:mc animated:YES completion:nil];
                     [blurView removeFromSuperview];
                 }
-                else {
-                    //do nothing
-                }
             }];
         }
     }

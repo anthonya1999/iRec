@@ -33,7 +33,6 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
     
     [self registerForRemoteNotification];
     
-    //Fail-safe if the preferences file is not created...
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *bundleIdentifier = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleIdentifierKey];
     NSString *plistPath = [NSHomeDirectory() stringByAppendingPathComponent:[NSString stringWithFormat:@"Library/Preferences/%@.plist",bundleIdentifier]];
@@ -43,12 +42,8 @@ static NSString * const LastCheckForUpdatesKey = @"lastCheckForUpdates";
         NSDictionary *attributes = nil;
         [fileManager createFileAtPath:plistPath contents:contents attributes:attributes];
     }
-    else {
-        //do nothing...
-    }
     
-    if (![userDefaults objectForKey:@"showedWarningAlert"])
-    {
+    if (![userDefaults objectForKey:@"showedWarningAlert"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
             WelcomeViewController *welcomeViewController = [[WelcomeViewController alloc] init];
             UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:welcomeViewController];
