@@ -1,6 +1,6 @@
 # iRec - iOS 7-8 Screen Recorder  
   
-![ScreenShot](http://104.131.174.145/iRecPreview.png)  
+![ScreenShot](https://adatechri.com/iRecPreview.png)  
   
 # Known Issues  
 
