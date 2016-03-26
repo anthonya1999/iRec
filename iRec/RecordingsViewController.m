@@ -91,7 +91,7 @@
         UIImageView *thumbnailImageView = [[UIImageView alloc] initWithImage:[self thumbnailFromVideoAtURL:[NSURL fileURLWithPath:[documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", _recordingNames[indexPath.row]]]]]];
         cell.textLabel.font = [cell.textLabel.font fontWithSize:18];
         
-        if (!UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
             [cell.textLabel setText:[NSString stringWithFormat:@"            %@", _recordingNames[indexPath.row]]];
             [thumbnailImageView setFrame:CGRectMake(-18, 5, 110, 110)];
         }
