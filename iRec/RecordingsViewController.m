@@ -7,6 +7,7 @@
 //
 
 #import "RecordingsViewController.h"
+#import "ScreenRecorder.h"
 #import "UIAlertView+RSTAdditions.h"
 #import "FXBlurView.h"
 #import <MediaPlayer/MediaPlayer.h>
@@ -14,7 +15,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import "Private.h"
 
 @implementation RecordingsViewController
 
