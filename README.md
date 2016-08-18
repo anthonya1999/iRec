@@ -8,6 +8,6 @@
 * Apple Watch remote does not work yet, it is only a GUI.
 * On iOS 9 devices, the app crashes when you start or stop recording.
   
-# If you happen to find a way to support iOS 9+, please be aware that the update will most likely not be public, in terms of releasing an open-sourced version of the app. Please privately notify me of anything if anyone finds a way to do this. Thank you.
+# Please note that the iOS 9+ version of iRec will most likely not be public, in terms of releasing an open-sourced version of the app. Thank you for understanding.
   
 Copyright © 2015 ADA Tech, LLC
