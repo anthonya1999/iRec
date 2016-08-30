@@ -13,4 +13,4 @@
    
 # Please note that the iOS 9+ version of iRec will most likely not be public, in terms of releasing an open-sourced version of the app. Thank you for understanding.
   
-Copyright © 2015 ADA Tech, LLC
+Copyright © 2016 ADA Tech, LLC
